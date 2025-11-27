@@ -1,0 +1,125 @@
+﻿using Assignment.Api.Entities;
+using Assignment.Api.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace Assignment.Api.Repositories;
+
+public abstract class Repository
+{
+    protected IQueryable<Entity> query = null!;
+
+    protected void ApplyIncludes<T>(T? @params)
+    {
+        if (@params is null) return;
+        foreach (var property in @params.GetType().GetProperties())
+        {
+            var value = property.GetValue(@params);
+            if (value is null) continue;
+            if (property.PropertyType.BaseType == typeof(object))
+            {
+                foreach (var subProperty in property.PropertyType.GetProperties())
+                {
+                    var subValue = subProperty.GetValue(property.GetValue(@params));
+                    if (subValue is null) continue;
+                    if (subProperty.PropertyType.BaseType == typeof(object))
+                    {
+                        query = query.Include($"{property.Name}.{subProperty.Name}");
+                        foreach (var subSubProperty in subProperty.PropertyType.GetProperties())
+                        {
+                            var subSubValue = subSubProperty.GetValue(subProperty.GetValue(property.GetValue(@params)));
+                            if (subSubValue is true)
+                                query = query.Include($"{property.Name}.{subProperty.Name}.{subSubProperty.Name}");
+                        }
+                    }
+                    else if (subValue is true)
+                    {
+                        query = query.Include($"{property.Name}.{subProperty.Name}");
+                    }
+                }
+            }
+            else if (value is true)
+            {
+                query = query.Include(property.Name);
+            }
+        }
+    }
+
+    protected void ApplyPagination(PaginationParams? @params)
+    {
+        if (@params is null) return;
+        var (page, size) = @params;
+        if (page != null && size != null)
+            query = query.Skip((page.Value - 1) * size.Value).Take(size.Value);
+    }
+
+    protected void BuildQuery<T>(T @params)
+    {
+        if (@params is null) return;
+        foreach (var property in @params.GetType().GetProperties())
+        {
+            if (property.PropertyType == typeof(string))
+            {
+                var value = property.GetValue(@params);
+                if (value is null) continue;
+                query = query.Where(x =>
+                    EF.Property<string>(x!, property.Name).Contains((string)value));
+            }
+            else if (property.PropertyType.FullName!.StartsWith("ITControl"))
+            {
+                var value = property.GetValue(@params);
+                if (value is null) continue;
+                foreach (var subProperty in value.GetType().GetProperties())
+                {
+                    var subValue = subProperty.GetValue(property.GetValue(@params));
+                    if (subValue is null) continue;
+                    if (subProperty.PropertyType == typeof(string))
+                    {
+                        query = query.Where(x =>
+                        EF.Property<string>(
+                            EF.Property<object>(x!, property.Name), subProperty.Name)
+                        .Contains((string)subValue));
+                    }
+                    else
+                    {
+                        query = query.Where(x =>
+                        EF.Property<object>(
+                            EF.Property<object>(x!, property.Name),
+                            subProperty.Name) == subValue);
+                    }
+                }
+            }
+            else
+            {
+                var value = property.GetValue(@params);
+                if (value is null) continue;
+
+                if (property.Name.StartsWith("Exclude"))
+                {
+                    query = query.Where(x =>
+                    EF.Property<object>(x!, property.Name.Remove(0, 7)) != value);
+                }
+                else
+                {
+                    query = query.Where(x =>
+                    EF.Property<object>(x!, property.Name) == value);
+                }
+            }
+
+        }
+    }
+
+    protected void BuildOrderBy<T>(T @params)
+    {
+        if (@params is null) return;
+        foreach (var property in @params.GetType().GetProperties())
+        {
+            if (property.GetValue(@params) is not string value) continue;
+            query = value switch
+            {
+                "a" => query.OrderBy(p => EF.Property<object>(p!, property.Name)),
+                "d" => query.OrderByDescending(p => EF.Property<object>(p!, property.Name)),
+                _ => query,
+            };
+        }
+    }
+}
