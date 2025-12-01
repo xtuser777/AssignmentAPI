@@ -28,21 +28,33 @@ public class TitleBySubscription : TitleBySubscriptionProps
 public class TitleBySubscriptionProps : Entity
 {
     [Required]
-    [ForeignKey(nameof(Year))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? YearId { get; set; }
+
     [Required]
-    [ForeignKey(nameof(Teatcher))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? TeatcherId { get; set; }
+
     [Required]
-    [ForeignKey(nameof(Title))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? TitleId { get; set; }
+
     [Required]
-    [ForeignKey(nameof(Subscription))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? SubscriptionId { get; set; }
+
     [Required]
     public decimal? Value { get; set; }
+
+    [ForeignKey(nameof(YearId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Year? Year { get; init; }
+
+    [ForeignKey(nameof(TeatcherId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Teatcher? Teatcher { get; init; }
+
+    [ForeignKey(nameof(TitleId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Title? Title { get; init; }
+
+    [ForeignKey(nameof(SubscriptionId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Subscription? Subscription { get; init; }
 }

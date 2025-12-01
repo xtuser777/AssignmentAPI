@@ -18,7 +18,7 @@ public interface IUnitOfWork
     ISubscriptionsRepository SubscriptionsRepository { get; }
     IClassificationsRepository ClassificationsRepository { get; }
     ITitlesRepository TitlesRepository { get; }
-    ITeatchersRepository EpisodesRepository { get; }
+    ITeatchersRepository TeatchersRepository { get; }
     ICivilStatusesRepository CivilStatusesRepository { get; }
     IPreferencesRepository PreferencesRepository { get; }
     ITitlesBySubscriptionsRepository TitlesBySubscriptionsRepository { get; }

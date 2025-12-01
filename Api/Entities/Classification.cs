@@ -28,44 +28,30 @@ public class Classification : ClassificationProps
 public class ClassificationProps : Entity
 {
     [Required]
-    [ForeignKey(nameof(Year))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? YearId { get; set; }
     [Required]
-    [ForeignKey(nameof(Teatcher))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? TeatcherId { get; set; }
     [Required]
-    [ForeignKey(nameof(Subscription))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? SubscriptionId { get; set; }
     [Required]
     [StringLength(200)]
     public string? Name { get; set; }
     [Required]
-    [ForeignKey(nameof(Situation))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? SituationId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Situation { get; set; }
     [Required]
-    [ForeignKey(nameof(Position))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? PositionId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Position { get; set; }
     [Required]
-    [ForeignKey(nameof(Unit))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? UnitId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Unit { get; set; }
     [Required]
-    [ForeignKey(nameof(Discipline))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? DisciplineId { get; set; }
     [Required]
     [StringLength(50)]

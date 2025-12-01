@@ -28,15 +28,23 @@ public class Subscription : SubscriptionProps
 public class SubscriptionProps : Entity
 {
     [Required]
-    [ForeignKey(nameof(Year))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? YearId { get; set; }
+
     [Required]
-    [ForeignKey(nameof(Teatcher))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? TeatcherId { get; set; }
+
     [Required]
-    [ForeignKey(nameof(Preference))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? PreferenceId { get; set; }
+
+    [ForeignKey(nameof(YearId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Year? Year { get; set; }
+    
+    [ForeignKey(nameof(TeatcherId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Teatcher? Teatcher { get; set; }
+    
+    [ForeignKey(nameof(PreferenceId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Preference? Preference { get; set; }
 }

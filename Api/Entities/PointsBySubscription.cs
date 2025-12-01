@@ -28,13 +28,9 @@ public class PointsBySubscription : PointsBySubscriptionProps
 public class PointsBySubscriptionProps : Entity
 {
     [Required]
-    [ForeignKey(nameof(Year))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? YearId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(Subscription))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? SubscriptionId { get; set; }
 
     [Required]
@@ -46,4 +42,12 @@ public class PointsBySubscriptionProps : Entity
 
     [Required]
     public decimal? Points { get; set; }
+
+    [ForeignKey(nameof(YearId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Year? Year { get; init; }
+
+    [ForeignKey(nameof(SubscriptionId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Subscription? Subscription { get; init; }
 }

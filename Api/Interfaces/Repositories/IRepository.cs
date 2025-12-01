@@ -12,7 +12,7 @@ public interface IRepository<T>
     {
         return Task.CompletedTask;
     }
-    public Task DeleteManyAsync(T props)
+    public Task DeleteManyAsync(Entity props)
     { return Task.CompletedTask; }
     public void Update(T entity) { }
     public void Delete(T entity) { }
@@ -49,7 +49,7 @@ public record PaginationParams
 
 public record FindManyRepositoryParams
 {
-    public Entity Where { get; set; } = null!;
+    public Entity Where { get; set; } = new();
     public OrderByParams? OrderBy { get; set; }
     public PaginationParams? Pagination { get; set; }
 }

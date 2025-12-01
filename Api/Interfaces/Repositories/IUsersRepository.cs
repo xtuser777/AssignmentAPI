@@ -26,3 +26,8 @@ public record OrderByUsersParams : OrderByParams
     public string? IsActive { get; set; }
     public string? Role { get; set; }
 }
+
+public record IncludesUsersParams : IncludesParams
+{
+    public IncludesUsersUnitsParams? UsersUnits { get; set; }
+}

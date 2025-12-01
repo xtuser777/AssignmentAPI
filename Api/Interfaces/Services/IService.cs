@@ -5,10 +5,13 @@ namespace Assignment.Api.Interfaces.Services;
 
 public interface IService<T>
 {
-    Task<T> FindOneAsync(FindOneServiceParams parameters);
-    Task<IEnumerable<T>> FindManyAsync(FindManyServiceParams parameters);
-    Task<IEnumerable<T>> FindManyPaginationAsync(FindManyPaginationServiceParams parameters);
-    Task CreateAsync(CreateServiceParams parameters);
+    Task<T> FindOneAsync(
+        FindOneServiceParams parameters);
+    Task<IEnumerable<T>> FindManyAsync(
+        FindManyServiceParams parameters);
+    Task<PaginationModel?> FindManyPaginationAsync(
+        FindManyPaginationServiceParams parameters);
+    Task<T> CreateAsync(CreateServiceParams parameters);
     Task UpdateAsync(UpdateServiceParams parameters);
     Task DeleteAsync(DeleteServiceParams parameters);
 }

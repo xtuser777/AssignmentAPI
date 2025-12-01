@@ -51,7 +51,9 @@ public class TitleProps : Entity
     public bool? IsActive { get; set; }
 
     [Required]
-    [ForeignKey(nameof(Year))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? YearId { get; set; }
+
+    [ForeignKey(nameof(YearId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Year? Year { get; set; }
 }

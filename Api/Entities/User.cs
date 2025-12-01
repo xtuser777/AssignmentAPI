@@ -43,4 +43,7 @@ public class UserProps : Entity
     public bool? IsActive { get; set; }
     [Required]
     public UserRole? Role { get; set; }
+
+    [InverseProperty("User")]
+    public ICollection<UserUnit>? UsersUnits { get; set; }
 }

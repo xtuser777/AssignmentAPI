@@ -28,11 +28,15 @@ public class UserUnit : UserUnitProps
 public class UserUnitProps : Entity
 {
     [Required]
-    [ForeignKey(nameof(User))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? UserId { get; set; }
     [Required]
-    [ForeignKey(nameof(Unit))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Guid? UnitId { get; set; }
+
+    [ForeignKey(nameof(UserId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public User? User { get; init; }
+
+    [ForeignKey(nameof(UnitId))]
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public Unit? Unit { get; init; }
 }
