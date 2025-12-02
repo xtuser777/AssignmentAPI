@@ -14,7 +14,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Preference> Preferences { get; set; }
     public DbSet<CivilStatus> CivilStatuses { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
-    public DbSet<Teatcher> Teatchers { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
     public DbSet<Title> Titles { get; set; }
     public DbSet<TitleBySubscription> TitlesBySubscriptions { get; set; }
     public DbSet<UserUnit> UsersUnits { get; set; }

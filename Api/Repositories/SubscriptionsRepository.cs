@@ -20,7 +20,7 @@ public class SubscriptionsRepository(
 
     public async Task<IEnumerable<Subscription>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Subscriptions.AsNoTracking();
+        query = context.Subscriptions.Include("Year").Include("Teacher:Unit").Include("Preference").AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);

@@ -2,22 +2,22 @@
 
 namespace Assignment.Api.Interfaces.Repositories;
 
-public interface ITeatchersRepository : IRepository<Teatcher>
+public interface ITeachersRepository : IRepository<Teacher>
 {
 }
 
-public class FindManyTeatchersParams : TeatcherProps;
+public class FindManyTeachersParams : TeacherProps;
 
-public class CountTeatchersParams : FindManyTeatchersParams;
+public class CountTeachersParams : FindManyTeachersParams;
 
-public class ExistsTeatchersParams : CountTeatchersParams;
+public class ExistsTeachersParams : CountTeachersParams;
 
-public class ExclusiveTeatchersParams : ExistsTeatchersParams
+public class ExclusiveTeachersParams : ExistsTeachersParams
 {
     public Guid ExcludeId { get; set; }
 }
 
-public record OrderByTeatchersParams : OrderByParams
+public record OrderByTeachersParams : OrderByParams
 {
     public string? Name { get; set; }
     public string? Identity { get; set; }
@@ -51,7 +51,7 @@ public record OrderByTeatchersParams : OrderByParams
     public string? IsMusic { get; set; }
 }
 
-public record IncludesTeatchersParams : IncludesParams
+public record IncludesTeachersParams : IncludesParams
 {
     public bool? Year { get; set; }
     public bool? Unit { get; set; }

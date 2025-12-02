@@ -15,13 +15,13 @@ public class ExistsSubscriptionsParams : CountSubscriptionsParams;
 public record OrderBySubscriptionsParams : OrderByParams
 {
     public string? Year { get; set; }
-    public string? Teatcher { get; set; }
+    public string? Teacher { get; set; }
     public string? Preference { get; set; }
 }
 
 public record IncludesSubscriptionsParams : IncludesParams
 {
     public bool? Year { get; set; }
-    public bool? Teatcher { get; set; }
+    public bool? Teacher { get; set; }
     public bool? Preference { get; set; }
 }

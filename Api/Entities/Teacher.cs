@@ -4,28 +4,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
 
-[Table("Teatchers")]
-public class Teatcher : TeatcherProps
+[Table("Teachers")]
+public class Teacher : TeacherProps
 {
-    public Teatcher() 
+    public Teacher() 
     {
         Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
 
-    public Teatcher(TeatcherProps props)
+    public Teacher(TeacherProps props)
     {
         Assign(props);
     }
 
-    public void Update(TeatcherProps props)
+    public void Update(TeacherProps props)
     {
         AssignUpdate(props);
     }
 }
 
-public class TeatcherProps : Entity
+public class TeacherProps : Entity
 {
     [Required]
     [StringLength(200)]

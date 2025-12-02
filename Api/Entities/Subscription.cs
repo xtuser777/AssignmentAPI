@@ -31,7 +31,7 @@ public class SubscriptionProps : Entity
     public Guid? YearId { get; set; }
 
     [Required]
-    public Guid? TeatcherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
     [Required]
     public Guid? PreferenceId { get; set; }
@@ -40,11 +40,17 @@ public class SubscriptionProps : Entity
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Year? Year { get; set; }
     
-    [ForeignKey(nameof(TeatcherId))]
+    [ForeignKey(nameof(TeacherId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
-    public Teatcher? Teatcher { get; set; }
+    public Teacher? Teacher { get; set; }
     
     [ForeignKey(nameof(PreferenceId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Preference? Preference { get; set; }
+
+    [InverseProperty("Subscription")]
+    public IEnumerable<TitleBySubscription>? Titles { get; set; }
+
+    [InverseProperty("Subscription")]
+    public IEnumerable<PointsBySubscription>? Points { get; set; }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Assignment.Api.Entities;
 
 [Table("Years")]
-public class Year : Entity
+public class Year : YearProps
 {
     public Year()
     {

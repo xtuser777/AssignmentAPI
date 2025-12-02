@@ -28,3 +28,8 @@ public record OrderByTitlesParams : OrderByParams
     public string? IsActive { get; set; }
     public string? Year { get; set; }
 }
+
+public record IncludesTitlesParams : IncludesParams
+{
+    public bool? Year { get; set; }
+}

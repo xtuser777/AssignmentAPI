@@ -4,45 +4,45 @@ using Assignment.Api.Utils;
 
 namespace Assignment.Api.Services;
 
-public class TeachersService(IUnitOfWork unitOfWork) : ITeatchersService
+public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
 {
-    public async Task<Teatcher> FindOneAsync(FindOneServiceParams parameters)
+    public async Task<Teacher> FindOneAsync(FindOneServiceParams parameters)
     {
         return await unitOfWork
-            .TeatchersRepository
+            .TeachersRepository
             .FindOneAsync(parameters)
             ?? throw new NullReferenceException();
     }
 
-    public async Task<IEnumerable<Teatcher>> FindManyAsync(FindManyServiceParams parameters)
+    public async Task<IEnumerable<Teacher>> FindManyAsync(FindManyServiceParams parameters)
     {
-        return await unitOfWork.TeatchersRepository.FindManyAsync(parameters);
+        return await unitOfWork.TeachersRepository.FindManyAsync(parameters);
     }
 
     public async Task<PaginationModel?> FindManyPaginationAsync(
         FindManyPaginationServiceParams parameters)
     {
-        var count = await unitOfWork.TeatchersRepository.CountAsync(parameters.CountProps);
+        var count = await unitOfWork.TeachersRepository.CountAsync(parameters.CountProps);
         return Pagination.Build(parameters.PaginationParams, count);
     }
 
-    public async Task<Teatcher> CreateAsync(CreateServiceParams parameters)
+    public async Task<Teacher> CreateAsync(CreateServiceParams parameters)
     {
-        var props = (TeatcherProps)parameters.Props;
-        var teacher = new Teatcher(props);
+        var props = (TeacherProps)parameters.Props;
+        var teacher = new Teacher(props);
         await using var transaction = unitOfWork.BeginTransaction;
-        await unitOfWork.TeatchersRepository.CreateAsync(teacher);
+        await unitOfWork.TeachersRepository.CreateAsync(teacher);
         await unitOfWork.Commit(transaction);
         return teacher;
     }
 
     public async Task UpdateAsync(UpdateServiceParams parameters)
     {
-        var props = (TeatcherProps)parameters.Props;
+        var props = (TeacherProps)parameters.Props;
         var teacher = await FindOneAsync(parameters);
         teacher.Update(props);
         await using var transaction = unitOfWork.BeginTransaction;
-        unitOfWork.TeatchersRepository.Update(teacher);
+        unitOfWork.TeachersRepository.Update(teacher);
         await unitOfWork.Commit(transaction);
     }
 
@@ -50,7 +50,7 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeatchersService
     {
         var teacher = await FindOneAsync(parameters);
         await using var transaction = unitOfWork.BeginTransaction;
-        unitOfWork.TeatchersRepository.Delete(teacher);
+        unitOfWork.TeachersRepository.Delete(teacher);
         await unitOfWork.Commit(transaction);
     }
 {

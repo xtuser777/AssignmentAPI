@@ -5,48 +5,48 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class TeatchersRepository(
-    ApplicationDbContext context) : Repository, ITeatchersRepository
+public class TeachersRepository(
+    ApplicationDbContext context) : Repository, ITeachersRepository
 {
-    public async Task<Teatcher?> FindOneAsync(FindOneRepositoryParams parameters)
+    public async Task<Teacher?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Teatchers.AsQueryable();
+        query = context.Teachers.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         var entity = await query.FirstOrDefaultAsync();
 
-        return (Teatcher?)entity;
+        return (Teacher?)entity;
     }
 
-    public async Task<IEnumerable<Teatcher>> FindManyAsync(FindManyRepositoryParams parameters)
+    public async Task<IEnumerable<Teacher>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Teatchers.AsNoTracking();
+        query = context.Teachers.Include("Year").Include("Unit").Include("Position").Include("Situation").AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
         var entities = await query.ToListAsync();
 
-        return entities.Cast<Teatcher>();
+        return entities.Cast<Teacher>();
     }
 
-    public async Task CreateAsync(Teatcher entity)
+    public async Task CreateAsync(Teacher entity)
     {
-        await context.Teatchers.AddAsync(entity);
+        await context.Teachers.AddAsync(entity);
     }
 
-    public void Update(Teatcher entiy)
+    public void Update(Teacher entiy)
     {
-        context.Teatchers.Update(entiy);
+        context.Teachers.Update(entiy);
     }
 
-    public void Delete(Teatcher entiy)
+    public void Delete(Teacher entiy)
     {
-        context.Teatchers.Remove(entiy);
+        context.Teachers.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Teatchers.AsNoTracking();
+        query = context.Teachers.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 

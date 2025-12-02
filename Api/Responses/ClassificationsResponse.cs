@@ -1,0 +1,107 @@
+﻿namespace Assignment.Api.Responses;
+
+public record FindManyClassificationsResponse
+{
+    public Guid? Id { get; set; }
+    public Guid? YearId { get; set; }
+    public int? Year { get; set; }
+    public Guid? TeacherId { get; set; }
+    public Guid? SubscriptionId { get; set; }
+    public string? Name { get; set; }
+    public Guid? SituationId { get; set; }
+    public string? Situation { get; set; }
+    public Guid? PositionId { get; set; }
+    public string? Position { get; set; }
+    public Guid? UnitId { get; set; }
+    public string? Unit { get; set; }
+    public Guid? DisciplineId { get; set; }
+    public string? Discipline { get; set; }
+    public string? Phone { get; set; }
+    public string? Cellphone { get; set; }
+    public string? Speciality { get; set; }
+    public bool? IsRemove { get; set; }
+    public bool? IsAdido { get; set; }
+    public bool? IsReadapted { get; set; }
+    public bool? IsReadingRoom { get; set; }
+    public bool? IsComputing { get; set; }
+    public bool? IsSupplementCharge { get; set; }
+    public bool? IsTutoring { get; set; }
+    public bool? IsAmbientalEdication { get; set; }
+    public bool? IsRobotics { get; set; }
+    public bool? IsMusic { get; set; }
+    public decimal? T1 { get; set; }
+    public decimal? T2 { get; set; }
+    public decimal? T3 { get; set; }
+    public decimal? T4 { get; set; }
+    public decimal? T5 { get; set; }
+    public decimal? T6 { get; set; }
+    public decimal? T7 { get; set; }
+    public decimal? T8 { get; set; }
+    public decimal? T9 { get; set; }
+    public decimal? T10 { get; set; }
+    public decimal? T11 { get; set; }
+    public decimal? T12 { get; set; }
+    public decimal? T13 { get; set; }
+    public decimal? T14 { get; set; }
+    public decimal? T15 { get; set; }
+    public decimal? T16 { get; set; }
+    public decimal? T17 { get; set; }
+    public decimal? T18 { get; set; }
+    public decimal? T19 { get; set; }
+    public decimal? T20 { get; set; }
+    public decimal? T21 { get; set; }
+    public decimal? T22 { get; set; }
+}
+
+public record FindOneClassificationsResponse
+{
+    public Guid? Id { get; set; }
+    public Guid? YearId { get; set; }
+    public int? Year { get; set; }
+    public Guid? TeacherId { get; set; }
+    public Guid? SubscriptionId { get; set; }
+    public string? Name { get; set; }
+    public Guid? SituationId { get; set; }
+    public string? Situation { get; set; }
+    public Guid? PositionId { get; set; }
+    public string? Position { get; set; }
+    public Guid? UnitId { get; set; }
+    public string? Unit { get; set; }
+    public Guid? DisciplineId { get; set; }
+    public string? Discipline { get; set; }
+    public string? Phone { get; set; }
+    public string? Cellphone { get; set; }
+    public string? Speciality { get; set; }
+    public bool? IsRemove { get; set; }
+    public bool? IsAdido { get; set; }
+    public bool? IsReadapted { get; set; }
+    public bool? IsReadingRoom { get; set; }
+    public bool? IsComputing { get; set; }
+    public bool? IsSupplementCharge { get; set; }
+    public bool? IsTutoring { get; set; }
+    public bool? IsAmbientalEdication { get; set; }
+    public bool? IsRobotics { get; set; }
+    public bool? IsMusic { get; set; }
+    public decimal? T1 { get; set; }
+    public decimal? T2 { get; set; }
+    public decimal? T3 { get; set; }
+    public decimal? T4 { get; set; }
+    public decimal? T5 { get; set; }
+    public decimal? T6 { get; set; }
+    public decimal? T7 { get; set; }
+    public decimal? T8 { get; set; }
+    public decimal? T9 { get; set; }
+    public decimal? T10 { get; set; }
+    public decimal? T11 { get; set; }
+    public decimal? T12 { get; set; }
+    public decimal? T13 { get; set; }
+    public decimal? T14 { get; set; }
+    public decimal? T15 { get; set; }
+    public decimal? T16 { get; set; }
+    public decimal? T17 { get; set; }
+    public decimal? T18 { get; set; }
+    public decimal? T19 { get; set; }
+    public decimal? T20 { get; set; }
+    public decimal? T21 { get; set; }
+    public decimal? T22 { get; set; }
+}

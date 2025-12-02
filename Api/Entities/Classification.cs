@@ -30,7 +30,9 @@ public class ClassificationProps : Entity
     [Required]
     public Guid? YearId { get; set; }
     [Required]
-    public Guid? TeatcherId { get; set; }
+    public int? Year {  get; set; }
+    [Required]
+    public Guid? TeacherId { get; set; }
     [Required]
     public Guid? SubscriptionId { get; set; }
     [Required]

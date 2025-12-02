@@ -20,7 +20,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     private IPreferencesRepository? _preferencesRepository;
     private IClassificationsRepository? _classificationsRepository;
     private ITitlesRepository? _titlesRepository;
-    private ITeatchersRepository? _teatchersRepository;
+    private ITeachersRepository? _TeachersRepository;
     private ITitlesBySubscriptionsRepository? _titlesBySubscriptionsRepository;
     private IPointsBySubscriptionsRepository? _pointsBySubscriptionsRepository;
 
@@ -38,7 +38,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public IPreferencesRepository PreferencesRepository => _preferencesRepository ?? new PreferencesRepository(context);
     public IClassificationsRepository ClassificationsRepository => _classificationsRepository ?? new ClassificationsRepository(context);
     public ITitlesRepository TitlesRepository => _titlesRepository ?? new TitlesRepository(context);
-    public ITeatchersRepository TeatchersRepository => _teatchersRepository ?? new TeatchersRepository(context);
+    public ITeachersRepository TeachersRepository => _TeachersRepository ?? new TeachersRepository(context);
     public ITitlesBySubscriptionsRepository TitlesBySubscriptionsRepository => _titlesBySubscriptionsRepository ?? new TitlesBySubscriptionsRepository(context);
     public IPointsBySubscriptionsRepository PointsBySubscriptionsRepository => _pointsBySubscriptionsRepository ?? new PointsBySubscriptionsRepository(context);
 

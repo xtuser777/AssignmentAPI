@@ -2,6 +2,6 @@
 
 namespace Assignment.Api.Interfaces.Services;
 
-public interface ITeatchersService : IService<Teatcher>
+public interface ITeachersService : IService<Teacher>
 {
 }

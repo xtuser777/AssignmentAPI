@@ -21,7 +21,7 @@ public class ExclusiveTitleBySubscriptionsParams : CountTitleBySubscriptionsPara
 public record OrderByTitlesBySubscriptionsParams : OrderByParams
 {
     public string? Year { get; set; }
-    public string? Teatcher { get; set; }
+    public string? Teacher { get; set; }
     public string? Title { get; set; }
     public string? Subscription { get; set; }
     public string? Value { get; set; }
@@ -30,7 +30,7 @@ public record OrderByTitlesBySubscriptionsParams : OrderByParams
 public record IncludesTitlesBySubscriptionsParams : IncludesParams
 {
     public bool? Year { get; set; }
-    public bool? Teatcher { get; set; }
+    public bool? Teacher { get; set; }
     public bool? Title { get; set; }
     public bool? Subscription { get; set; }
 }

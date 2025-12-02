@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Assignment.Api.Requests;
 
-public record CreateTeatchersRequest
+public record CreateTeachersRequest
 {
     [RequiredField]
     [StringMaxLength(200)]
-    [UniqueField<Teatcher>(typeof(ITeatchersRepository), typeof(ExistsTeatchersParams))]
+    [UniqueField<Teacher>(typeof(ITeachersRepository), typeof(ExistsTeachersParams))]
     public string? Name { get; set; } = string.Empty;
 
     [RequiredField]
@@ -123,9 +123,9 @@ public record CreateTeatchersRequest
     [BoolValue]
     public bool? IsMusic { get; set; }
 
-    public static implicit operator TeatcherProps(CreateTeatchersRequest request)
+    public static implicit operator TeacherProps(CreateTeachersRequest request)
     {
-        return new TeatcherProps
+        return new TeacherProps
         {
             Name = request.Name,
             Identity = request.Identity,
@@ -161,11 +161,11 @@ public record CreateTeatchersRequest
     }
 }
 
-public record UpdateTeatchersRequest
+public record UpdateTeachersRequest
 {
     [StringMinLength(1)]
     [StringMaxLength(200)]
-    [UniqueField<Teatcher>(typeof(ITeatchersRepository), typeof(ExistsTeatchersParams))]
+    [UniqueField<Teacher>(typeof(ITeachersRepository), typeof(ExistsTeachersParams))]
     public string? Name { get; set; } = string.Empty;
 
     [StringMinLength(1)]
@@ -272,9 +272,9 @@ public record UpdateTeatchersRequest
     [BoolValue]
     public bool? IsMusic { get; set; }
 
-    public static implicit operator TeatcherProps(UpdateTeatchersRequest request)
+    public static implicit operator TeacherProps(UpdateTeachersRequest request)
     {
-        return new TeatcherProps
+        return new TeacherProps
         {
             Name = request.Name,
             Identity = request.Identity,

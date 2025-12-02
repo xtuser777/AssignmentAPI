@@ -31,7 +31,7 @@ public class TitleBySubscriptionProps : Entity
     public Guid? YearId { get; set; }
 
     [Required]
-    public Guid? TeatcherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
     [Required]
     public Guid? TitleId { get; set; }
@@ -46,9 +46,9 @@ public class TitleBySubscriptionProps : Entity
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Year? Year { get; init; }
 
-    [ForeignKey(nameof(TeatcherId))]
+    [ForeignKey(nameof(TeacherId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
-    public Teatcher? Teatcher { get; init; }
+    public Teacher? Teacher { get; init; }
 
     [ForeignKey(nameof(TitleId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
