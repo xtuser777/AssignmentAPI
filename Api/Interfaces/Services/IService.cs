@@ -40,7 +40,7 @@ public record FindManyPaginationServiceParams
 
 public record FindOneServiceParams
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public IncludesParams? Includes { get; set; }
 
     public static implicit operator FindOneRepositoryParams(
@@ -59,7 +59,7 @@ public record CreateServiceParams
 
 public record UpdateServiceParams
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public Entity Props { get; set; } = null!;
 
@@ -73,7 +73,7 @@ public record UpdateServiceParams
 
 public record DeleteServiceParams
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(
         DeleteServiceParams parameters)

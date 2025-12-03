@@ -14,7 +14,7 @@ public class ExistsTeachersParams : CountTeachersParams;
 
 public class ExclusiveTeachersParams : ExistsTeachersParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByTeachersParams : OrderByParams

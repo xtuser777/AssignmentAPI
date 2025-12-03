@@ -30,7 +30,18 @@ public class YearsRepository(
 
     public async Task CreateAsync(Year entity)
     {
+        entity.Id = context.Years.OrderBy(x => x.Id).Last().Id + 1;
         await context.Years.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Year> entities)
+    {
+        var id = ((await context.Years.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await context.Years.AddRangeAsync(entities);
     }
 
     public void Update(Year entity)

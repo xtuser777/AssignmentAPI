@@ -32,7 +32,7 @@ public record CreateTitlesRequest
 
     [RequiredField]
     [Connection<Year>(typeof(IYearsRepository))]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     public static implicit operator TitleProps(CreateTitlesRequest request)
     {
@@ -74,9 +74,8 @@ public record UpdateTitlesRequest
     [BoolValue]
     public bool? IsActive { get; set; }
 
-    [GuidValue]
     [Connection<Year>(typeof(IYearsRepository))]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     public static implicit operator TitleProps(UpdateTitlesRequest request)
     {

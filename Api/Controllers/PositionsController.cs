@@ -27,7 +27,7 @@ public class PositionsController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowPositionsParams parameters)
     {
@@ -47,7 +47,7 @@ public class PositionsController(
         return Created($"positions/{position.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdatePositionsParams parameters)
     {
@@ -56,7 +56,7 @@ public class PositionsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeletePositionsParams parameters)
     {
@@ -108,7 +108,7 @@ public record IndexPositionsParams : PaginationParams
 public record ShowPositionsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowPositionsParams showPositionsParams)
         => new()
@@ -132,7 +132,7 @@ public record CreatePositionsParams
 public record UpdatePositionsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdatePositionsRequest Request { get; set; } = new();
@@ -148,7 +148,7 @@ public record UpdatePositionsParams
 public record DeletePositionsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeletePositionsParams showPositionsParams)
         => new()

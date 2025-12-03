@@ -9,7 +9,6 @@ public class TitleBySubscription : TitleBySubscriptionProps
 {
     public TitleBySubscription()
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -28,23 +27,20 @@ public class TitleBySubscription : TitleBySubscriptionProps
 public class TitleBySubscriptionProps : Entity
 {
     [Required]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [Required]
-    public Guid? TeacherId { get; set; }
+    public int? TeacherId { get; set; }
 
     [Required]
-    public Guid? TitleId { get; set; }
+    public int? TitleId { get; set; }
 
     [Required]
-    public Guid? SubscriptionId { get; set; }
+    public int? SubscriptionId { get; set; }
 
     [Required]
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? Value { get; set; }
-
-    [ForeignKey(nameof(YearId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
-    public Year? Year { get; init; }
 
     [ForeignKey(nameof(TeacherId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]

@@ -53,5 +53,4 @@ public class DisciplinesService(IUnitOfWork unitOfWork) : IDisciplinesService
         unitOfWork.DisciplinesRepository.Delete(discipline);
         await unitOfWork.Commit(transaction);
     }
-{
 }

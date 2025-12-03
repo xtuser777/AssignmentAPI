@@ -53,5 +53,4 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
         unitOfWork.TitlesRepository.Delete(title);
         await unitOfWork.Commit(transaction);
     }
-{
 }

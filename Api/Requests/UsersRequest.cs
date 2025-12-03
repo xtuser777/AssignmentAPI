@@ -9,7 +9,7 @@ public record CreateUsersUnitsRequest
 {
     [RequiredField]
     [Connection<Unit>(typeof(IUnitsRepository))]
-    public Guid UnitId { get; set; }
+    public int UnitId { get; set; }
 }
 
 public record CreateUsersRequest
@@ -57,7 +57,7 @@ public record CreateUsersRequest
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
-                    new UserUnitProps () { UserId = Guid.Empty, UnitId = unit.UnitId }))],
+                    new UserUnitProps () { UserId = 0, UnitId = unit.UnitId }))],
         };
     }
 }
@@ -104,7 +104,7 @@ public record UpdateUsersRequest
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
-                    new UserUnitProps () { UserId = Guid.Empty, UnitId = unit.UnitId }))],
+                    new UserUnitProps () { UserId = 0, UnitId = unit.UnitId }))],
         };
     }
 }

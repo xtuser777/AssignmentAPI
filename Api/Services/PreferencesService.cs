@@ -53,5 +53,4 @@ public class PreferencesService(IUnitOfWork unitOfWork) : IPreferencesService
         unitOfWork.PreferencesRepository.Delete(preference);
         await unitOfWork.Commit(transaction);
     }
-{
 }

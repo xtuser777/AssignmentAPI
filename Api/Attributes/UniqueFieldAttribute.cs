@@ -48,7 +48,7 @@ public class UniqueFieldAttribute<TEntity> : ValidationAttribute
         else if (method == HttpMethods.Put || method == HttpMethods.Patch)
         {
             var idString = httpContext.GetRouteData().Values["id"]?.ToString() ?? "";
-            if (Guid.TryParse(idString, out var id))
+            if (int.TryParse(idString, out var id))
             {
                 var exclusiveParams =
                     (Entity)_paramsType.GetConstructor(Type.EmptyTypes)!

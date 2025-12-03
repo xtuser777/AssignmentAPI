@@ -56,5 +56,4 @@ public class UnitsService(IUnitOfWork unitOfWork) : IUnitsService
         unitOfWork.UnitsRepository.Delete(unit);
         await unitOfWork.Commit(transaction);
     }
-{
 }

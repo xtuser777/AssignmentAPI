@@ -31,6 +31,7 @@ public class TitlesRepository(
 
     public async Task CreateAsync(Title entity)
     {
+        entity.Id = context.Titles.Last().Id + 1;
         await context.Titles.AddAsync(entity);
     }
 

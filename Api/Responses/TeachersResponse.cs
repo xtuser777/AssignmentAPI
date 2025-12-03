@@ -2,12 +2,12 @@
 
 public record CreateTeachersResponse
 {
-    public Guid? Id { get; set; }
+    public int? Id { get; set; }
 }
 
 public record FindManyTeachersResponse
 {
-    public Guid? Id { get; set; }
+    public int? Id { get; set; }
     public string? Name { get; set; }
     public string? Identity { get; set; }
     public string? Document { get; set; }
@@ -21,17 +21,16 @@ public record FindManyTeachersResponse
     public string? Cellphone { get; set; }
     public string? Email { get; set; }
     public string? Observations { get; set; }
-    public Guid? YearId { get; set; }
-    public int? Year {  get; set; }
-    public Guid? UnitId { get; set; }
+    public int? YearId { get; set; }
+    public int? UnitId { get; set; }
     public string? UnitName { get; set; }
-    public Guid? CivilStatusId { get; set; }
+    public int? CivilStatusId { get; set; }
     public string? CivilStatusName { get; set; }
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
     public string? PositionName { get; set; }
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
     public string? DisciplineName { get; set; }
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
     public string? SituationName { get; set; }
     public string? Speciality { get; set; }
     public bool? IsRemove { get; set; }
@@ -48,7 +47,7 @@ public record FindManyTeachersResponse
 
 public record FindOneTeachersResponse
 {
-    public Guid? Id { get; set; }
+    public int? Id { get; set; }
     public string? Name { get; set; }
     public string? Identity { get; set; }
     public string? Document { get; set; }
@@ -62,12 +61,12 @@ public record FindOneTeachersResponse
     public string? Cellphone { get; set; }
     public string? Email { get; set; }
     public string? Observations { get; set; }
-    public Guid? YearId { get; set; }
-    public Guid? UnitId { get; set; }
-    public Guid? CivilStatusId { get; set; }
-    public Guid? PositionId { get; set; }
-    public Guid? DisciplineId { get; set; }
-    public Guid? SituationId { get; set; }
+    public int? YearId { get; set; }
+    public int? UnitId { get; set; }
+    public int? CivilStatusId { get; set; }
+    public int? PositionId { get; set; }
+    public int? DisciplineId { get; set; }
+    public int? SituationId { get; set; }
     public string? Speciality { get; set; }
     public bool? IsRemove { get; set; }
     public bool? IsAdido { get; set; }

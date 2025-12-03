@@ -37,12 +37,6 @@ public class TitlesView : ITitlesView
             Weight = title.Weight,
             IsActive = title.IsActive,
             YearId = title.YearId,
-            Year = title.Year != null 
-                ? new FindOneTitlesYearResponse 
-                {
-                    Id = title.Year.Id,
-                    Value = title.Year.Value,
-                } : null,
         };
     }
 

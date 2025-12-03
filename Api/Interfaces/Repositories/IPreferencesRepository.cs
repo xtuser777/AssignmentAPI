@@ -14,7 +14,7 @@ public class ExistsPreferencesParams : CountPreferencesParams;
 
 public class ExclusivePreferencesParams : CountPreferencesParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByPreferencesParams : OrderByParams

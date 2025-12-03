@@ -32,13 +32,6 @@ public class SubscriptionsView : ISubscriptionsView
             YearId = subscription.YearId,
             TeacherId = subscription.TeacherId,
             PreferenceId = subscription.PreferenceId,
-            Year = subscription.Year != null 
-                ? new FindOneSubscriptionsYearResponse 
-                {
-                    Id = subscription.Year.Id,
-                    Value = subscription.Year.Value,
-                } 
-                : null,
             Teacher = subscription.Teacher != null 
                 ? new FindOneSubscriptionsTeacherResponse 
                 {
@@ -84,7 +77,6 @@ public class SubscriptionsView : ISubscriptionsView
         {
             Id = subscription.Id,
             YearId = subscription.YearId,
-            Year = subscription.Year?.Value,
             TeacherId = subscription.TeacherId,
             TeacherName = subscription.Teacher?.Name,
             TeacherUnit = subscription.Teacher?.Unit?.Name,

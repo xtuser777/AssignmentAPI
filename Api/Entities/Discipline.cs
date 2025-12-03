@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
@@ -8,7 +9,6 @@ public class Discipline : DisciplineProps
 {
     public Discipline()
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }

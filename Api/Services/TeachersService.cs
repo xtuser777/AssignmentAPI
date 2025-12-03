@@ -53,5 +53,4 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
         unitOfWork.TeachersRepository.Delete(teacher);
         await unitOfWork.Commit(transaction);
     }
-{
 }

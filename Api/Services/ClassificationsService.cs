@@ -53,5 +53,4 @@ public class ClassificationsService(IUnitOfWork unitOfWork) : IClassificationsSe
         unitOfWork.ClassificationsRepository.Delete(year);
         await unitOfWork.Commit(transaction);
     }
-{
 }

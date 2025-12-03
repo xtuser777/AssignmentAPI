@@ -18,7 +18,7 @@ public class UserIdAttribute : Attribute, IBindingSourceMetadata, IModelBinder
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.ReadJwtToken(tokenString);
             var sub = (string)token.Payload["sub"];
-            Guid.TryParse(sub, out var userId);
+            int.TryParse(sub, out var userId);
             var value = userId;
             context.Result = ModelBindingResult.Success(value);
             return Task.CompletedTask;

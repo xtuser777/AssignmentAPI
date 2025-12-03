@@ -14,7 +14,7 @@ public class ExistsUsersParams : CountUsersParams;
 
 public class ExclusiveUsersParams : ExistsUsersParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByUsersParams : OrderByParams

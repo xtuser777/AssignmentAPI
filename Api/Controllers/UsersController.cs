@@ -28,7 +28,7 @@ public class UsersController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync([AsParameters] ShowUsersParams parameters)
     {
         var user = await usersService.FindOneAsync(parameters);
@@ -52,7 +52,7 @@ public class UsersController(
         });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync([AsParameters] UpdateUsersParams parameters)
     {
         await usersService.UpdateAsync(parameters);
@@ -60,7 +60,7 @@ public class UsersController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync([AsParameters] DeleteUsersParams parameters)
     {
         await usersService.DeleteAsync(parameters);
@@ -132,7 +132,7 @@ public record IndexUsersParams : PaginationParams
 public record ShowUsersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromRoute]
     public bool? IncludeUsersUnits { get; set; } = true;
@@ -166,7 +166,7 @@ public record CreateUsersParams
 public record UpdateUsersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateUsersRequest Request { get; set; } = new();
@@ -182,7 +182,7 @@ public record UpdateUsersParams
 public record DeleteUsersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteUsersParams parameters)
         => new()

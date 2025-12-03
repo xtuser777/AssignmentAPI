@@ -14,7 +14,7 @@ public class ExistsClassificationsParams : CountClassificationsParams;
 
 public class ExclusiveClassificationsParams : CountClassificationsParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByClassificationsParams : OrderByParams

@@ -12,12 +12,6 @@ public class CountTitleBySubscriptionsParams : FindManyTitleBySubscriptionsParam
 
 public class ExistsTitleBySubscriptionsParams : CountTitleBySubscriptionsParams;
 
-public class ExclusiveTitleBySubscriptionsParams : CountTitleBySubscriptionsParams
-{
-    public Guid ExcludeId { get; set; }
-}
-
-
 public record OrderByTitlesBySubscriptionsParams : OrderByParams
 {
     public string? Year { get; set; }

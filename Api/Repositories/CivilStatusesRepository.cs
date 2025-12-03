@@ -31,6 +31,7 @@ public class CivilStatusesRepository(
 
     public async Task CreateAsync(CivilStatus entity)
     {
+        entity.Id = context.CivilStatuses.Last().Id + 1;
         await context.CivilStatuses.AddAsync(entity);
     }
 

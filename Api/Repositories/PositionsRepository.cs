@@ -31,6 +31,7 @@ public class PositionsRepository(
 
     public async Task CreateAsync(Position entity)
     {
+        entity.Id = context.Positions.Last().Id + 1;
         await context.Positions.AddAsync(entity);
     }
 

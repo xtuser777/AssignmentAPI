@@ -73,5 +73,4 @@ public class UsersService(
         unitOfWork.UsersRepository.Delete(user);
         await unitOfWork.Commit(transaction);
     }
-{
 }

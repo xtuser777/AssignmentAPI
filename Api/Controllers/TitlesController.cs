@@ -27,7 +27,7 @@ public class TitlesController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowTitlesParams parameters)
     {
@@ -47,7 +47,7 @@ public class TitlesController(
         return Created($"titles/{title.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateTitlesParams parameters)
     {
@@ -56,7 +56,7 @@ public class TitlesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTitlesParams parameters)
     {
@@ -75,7 +75,7 @@ public record IndexTitlesParams : PaginationParams
     public int? Order { get; set; }
     public char? Type { get; set; }
     public bool? IsActive { get; set; }
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [FromHeader(Name = "X-Order-By-Alias")]
     public string? OrderByAlias { get; set; }
@@ -150,7 +150,7 @@ public record IndexTitlesParams : PaginationParams
 public record ShowTitlesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromRoute]
     public bool? IncludeYear { get; set; } = true;
@@ -181,7 +181,7 @@ public record CreateTitlesParams
 public record UpdateTitlesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateTitlesRequest Request { get; set; } = new();
@@ -197,7 +197,7 @@ public record UpdateTitlesParams
 public record DeleteTitlesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteTitlesParams showTitlesParams)
         => new()

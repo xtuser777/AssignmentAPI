@@ -20,7 +20,7 @@ public class TeachersRepository(
 
     public async Task<IEnumerable<Teacher>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Teachers.Include("Year").Include("Unit").Include("Position").Include("Situation").AsNoTracking();
+        query = context.Teachers.Include("Unit").Include("Position").Include("Situation").AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
@@ -31,6 +31,7 @@ public class TeachersRepository(
 
     public async Task CreateAsync(Teacher entity)
     {
+        entity.Id = context.Teachers.Last().Id + 1;
         await context.Teachers.AddAsync(entity);
     }
 

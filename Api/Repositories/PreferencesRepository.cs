@@ -31,6 +31,7 @@ public class PreferencesRepository(
 
     public async Task CreateAsync(Preference entity)
     {
+        entity.Id = context.Preferences.Last().Id + 1;
         await context.Preferences.AddAsync(entity);
     }
 

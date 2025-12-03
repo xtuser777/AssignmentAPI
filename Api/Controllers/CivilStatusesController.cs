@@ -27,7 +27,7 @@ public class CivilStatusesController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowCivilStatusesParams parameters)
     {
@@ -47,7 +47,7 @@ public class CivilStatusesController(
         return Created($"civil-statuses/{civilStatus.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateCivilStatusesParams parameters)
     {
@@ -56,7 +56,7 @@ public class CivilStatusesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteCivilStatusesParams parameters)
     {
@@ -101,7 +101,7 @@ public record IndexCivilStatusesParams : PaginationParams
 public record ShowCivilStatusesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowCivilStatusesParams showCivilStatusesParams)
         => new()
@@ -125,7 +125,7 @@ public record CreateCivilStatusesParams
 public record UpdateCivilStatusesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateCivilStatusesRequest Request { get; set; } = new();
@@ -141,7 +141,7 @@ public record UpdateCivilStatusesParams
 public record DeleteCivilStatusesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteCivilStatusesParams showCivilStatusesParams)
         => new()

@@ -29,7 +29,6 @@ public class YearsView : IYearsView
         return new FindOneYearsResponse
         {
             Id = year.Id,
-            Value = year.Value,
             Record = year.Record,
             Resolution = year.Resolution,
             IsBlocked = year.IsBlocked
@@ -46,7 +45,6 @@ public class YearsView : IYearsView
         return years.Select(year => new FindManyYearsResponse
         {
             Id = year.Id,
-            Value = year.Value,
             Record = year.Record,
             Resolution = year.Resolution,
             IsBlocked = year.IsBlocked

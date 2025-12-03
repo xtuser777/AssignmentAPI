@@ -9,7 +9,6 @@ public class Subscription : SubscriptionProps
 {
     public Subscription() 
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -28,13 +27,13 @@ public class Subscription : SubscriptionProps
 public class SubscriptionProps : Entity
 {
     [Required]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [Required]
-    public Guid? TeacherId { get; set; }
+    public int? TeacherId { get; set; }
 
     [Required]
-    public Guid? PreferenceId { get; set; }
+    public int? PreferenceId { get; set; }
 
     [ForeignKey(nameof(YearId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]

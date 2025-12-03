@@ -26,7 +26,7 @@ public class YearsController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync([AsParameters] ShowYearsParams parameters)
     {
         var year = await yearsService.FindOneAsync(parameters);
@@ -44,7 +44,7 @@ public class YearsController(
         return Created($"years/{year.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync([AsParameters] UpdateYearsParams parameters)
     {
         await yearsService.UpdateAsync(parameters);
@@ -52,7 +52,7 @@ public class YearsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync([AsParameters]  DeleteYearsParams parameters)
     {
         await yearsService.DeleteAsync(parameters);
@@ -63,13 +63,9 @@ public class YearsController(
 
 public record IndexYearsParams : PaginationParams
 {
-    public int? Value { get; set; }
     public string? Record { get; set; }
     public string? Resolution { get; set; }
     public bool? IsBlocked { get; set; }
-
-    [FromHeader(Name = "Order-By-Value")]
-    public string? OrderByValue { get; set; }
 
     [FromHeader(Name = "Order-By-Record")]
     public string? OrderByRecord { get; set; }
@@ -85,14 +81,12 @@ public record IndexYearsParams : PaginationParams
         {
             FindManyProps = new FindManyYearsParams
             {
-                Value = parameters.Value,
                 Record = parameters.Record,
                 Resolution = parameters.Resolution,
                 IsBlocked = parameters.IsBlocked,
             },
             OrderByParams = new OrderByYearsParams
             {
-                Value = parameters.OrderByValue,
                 Record = parameters.OrderByRecord,
                 Resolution = parameters.OrderByResolution,
                 IsBlocked = parameters.OrderByIsBlocked,
@@ -105,7 +99,6 @@ public record IndexYearsParams : PaginationParams
         {
             CountProps = new CountYearParams
             {
-                Value = parameters.Value,
                 Record = parameters.Record,
                 Resolution = parameters.Resolution,
                 IsBlocked = parameters.IsBlocked,
@@ -117,7 +110,7 @@ public record IndexYearsParams : PaginationParams
 public record ShowYearsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowYearsParams parameters)
         => new()
@@ -141,7 +134,7 @@ public record CreateYearsParams
 public record UpdateYearsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateYearsRequest Request { get; set; } = new();
@@ -157,7 +150,7 @@ public record UpdateYearsParams
 public record DeleteYearsParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteYearsParams parameters)
         => new()

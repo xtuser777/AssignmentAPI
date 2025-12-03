@@ -31,7 +31,18 @@ public class UnitsRepository(
 
     public async Task CreateAsync(Unit entity)
     {
+        entity.Id = ((await context.Units.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
         await context.Units.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Unit> entities)
+    {
+        var id = ((await context.Units.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await context.Units.AddRangeAsync(entities);
     }
 
     public void Update(Unit entiy)

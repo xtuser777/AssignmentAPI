@@ -53,5 +53,4 @@ public class TitlesBySubscriptionService(IUnitOfWork unitOfWork) : ITitlesBySubs
         unitOfWork.TitlesBySubscriptionsRepository.Delete(title);
         await unitOfWork.Commit(transaction);
     }
-{
 }

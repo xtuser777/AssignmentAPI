@@ -9,7 +9,6 @@ public class Teacher : TeacherProps
 {
     public Teacher() 
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -77,22 +76,22 @@ public class TeacherProps : Entity
     public string? Observations { get; set; }
 
     [Required]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [Required]
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
 
     [Required]
-    public Guid? CivilStatusId { get; set; }
+    public int? CivilStatusId { get; set; }
 
     [Required]
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
 
     [Required]
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
 
     [Required]
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
 
     [StringLength(50)]
     public string? Speciality { get; set; }
@@ -117,10 +116,6 @@ public class TeacherProps : Entity
 
     public bool? IsMusic { get; set; }
 
-    [ForeignKey(nameof(YearId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
-    public Year? Year { get; init; }
-
     [ForeignKey(nameof(UnitId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Unit? Unit { get; init; }
@@ -140,5 +135,4 @@ public class TeacherProps : Entity
     [ForeignKey(nameof(SituationId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Situation? Situation { get; init; }
-
 }

@@ -9,7 +9,6 @@ public class UserUnit : UserUnitProps
 {
     public UserUnit() 
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -28,9 +27,9 @@ public class UserUnit : UserUnitProps
 public class UserUnitProps : Entity
 {
     [Required]
-    public Guid? UserId { get; set; }
+    public int? UserId { get; set; }
     [Required]
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
 
     [ForeignKey(nameof(UserId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]

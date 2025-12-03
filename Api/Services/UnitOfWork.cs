@@ -2,27 +2,28 @@
 using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Assignment.Api.Services;
 
 public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {
-    private IYearsRepository? _yearsRepository;
-    private IPositionsRepository? _positionsRepository;
-    private IUsersRepository? _usersRepository;
-    private IUsersUnitsRepository? _usersUnitsRepository;
-    private IUnitsRepository? _unitsRepository;
-    private IDisciplinesRepository? _disciplinesRepository;
-    private ISituationsRepository? _situationsRepository;
-    private ICivilStatusesRepository? _civilStatusesRepository;
-    private ISubscriptionsRepository? _subscriptionsRepository;
-    private IPreferencesRepository? _preferencesRepository;
-    private IClassificationsRepository? _classificationsRepository;
-    private ITitlesRepository? _titlesRepository;
-    private ITeachersRepository? _TeachersRepository;
-    private ITitlesBySubscriptionsRepository? _titlesBySubscriptionsRepository;
-    private IPointsBySubscriptionsRepository? _pointsBySubscriptionsRepository;
+    private IYearsRepository? _yearsRepository = null;
+    private IPositionsRepository? _positionsRepository = null;
+    private IUsersRepository? _usersRepository = null;
+    private IUsersUnitsRepository? _usersUnitsRepository = null;
+    private IUnitsRepository? _unitsRepository = null;
+    private IDisciplinesRepository? _disciplinesRepository = null;
+    private ISituationsRepository? _situationsRepository = null;
+    private ICivilStatusesRepository? _civilStatusesRepository = null;
+    private ISubscriptionsRepository? _subscriptionsRepository = null;
+    private IPreferencesRepository? _preferencesRepository = null;
+    private IClassificationsRepository? _classificationsRepository = null;
+    private ITitlesRepository? _titlesRepository = null;
+    private ITeachersRepository? _teachersRepository = null;
+    private ITitlesBySubscriptionsRepository? _titlesBySubscriptionsRepository = null;
+    private IPointsBySubscriptionsRepository? _pointsBySubscriptionsRepository = null;
 
     public ApplicationDbContext Context => context;
     public IDbContextTransaction BeginTransaction => context.Database.BeginTransaction();
@@ -38,13 +39,17 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public IPreferencesRepository PreferencesRepository => _preferencesRepository ?? new PreferencesRepository(context);
     public IClassificationsRepository ClassificationsRepository => _classificationsRepository ?? new ClassificationsRepository(context);
     public ITitlesRepository TitlesRepository => _titlesRepository ?? new TitlesRepository(context);
-    public ITeachersRepository TeachersRepository => _TeachersRepository ?? new TeachersRepository(context);
+    public ITeachersRepository TeachersRepository => _teachersRepository ?? new TeachersRepository(context);
     public ITitlesBySubscriptionsRepository TitlesBySubscriptionsRepository => _titlesBySubscriptionsRepository ?? new TitlesBySubscriptionsRepository(context);
     public IPointsBySubscriptionsRepository PointsBySubscriptionsRepository => _pointsBySubscriptionsRepository ?? new PointsBySubscriptionsRepository(context);
 
-    public async Task Commit(IDbContextTransaction transaction)
+    public async Task Commit(IDbContextTransaction transaction, string? tableName = null)
     {
+        if (tableName != null) 
+            await context.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] ON");
         await context.SaveChangesAsync();
+        if (tableName != null) 
+            await context.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] OFF");
         await transaction.CommitAsync();
     }
 

@@ -20,7 +20,7 @@ public class SubscriptionsRepository(
 
     public async Task<IEnumerable<Subscription>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Subscriptions.Include("Year").Include("Teacher:Unit").Include("Preference").AsNoTracking();
+        query = context.Subscriptions.Include("Teacher:Unit").Include("Preference").AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
@@ -31,6 +31,7 @@ public class SubscriptionsRepository(
 
     public async Task CreateAsync(Subscription entity)
     {
+        entity.Id = context.Subscriptions.Last().Id + 1;
         await context.Subscriptions.AddAsync(entity);
     }
 

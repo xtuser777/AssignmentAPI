@@ -8,7 +8,6 @@ public class Year : YearProps
 {
     public Year()
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -26,9 +25,6 @@ public class Year : YearProps
 
 public class YearProps : Entity
 {
-    [Required]
-    public int? Value { get; set; }
-
     [Required]
     [StringLength(250)]
     public string? Record { get; set; }

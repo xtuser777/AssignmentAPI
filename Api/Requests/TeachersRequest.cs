@@ -61,34 +61,28 @@ public record CreateTeachersRequest
     public string? Observations { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<Year>(typeof(IYearsRepository))]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<Unit>(typeof(IUnitsRepository))]
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<CivilStatus>(typeof(ICivilStatusesRepository))]
-    public Guid? CivilStatusId { get; set; }
+    public int? CivilStatusId { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<Position>(typeof(IPositionsRepository))]
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<Discipline>(typeof(IDisciplinesRepository))]
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
 
     [RequiredField]
-    [GuidValue]
     [Connection<Situation>(typeof(ISituationsRepository))]
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
 
     [StringMaxLength(50)]
     public string? Speciality { get; set; }
@@ -215,29 +209,23 @@ public record UpdateTeachersRequest
     [StringMaxLength(255)]
     public string? Observations { get; set; }
 
-    [GuidValue]
     [Connection<Year>(typeof(IYearsRepository))]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
-    [GuidValue]
     [Connection<Unit>(typeof(IUnitsRepository))]
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
 
-    [GuidValue]
     [Connection<CivilStatus>(typeof(ICivilStatusesRepository))]
-    public Guid? CivilStatusId { get; set; }
+    public int? CivilStatusId { get; set; }
 
-    [GuidValue]
     [Connection<Position>(typeof(IPositionsRepository))]
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
 
-    [GuidValue]
     [Connection<Discipline>(typeof(IDisciplinesRepository))]
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
 
-    [GuidValue]
     [Connection<Situation>(typeof(ISituationsRepository))]
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
 
     [StringMaxLength(50)]
     public string? Speciality { get; set; }

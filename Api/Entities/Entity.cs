@@ -5,7 +5,7 @@ namespace Assignment.Api.Entities;
 public class Entity
 {
     [Key]
-    public Guid? Id { get; set; }
+    public int? Id { get; set; }
 
     [Required]
     public DateTime? CreatedAt { get; set; }
@@ -20,7 +20,6 @@ public class Entity
         {
             prop.SetValue(this, prop.GetValue(entity));
         }
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }

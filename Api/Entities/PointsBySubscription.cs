@@ -9,7 +9,6 @@ public class PointsBySubscription : PointsBySubscriptionProps
 {
     public PointsBySubscription()
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -28,10 +27,10 @@ public class PointsBySubscription : PointsBySubscriptionProps
 public class PointsBySubscriptionProps : Entity
 {
     [Required]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
 
     [Required]
-    public Guid? SubscriptionId { get; set; }
+    public int? SubscriptionId { get; set; }
 
     [Required]
     public int? Order { get; set; }
@@ -41,6 +40,7 @@ public class PointsBySubscriptionProps : Entity
     public string? Description { get; set; }
 
     [Required]
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? Points { get; set; }
 
     [ForeignKey(nameof(YearId))]

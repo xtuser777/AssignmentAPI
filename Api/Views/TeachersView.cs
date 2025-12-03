@@ -86,7 +86,6 @@ public class TeachersView : ITeachersView
             Email = teacher.Email,
             Observations = teacher.Observations,
             YearId = teacher.YearId,
-            Year = teacher.Year?.Value,
             UnitId = teacher.UnitId,
             UnitName = teacher.Unit?.Name,
             CivilStatusId = teacher.CivilStatusId,

@@ -31,6 +31,7 @@ public class DisciplinesRepository(
 
     public async Task CreateAsync(Discipline entity)
     {
+        entity.Id = context.Disciplines.Last().Id + 1;
         await context.Disciplines.AddAsync(entity);
     }
 

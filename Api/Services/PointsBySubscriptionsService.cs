@@ -53,5 +53,4 @@ public class PointsBySubscriptionsService(IUnitOfWork unitOfWork) : IPointsBySub
         unitOfWork.PointsBySubscriptionsRepository.Delete(points);
         await unitOfWork.Commit(transaction);
     }
-{
 }

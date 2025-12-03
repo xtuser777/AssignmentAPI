@@ -9,7 +9,6 @@ public class Title: TitleProps
 {
     public Title()
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -36,9 +35,11 @@ public class TitleProps : Entity
     public string? Alias { get; set; }
 
     [Required]
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? Weight { get; set; }
 
     [Required]
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? Max { get; set; }
 
     [Required]
@@ -51,9 +52,5 @@ public class TitleProps : Entity
     public bool? IsActive { get; set; }
 
     [Required]
-    public Guid? YearId { get; set; }
-
-    [ForeignKey(nameof(YearId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
-    public Year? Year { get; set; }
+    public int? YearId { get; set; }
 }

@@ -31,6 +31,7 @@ public class SituationsRepository(
 
     public async Task CreateAsync(Situation entity)
     {
+        entity.Id = context.Situations.Last().Id + 1;
         await context.Situations.AddAsync(entity);
     }
 

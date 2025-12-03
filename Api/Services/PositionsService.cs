@@ -53,5 +53,4 @@ public class PositionsService(IUnitOfWork unitOfWork) : IPositionsService
         unitOfWork.PositionsRepository.Delete(position);
         await unitOfWork.Commit(transaction);
     }
-{
 }

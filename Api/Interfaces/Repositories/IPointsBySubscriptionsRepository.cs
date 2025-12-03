@@ -14,7 +14,7 @@ public class ExistsPointsBySubscriptionsParams : CountPointsBySubscriptionsParam
 
 public class ExclusivePointsBySubscriptionsParams : CountPointsBySubscriptionsParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByPointsBySubscriptionsParams : OrderByParams

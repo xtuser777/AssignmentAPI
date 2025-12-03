@@ -27,7 +27,7 @@ public class TeachersController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowTeachersParams parameters)
     {
@@ -47,7 +47,7 @@ public class TeachersController(
         return Created($"teachers/{teacher.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateTeachersParams parameters)
     {
@@ -56,7 +56,7 @@ public class TeachersController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTeachersParams parameters)
     {
@@ -101,7 +101,7 @@ public record IndexTeachersParams : PaginationParams
 public record ShowTeachersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowTeachersParams showTeachersParams)
         => new()
@@ -125,7 +125,7 @@ public record CreateTeachersParams
 public record UpdateTeachersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateTeachersRequest Request { get; set; } = new();
@@ -141,7 +141,7 @@ public record UpdateTeachersParams
 public record DeleteTeachersParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteTeachersParams showTeachersParams)
         => new()

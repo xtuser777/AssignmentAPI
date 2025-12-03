@@ -27,7 +27,7 @@ public class DisciplinesController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowDisciplinesParams parameters)
     {
@@ -47,7 +47,7 @@ public class DisciplinesController(
         return Created($"disciplines/{discipline.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateDisciplinesParams parameters)
     {
@@ -56,7 +56,7 @@ public class DisciplinesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteDisciplinesParams parameters)
     {
@@ -101,7 +101,7 @@ public record IndexDisciplinesParams : PaginationParams
 public record ShowDisciplinesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowDisciplinesParams showDisciplinesParams)
         => new()
@@ -125,7 +125,7 @@ public record CreateDisciplinesParams
 public record UpdateDisciplinesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdateDisciplinesRequest Request { get; set; } = new();
@@ -141,7 +141,7 @@ public record UpdateDisciplinesParams
 public record DeleteDisciplinesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteDisciplinesParams showDisciplinesParams)
         => new()

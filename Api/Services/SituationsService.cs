@@ -53,5 +53,4 @@ public class SituationsService(IUnitOfWork unitOfWork) : ISituationsService
         unitOfWork.SituationsRepository.Delete(situation);
         await unitOfWork.Commit(transaction);
     }
-{
 }

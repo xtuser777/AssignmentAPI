@@ -27,7 +27,7 @@ public class PreferencesController(
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowPreferencesParams parameters)
     {
@@ -47,7 +47,7 @@ public class PreferencesController(
         return Created($"preferences/{preference.Id}", new { Data = data });
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdatePreferencesParams parameters)
     {
@@ -56,7 +56,7 @@ public class PreferencesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeletePreferencesParams parameters)
     {
@@ -101,7 +101,7 @@ public record IndexPreferencesParams : PaginationParams
 public record ShowPreferencesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowPreferencesParams showPreferencesParams)
         => new()
@@ -125,7 +125,7 @@ public record CreatePreferencesParams
 public record UpdatePreferencesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [FromBody]
     public UpdatePreferencesRequest Request { get; set; } = new();
@@ -141,7 +141,7 @@ public record UpdatePreferencesParams
 public record DeletePreferencesParams
 {
     [FromRoute]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public static implicit operator DeleteServiceParams(DeletePreferencesParams showPreferencesParams)
         => new()

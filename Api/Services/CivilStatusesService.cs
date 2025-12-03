@@ -53,5 +53,4 @@ public class CivilStatusesService(IUnitOfWork unitOfWork) : ICivilStatusesServic
         unitOfWork.CivilStatusesRepository.Delete(status);
         await unitOfWork.Commit(transaction);
     }
-{
 }

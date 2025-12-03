@@ -2,19 +2,19 @@
 
 public record FindManyClassificationsResponse
 {
-    public Guid? Id { get; set; }
-    public Guid? YearId { get; set; }
+    public int? Id { get; set; }
+    public int? YearId { get; set; }
     public int? Year { get; set; }
-    public Guid? TeacherId { get; set; }
-    public Guid? SubscriptionId { get; set; }
+    public int? TeacherId { get; set; }
+    public int? SubscriptionId { get; set; }
     public string? Name { get; set; }
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
     public string? Situation { get; set; }
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
     public string? Position { get; set; }
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
     public string? Unit { get; set; }
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
     public string? Discipline { get; set; }
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
@@ -55,19 +55,19 @@ public record FindManyClassificationsResponse
 
 public record FindOneClassificationsResponse
 {
-    public Guid? Id { get; set; }
-    public Guid? YearId { get; set; }
+    public int? Id { get; set; }
+    public int? YearId { get; set; }
     public int? Year { get; set; }
-    public Guid? TeacherId { get; set; }
-    public Guid? SubscriptionId { get; set; }
+    public int? TeacherId { get; set; }
+    public int? SubscriptionId { get; set; }
     public string? Name { get; set; }
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
     public string? Situation { get; set; }
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
     public string? Position { get; set; }
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
     public string? Unit { get; set; }
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
     public string? Discipline { get; set; }
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }

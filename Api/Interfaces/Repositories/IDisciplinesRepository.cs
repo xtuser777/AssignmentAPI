@@ -14,7 +14,7 @@ public class ExistsDisciplinesParams : CountDisciplinesParams;
 
 public class ExclusiveDisciplinesParams : CountDisciplinesParams
 {
-    public Guid ExcludeId { get; set; }
+    public int ExcludeId { get; set; }
 }
 
 public record OrderByDisciplinesParams : OrderByParams

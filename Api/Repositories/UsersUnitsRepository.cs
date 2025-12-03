@@ -31,11 +31,17 @@ public class UsersUnitsRepository(
 
     public async Task CreateAsync(UserUnit entity)
     {
+        entity.Id = context.UsersUnits.Last().Id + 1;
         await context.UsersUnits.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<UserUnit> entities)
     {
+        var id = context.UsersUnits.Last().Id + 1;
+        foreach (var entity in entities)
+        {
+            entity.Id = id++;
+        }
         await context.UsersUnits.AddRangeAsync(entities);
     }
 

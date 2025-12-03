@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
@@ -9,7 +8,6 @@ public class Classification : ClassificationProps
 {
     public Classification() 
     {
-        Id = Guid.NewGuid();
         CreatedAt = DateTime.Now;
         UpdatedAt = DateTime.Now;
     }
@@ -28,33 +26,33 @@ public class Classification : ClassificationProps
 public class ClassificationProps : Entity
 {
     [Required]
-    public Guid? YearId { get; set; }
+    public int? YearId { get; set; }
     [Required]
     public int? Year {  get; set; }
     [Required]
-    public Guid? TeacherId { get; set; }
+    public int? TeacherId { get; set; }
     [Required]
-    public Guid? SubscriptionId { get; set; }
+    public int? SubscriptionId { get; set; }
     [Required]
     [StringLength(200)]
     public string? Name { get; set; }
     [Required]
-    public Guid? SituationId { get; set; }
+    public int? SituationId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Situation { get; set; }
     [Required]
-    public Guid? PositionId { get; set; }
+    public int? PositionId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Position { get; set; }
     [Required]
-    public Guid? UnitId { get; set; }
+    public int? UnitId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Unit { get; set; }
     [Required]
-    public Guid? DisciplineId { get; set; }
+    public int? DisciplineId { get; set; }
     [Required]
     [StringLength(50)]
     public string? Discipline { get; set; }
@@ -76,26 +74,70 @@ public class ClassificationProps : Entity
     public bool? IsAmbientalEdication { get; set; }
     public bool? IsRobotics { get; set; }
     public bool? IsMusic { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T1 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T2 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T3 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T4 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T5 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T6 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T7 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T8 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T9 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T10 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T11 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T12 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T13 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T14 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T15 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T16 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T17 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T18 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T19 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T20 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T21 { get; set; }
+
+    [Column(TypeName = "decimal(12,3)")]
     public decimal? T22 { get; set; }
 }

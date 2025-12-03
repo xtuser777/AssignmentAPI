@@ -9,7 +9,7 @@ public class ConnectionAttribute<T>(Type repositoryType) : ValidationAttribute
     protected override ValidationResult? IsValid(
         object? value, ValidationContext validationContext)
     {
-        if (value is not Guid id || id == Guid.Empty)
+        if (value is not int id || id == int.MinValue)
         {
             return ValidationResult.Success;
         }

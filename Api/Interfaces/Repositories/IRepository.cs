@@ -8,7 +8,7 @@ public interface IRepository<T>
     Task<IEnumerable<T>> FindManyAsync(
         FindManyRepositoryParams @params);
     Task CreateAsync(T entity);
-    public Task CreateManyAsync(T[] entities)
+    public Task CreateManyAsync(IEnumerable<T> entities)
     {
         return Task.CompletedTask;
     }

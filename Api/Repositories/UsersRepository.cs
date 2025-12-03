@@ -31,6 +31,7 @@ public class UsersRepository(
 
     public async Task CreateAsync(User entity)
     {
+        entity.Id = context.Users.Last().Id + 1;
         await context.Users.AddAsync(entity);
     }
 

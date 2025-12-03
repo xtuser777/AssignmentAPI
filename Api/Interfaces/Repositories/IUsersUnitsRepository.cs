@@ -12,11 +12,6 @@ public class CountUsersUnitsParams : FindManyUsersUnitsParams;
 
 public class ExistsUsersUnitsParams : CountUsersUnitsParams;
 
-public class ExclusiveUsersUnitsParams : ExistsUsersUnitsParams
-{
-    public Guid ExcludeId { get; set; }
-}
-
 public record IncludesUsersUnitsParams : IncludesParams
 {
     public bool? User { get; set; }

@@ -31,6 +31,7 @@ public class ClassificationsRepository(
 
     public async Task CreateAsync(Classification entity)
     {
+        entity.Id = context.Classifications.Last().Id + 1;
         await context.Classifications.AddAsync(entity);
     }
 
