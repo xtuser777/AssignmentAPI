@@ -5,49 +5,59 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class PositionsRepository(
-    ApplicationDbContext context) : Repository, IPositionsRepository
+public class PositionsRepository : Repository<Position>, IPositionsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public PositionsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Positions.AsQueryable();
+    }
+
     public async Task<Position?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Positions.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (Position?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Position>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Positions.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Position>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Position entity)
     {
-        entity.Id = context.Positions.Last().Id + 1;
-        await context.Positions.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Positions.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Position> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Positions.AddRangeAsync(entities);
     }
 
     public void Update(Position entiy)
     {
-        context.Positions.Update(entiy);
+        _context.Positions.Update(entiy);
     }
 
     public void Delete(Position entiy)
     {
-        context.Positions.Remove(entiy);
+        _context.Positions.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Positions.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 

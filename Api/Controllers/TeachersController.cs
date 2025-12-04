@@ -84,6 +84,12 @@ public record IndexTeachersParams : PaginationParams
             {
                 Name = indexTeachersParams.OrderByName,
             },
+            Includes = new IncludesTeachersParams
+            {
+                Unit = true,
+                Position = true,
+                Situation = true,
+            },
             PaginationParams = indexTeachersParams
         };
 
@@ -103,10 +109,32 @@ public record ShowTeachersParams
     [FromRoute]
     public int Id { get; set; }
 
+    [FromRoute]
+    public bool? IncludeYear { get; set; } = true;
+    [FromRoute]
+    public bool? IncludeUnit { get; set; } = true;
+    [FromRoute]
+    public bool? IncludeCivilStatus { get; set; } = true;
+    [FromRoute]
+    public bool? IncludePosition { get; set; } = true;
+    [FromRoute]
+    public bool? IncludeDiscipline { get; set; } = true;
+    [FromRoute]
+    public bool? IncludeSituation { get; set; } = true;
+
     public static implicit operator FindOneServiceParams(ShowTeachersParams showTeachersParams)
         => new()
         {
             Id = showTeachersParams.Id,
+            Includes = new IncludesTeachersParams
+            {
+                Year = showTeachersParams.IncludeYear,
+                Unit = showTeachersParams.IncludeUnit,
+                CivilStatus = showTeachersParams.IncludeCivilStatus,
+                Position = showTeachersParams.IncludePosition,
+                Discipline = showTeachersParams.IncludeDiscipline,
+                Situation = showTeachersParams.IncludeSituation,
+            },
         };
 }
 

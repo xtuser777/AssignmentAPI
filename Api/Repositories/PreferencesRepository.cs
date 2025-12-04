@@ -5,49 +5,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class PreferencesRepository(
-    ApplicationDbContext context) : Repository, IPreferencesRepository
+public class PreferencesRepository : Repository<Preference>, IPreferencesRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public PreferencesRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Preferences.AsQueryable();
+    }
     public async Task<Preference?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Preferences.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         var entity = await query.FirstOrDefaultAsync();
 
-        return (Preference?)entity;
+        return entity;
     }
 
     public async Task<IEnumerable<Preference>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Preferences.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Preference>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Preference entity)
     {
-        entity.Id = context.Preferences.Last().Id + 1;
-        await context.Preferences.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Preferences.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Preference> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Preferences.AddRangeAsync(entities);
     }
 
     public void Update(Preference entiy)
     {
-        context.Preferences.Update(entiy);
+        _context.Preferences.Update(entiy);
     }
 
     public void Delete(Preference entiy)
     {
-        context.Preferences.Remove(entiy);
+        _context.Preferences.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Preferences.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 

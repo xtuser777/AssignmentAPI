@@ -5,49 +5,61 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class CivilStatusesRepository(
-    ApplicationDbContext context) : Repository, ICivilStatusesRepository
+public class CivilStatusesRepository : Repository<CivilStatus>, ICivilStatusesRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public CivilStatusesRepository(ApplicationDbContext context) 
+    {
+        _context = context;
+        query = context.CivilStatuses.AsQueryable();
+    }
+
     public async Task<CivilStatus?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.CivilStatuses.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         var entity = await query.FirstOrDefaultAsync();
 
-        return (CivilStatus?)entity;
+        return entity;
     }
 
     public async Task<IEnumerable<CivilStatus>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.CivilStatuses.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<CivilStatus>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(CivilStatus entity)
     {
-        entity.Id = context.CivilStatuses.Last().Id + 1;
-        await context.CivilStatuses.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.CivilStatuses.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<CivilStatus> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.CivilStatuses.AddRangeAsync(entities);
     }
 
     public void Update(CivilStatus entiy)
     {
-        context.CivilStatuses.Update(entiy);
+        _context.CivilStatuses.Update(entiy);
     }
 
     public void Delete(CivilStatus entiy)
     {
-        context.CivilStatuses.Remove(entiy);
+        _context.CivilStatuses.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.CivilStatuses.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 

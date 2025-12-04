@@ -1,21 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Assignment.Api.Entities;
+﻿namespace Assignment.Api.Entities;
 
 public class Entity
 {
-    [Key]
     public int? Id { get; set; }
-
-    [Required]
     public DateTime? CreatedAt { get; set; }
-    [Required]
     public DateTime? UpdatedAt { get; set; }
 
     protected void Assign(Entity entity)
     {
         var selfProperties = this.GetType().GetProperties();
-        var entityProperties = entity.GetType().GetProperties();
         foreach (var prop in selfProperties)
         {
             prop.SetValue(this, prop.GetValue(entity));
@@ -27,7 +20,6 @@ public class Entity
     protected void AssignUpdate(Entity entity)
     {
         var selfProperties = this.GetType().GetProperties();
-        var entityProperties = entity.GetType().GetProperties();
         foreach (var prop in selfProperties)
         {
             switch (prop.Name)

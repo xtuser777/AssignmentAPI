@@ -5,66 +5,73 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class ClassificationsRepository(
-    ApplicationDbContext context) : Repository, IClassificationsRepository
+public class ClassificationsRepository : Repository<Classification>, IClassificationsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public ClassificationsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Classifications.AsQueryable();
+    }
+
     public async Task<Classification?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Classifications.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (Classification?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Classification>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Classifications.AsNoTracking();
+        ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Classification>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Classification entity)
     {
-        entity.Id = context.Classifications.Last().Id + 1;
-        await context.Classifications.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Classifications.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Classification> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Classifications.AddRangeAsync(entities);
     }
 
     public void Update(Classification entiy)
     {
-        context.Classifications.Update(entiy);
+        _context.Classifications.Update(entiy);
     }
 
     public void Delete(Classification entiy)
     {
-        context.Classifications.Remove(entiy);
+        _context.Classifications.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Classifications.AsNoTracking();
         BuildQuery(props);
-        var count = await query.CountAsync();
-
-        return count;
+        return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

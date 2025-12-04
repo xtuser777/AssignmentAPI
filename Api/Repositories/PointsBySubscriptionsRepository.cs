@@ -5,84 +5,80 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class PointsBySubscriptionsRepository(
-    ApplicationDbContext context) : Repository, IPointsBySubscriptionsRepository
+public class PointsBySubscriptionsRepository : Repository<PointsBySubscription>, IPointsBySubscriptionsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public PointsBySubscriptionsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.PointsBySubscriptions.AsQueryable();
+    }
+
     public async Task<PointsBySubscription?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.PointsBySubscriptions.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (PointsBySubscription?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<PointsBySubscription>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.PointsBySubscriptions.AsNoTracking();
+        ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<PointsBySubscription>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(PointsBySubscription entity)
     {
-        entity.Id = context.PointsBySubscriptions.Last().Id + 1;
-        await context.PointsBySubscriptions.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.PointsBySubscriptions.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<PointsBySubscription> entities)
     {
-        var id = context.PointsBySubscriptions.Last().Id + 1;
+        var id = await GetId();
         foreach (var entity in entities)
         {
             entity.Id = id++;
         }
-        await context.PointsBySubscriptions.AddRangeAsync(entities);
+        await _context.PointsBySubscriptions.AddRangeAsync(entities);
     }
 
     public void Update(PointsBySubscription entiy)
     {
-        context.PointsBySubscriptions.Update(entiy);
+        _context.PointsBySubscriptions.Update(entiy);
     }
 
     public void Delete(PointsBySubscription entiy)
     {
-        context.PointsBySubscriptions.Remove(entiy);
+        _context.PointsBySubscriptions.Remove(entiy);
     }
 
     public async Task DeleteManyAsync(Entity props)
     {
-        query = context.PointsBySubscriptions.AsNoTracking();
         BuildQuery(props);
         var entities = await query.ToListAsync();
-        context.PointsBySubscriptions.RemoveRange(entities.Cast<PointsBySubscription>());
+        _context.PointsBySubscriptions.RemoveRange(entities.Cast<PointsBySubscription>());
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.PointsBySubscriptions.AsNoTracking();
         BuildQuery(props);
-        var count = await query.CountAsync();
-
-        return count;
+        return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

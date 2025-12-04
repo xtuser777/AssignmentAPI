@@ -17,8 +17,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -32,8 +32,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     YearId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
@@ -94,8 +94,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -109,8 +109,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -125,8 +125,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -140,8 +140,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -150,35 +150,13 @@ namespace Assignment.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Titles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Weight = table.Column<decimal>(type: "decimal(12,3)", nullable: false),
-                    Max = table.Column<decimal>(type: "decimal(12,3)", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    YearId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Titles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Units",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -190,20 +168,20 @@ namespace Assignment.Api.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => new { x.Id, x.Username });
+                    table.UniqueConstraint("AK_Users_Username", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,8 +190,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Record = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Resolution = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false)
@@ -224,13 +202,41 @@ namespace Assignment.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
+                name: "UsersUnits",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserLogin = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    UnitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersUnits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UsersUnits_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UsersUnits_Users_UserLogin",
+                        column: x => x.UserLogin,
+                        principalTable: "Users",
+                        principalColumn: "Username",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    YearId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Identity = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Document = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
@@ -242,29 +248,29 @@ namespace Assignment.Api.Migrations
                     PostalCode = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Cellphone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Observations = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    YearId = table.Column<int>(type: "int", nullable: false),
                     UnitId = table.Column<int>(type: "int", nullable: false),
                     CivilStatusId = table.Column<int>(type: "int", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false),
                     DisciplineId = table.Column<int>(type: "int", nullable: false),
                     SituationId = table.Column<int>(type: "int", nullable: false),
                     Speciality = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    IsRemove = table.Column<bool>(type: "bit", nullable: true),
-                    IsAdido = table.Column<bool>(type: "bit", nullable: true),
-                    IsReadapted = table.Column<bool>(type: "bit", nullable: true),
-                    IsReadingRoom = table.Column<bool>(type: "bit", nullable: true),
-                    IsComputing = table.Column<bool>(type: "bit", nullable: true),
-                    IsSupplementCharge = table.Column<bool>(type: "bit", nullable: true),
-                    IsTutoring = table.Column<bool>(type: "bit", nullable: true),
-                    IsAmbientalEdication = table.Column<bool>(type: "bit", nullable: true),
-                    IsRobotics = table.Column<bool>(type: "bit", nullable: true),
-                    IsMusic = table.Column<bool>(type: "bit", nullable: true)
+                    IsRemove = table.Column<bool>(type: "bit", nullable: false),
+                    IsAdido = table.Column<bool>(type: "bit", nullable: false),
+                    IsReadapted = table.Column<bool>(type: "bit", nullable: false),
+                    IsReadingRoom = table.Column<bool>(type: "bit", nullable: false),
+                    IsComputing = table.Column<bool>(type: "bit", nullable: false),
+                    IsSupplementCharge = table.Column<bool>(type: "bit", nullable: false),
+                    IsTutoring = table.Column<bool>(type: "bit", nullable: false),
+                    IsAmbientalEdication = table.Column<bool>(type: "bit", nullable: false),
+                    IsRobotics = table.Column<bool>(type: "bit", nullable: false),
+                    IsMusic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.PrimaryKey("PK_Teachers", x => new { x.Id, x.YearId });
+                    table.UniqueConstraint("AK_Teachers_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Teachers_CivilStatuses_CivilStatusId",
                         column: x => x.CivilStatusId,
@@ -295,32 +301,38 @@ namespace Assignment.Api.Migrations
                         principalTable: "Units",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Teachers_Years_YearId",
+                        column: x => x.YearId,
+                        principalTable: "Years",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersUnits",
+                name: "Titles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UnitId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    YearId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Alias = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Weight = table.Column<decimal>(type: "decimal(12,3)", nullable: false),
+                    Max = table.Column<decimal>(type: "decimal(12,3)", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(1)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersUnits", x => x.Id);
+                    table.PrimaryKey("PK_Titles", x => new { x.Id, x.YearId });
+                    table.UniqueConstraint("AK_Titles_Id", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UsersUnits_Units_UnitId",
-                        column: x => x.UnitId,
-                        principalTable: "Units",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UsersUnits_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Titles_Years_YearId",
+                        column: x => x.YearId,
+                        principalTable: "Years",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -329,17 +341,17 @@ namespace Assignment.Api.Migrations
                 name: "Subscriptions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     YearId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PreferenceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    table.PrimaryKey("PK_Subscriptions", x => new { x.Id, x.YearId, x.TeacherId });
+                    table.UniqueConstraint("AK_Subscriptions_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Subscriptions_Preferences_PreferenceId",
                         column: x => x.PreferenceId,
@@ -366,8 +378,8 @@ namespace Assignment.Api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     YearId = table.Column<int>(type: "int", nullable: false),
                     SubscriptionId = table.Column<int>(type: "int", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
@@ -392,13 +404,13 @@ namespace Assignment.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TitlesBySubscription",
+                name: "TitlesBySubscriptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     YearId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     TitleId = table.Column<int>(type: "int", nullable: false),
@@ -407,26 +419,54 @@ namespace Assignment.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TitlesBySubscription", x => x.Id);
+                    table.PrimaryKey("PK_TitlesBySubscriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TitlesBySubscription_Subscriptions_SubscriptionId",
+                        name: "FK_TitlesBySubscriptions_Subscriptions_SubscriptionId",
                         column: x => x.SubscriptionId,
                         principalTable: "Subscriptions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TitlesBySubscription_Teachers_TeacherId",
+                        name: "FK_TitlesBySubscriptions_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TitlesBySubscription_Titles_TitleId",
+                        name: "FK_TitlesBySubscriptions_Titles_TitleId",
                         column: x => x.TitleId,
                         principalTable: "Titles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TitlesBySubscriptions_Years_YearId",
+                        column: x => x.YearId,
+                        principalTable: "Years",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CivilStatuses_Id",
+                table: "CivilStatuses",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CivilStatuses_Name",
+                table: "CivilStatuses",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Disciplines_Id",
+                table: "Disciplines",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Disciplines_Name",
+                table: "Disciplines",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PointsBySubscriptions_SubscriptionId",
@@ -437,6 +477,39 @@ namespace Assignment.Api.Migrations
                 name: "IX_PointsBySubscriptions_YearId",
                 table: "PointsBySubscriptions",
                 column: "YearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Positions_Id",
+                table: "Positions",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Positions_Name",
+                table: "Positions",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Preferences_Id",
+                table: "Preferences",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Preferences_Name",
+                table: "Preferences",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Situations_Id",
+                table: "Situations",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Situations_Name",
+                table: "Situations",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_PreferenceId",
@@ -464,6 +537,11 @@ namespace Assignment.Api.Migrations
                 column: "DisciplineId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Teachers_Id",
+                table: "Teachers",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teachers_PositionId",
                 table: "Teachers",
                 column: "PositionId");
@@ -479,19 +557,74 @@ namespace Assignment.Api.Migrations
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TitlesBySubscription_SubscriptionId",
-                table: "TitlesBySubscription",
+                name: "IX_Teachers_YearId",
+                table: "Teachers",
+                column: "YearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Titles_YearId",
+                table: "Titles",
+                column: "YearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TitlesBySubscriptions_SubscriptionId",
+                table: "TitlesBySubscriptions",
                 column: "SubscriptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TitlesBySubscription_TeacherId",
-                table: "TitlesBySubscription",
+                name: "IX_TitlesBySubscriptions_TeacherId",
+                table: "TitlesBySubscriptions",
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TitlesBySubscription_TitleId",
-                table: "TitlesBySubscription",
+                name: "IX_TitlesBySubscriptions_TitleId",
+                table: "TitlesBySubscriptions",
                 column: "TitleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TitlesBySubscriptions_YearId",
+                table: "TitlesBySubscriptions",
+                column: "YearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Units_Id",
+                table: "Units",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Units_Name",
+                table: "Units",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Id",
+                table: "Users",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Name",
+                table: "Users",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersUnits_Id",
+                table: "UsersUnits",
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersUnits_UnitId",
@@ -499,9 +632,9 @@ namespace Assignment.Api.Migrations
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersUnits_UserId",
+                name: "IX_UsersUnits_UserLogin",
                 table: "UsersUnits",
-                column: "UserId");
+                column: "UserLogin");
         }
 
         /// <inheritdoc />
@@ -514,7 +647,7 @@ namespace Assignment.Api.Migrations
                 name: "PointsBySubscriptions");
 
             migrationBuilder.DropTable(
-                name: "TitlesBySubscription");
+                name: "TitlesBySubscriptions");
 
             migrationBuilder.DropTable(
                 name: "UsersUnits");
@@ -535,9 +668,6 @@ namespace Assignment.Api.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "Years");
-
-            migrationBuilder.DropTable(
                 name: "CivilStatuses");
 
             migrationBuilder.DropTable(
@@ -551,6 +681,9 @@ namespace Assignment.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "Years");
         }
     }
 }

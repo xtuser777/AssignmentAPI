@@ -5,66 +5,71 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class TitlesRepository(
-    ApplicationDbContext context) : Repository, ITitlesRepository
+public class TitlesRepository : Repository<Title>, ITitlesRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public TitlesRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Titles.AsQueryable();
+    }
+
     public async Task<Title?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Titles.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (Title?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Title>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Titles.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Title>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Title entity)
     {
-        entity.Id = context.Titles.Last().Id + 1;
-        await context.Titles.AddAsync(entity);
+        await _context.Titles.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Title> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Titles.AddRangeAsync(entities);
     }
 
     public void Update(Title entiy)
     {
-        context.Titles.Update(entiy);
+        _context.Titles.Update(entiy);
     }
 
     public void Delete(Title entiy)
     {
-        context.Titles.Remove(entiy);
+        _context.Titles.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Titles.AsNoTracking();
         BuildQuery(props);
-        var count = await query.CountAsync();
-
-        return count;
+        return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

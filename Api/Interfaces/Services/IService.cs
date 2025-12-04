@@ -20,6 +20,7 @@ public record FindManyServiceParams
 {
     public Entity FindManyProps { get; set; } = null!;
     public OrderByParams OrderByParams { get; set; } = new();
+    public IncludesParams? Includes { get; set; }
     public PaginationParams PaginationParams { get; set; } = new();
 
     public static implicit operator FindManyRepositoryParams(
@@ -28,6 +29,7 @@ public record FindManyServiceParams
         {
             Where = parameters.FindManyProps,
             OrderBy = parameters.OrderByParams,
+            Includes = parameters.Includes,
             Pagination = parameters.PaginationParams,
         };
 }

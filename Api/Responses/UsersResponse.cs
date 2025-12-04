@@ -18,7 +18,7 @@ public record FindManyUsersResponse
 public record FindOneUsersUsersUnitsResponse
 {
     public int? Id { get; set; }
-    public int? UserId { get; set; }
+    public string? UserLogin { get; set; }
     public int? UnitId { get; set; }
 }
 

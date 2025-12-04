@@ -1,11 +1,7 @@
 ﻿using Assignment.Api.Enums;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
 
-[Table("Users")]
 public class User : UserProps
 {
     public User()
@@ -27,23 +23,11 @@ public class User : UserProps
 
 public class UserProps : Entity
 {
-    [Required]
-    [StringLength(50)]
     public string? Username { get; set; }   
-    [Required]
-    [StringLength(100)]
     public string? Password { get; set; }
-    [Required]
-    [StringLength(100)]
     public string? Name { get; set; }
-    [Required]
-    [StringLength(100)]
     public string? Email { get; set; }
-    [Required]
     public bool? IsActive { get; set; }
-    [Required]
     public UserRole? Role { get; set; }
-
-    [InverseProperty("User")]
     public ICollection<UserUnit>? UsersUnits { get; set; }
 }

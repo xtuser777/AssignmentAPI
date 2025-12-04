@@ -51,6 +51,7 @@ public record FindManyRepositoryParams
 {
     public Entity Where { get; set; } = new();
     public OrderByParams? OrderBy { get; set; }
+    public IncludesParams? Includes { get; set; }
     public PaginationParams? Pagination { get; set; }
 }
 

@@ -43,7 +43,7 @@ public class UsersView : IUsersView
             .Select(unit => new FindOneUsersUsersUnitsResponse
             {
                 Id=unit.Id,
-                UserId=unit.UserId,
+                UserLogin=unit.UserLogin,
                 UnitId=unit.UnitId,
             }),
         };

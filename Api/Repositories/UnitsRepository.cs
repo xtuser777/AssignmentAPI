@@ -5,76 +5,73 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class UnitsRepository(
-    ApplicationDbContext context) : Repository, IUnitsRepository
+public class UnitsRepository : Repository<Unit>, IUnitsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public UnitsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Units.AsQueryable();
+    }
+
     public async Task<Unit?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Units.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (Unit?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Unit>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Units.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Unit>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Unit entity)
     {
-        entity.Id = ((await context.Units.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
-        await context.Units.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Units.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Unit> entities)
     {
-        var id = ((await context.Units.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
+        var id = await GetId();
         foreach (var entity in entities)
         {
             entity.Id ??= id++;
         }
-        await context.Units.AddRangeAsync(entities);
+        await _context.Units.AddRangeAsync(entities);
     }
 
     public void Update(Unit entiy)
     {
-        context.Units.Update(entiy);
+        _context.Units.Update(entiy);
     }
 
     public void Delete(Unit entiy)
     {
-        context.Units.Remove(entiy);
+        _context.Units.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Units.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
-
         return count;
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

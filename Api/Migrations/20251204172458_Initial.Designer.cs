@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251203145655_Initial")]
+    [Migration("20251204172458_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -41,10 +41,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("CivilStatuses");
                 });
@@ -62,7 +67,7 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Discipline")
@@ -213,7 +218,7 @@ namespace Assignment.Api.Migrations
                     b.Property<int>("UnitId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Year")
@@ -235,7 +240,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -243,10 +248,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Disciplines");
                 });
@@ -259,7 +269,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -271,12 +281,12 @@ namespace Assignment.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Points")
-                        .HasColumnType("decimal(12,3)");
+                        .HasColumnType("decimal(12, 3)");
 
                     b.Property<int>("SubscriptionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("YearId")
@@ -299,7 +309,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -310,10 +320,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Positions");
                 });
@@ -326,7 +341,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -334,10 +349,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Preferences");
                 });
@@ -350,7 +370,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -358,10 +378,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Situations");
                 });
@@ -369,27 +394,24 @@ namespace Assignment.Api.Migrations
             modelBuilder.Entity("Assignment.Api.Entities.Subscription", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PreferenceId")
+                    b.Property<int>("YearId")
                         .HasColumnType("int");
 
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("YearId")
+                    b.Property<int>("PreferenceId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id", "YearId", "TeacherId");
 
                     b.HasIndex("PreferenceId");
 
@@ -403,10 +425,10 @@ namespace Assignment.Api.Migrations
             modelBuilder.Entity("Assignment.Api.Entities.Teacher", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("YearId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -429,7 +451,7 @@ namespace Assignment.Api.Migrations
                     b.Property<int>("CivilStatusId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Dependents")
@@ -445,42 +467,42 @@ namespace Assignment.Api.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Identity")
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<bool?>("IsAdido")
+                    b.Property<bool>("IsAdido")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsAmbientalEdication")
+                    b.Property<bool>("IsAmbientalEdication")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsComputing")
+                    b.Property<bool>("IsComputing")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsMusic")
+                    b.Property<bool>("IsMusic")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsReadapted")
+                    b.Property<bool>("IsReadapted")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsReadingRoom")
+                    b.Property<bool>("IsReadingRoom")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsRemove")
+                    b.Property<bool>("IsRemove")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsRobotics")
+                    b.Property<bool>("IsRobotics")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsSupplementCharge")
+                    b.Property<bool>("IsSupplementCharge")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsTutoring")
+                    b.Property<bool>("IsTutoring")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -520,17 +542,16 @@ namespace Assignment.Api.Migrations
                     b.Property<int>("UnitId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("YearId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "YearId");
 
                     b.HasIndex("CivilStatusId");
 
                     b.HasIndex("DisciplineId");
+
+                    b.HasIndex("Id");
 
                     b.HasIndex("PositionId");
 
@@ -538,23 +559,25 @@ namespace Assignment.Api.Migrations
 
                     b.HasIndex("UnitId");
 
+                    b.HasIndex("YearId");
+
                     b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Assignment.Api.Entities.Title", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("YearId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Alias")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -566,25 +589,23 @@ namespace Assignment.Api.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Max")
-                        .HasColumnType("decimal(12,3)");
+                        .HasColumnType("decimal(12, 3)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(12,3)");
+                        .HasColumnType("decimal(12, 3)");
 
-                    b.Property<int>("YearId")
-                        .HasColumnType("int");
+                    b.HasKey("Id", "YearId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("YearId");
 
                     b.ToTable("Titles");
                 });
@@ -597,7 +618,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SubscriptionId")
@@ -609,11 +630,11 @@ namespace Assignment.Api.Migrations
                     b.Property<int>("TitleId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(12,3)");
+                        .HasColumnType("decimal(12, 3)");
 
                     b.Property<int>("YearId")
                         .HasColumnType("int");
@@ -626,7 +647,9 @@ namespace Assignment.Api.Migrations
 
                     b.HasIndex("TitleId");
 
-                    b.ToTable("TitlesBySubscription");
+                    b.HasIndex("YearId");
+
+                    b.ToTable("TitlesBySubscriptions");
                 });
 
             modelBuilder.Entity("Assignment.Api.Entities.Unit", b =>
@@ -637,7 +660,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -645,10 +668,15 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Units");
                 });
@@ -656,12 +684,13 @@ namespace Assignment.Api.Migrations
             modelBuilder.Entity("Assignment.Api.Entities.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Username")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -673,9 +702,7 @@ namespace Assignment.Api.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -685,15 +712,22 @@ namespace Assignment.Api.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.HasKey("Id", "Username");
 
-                    b.HasKey("Id");
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -706,23 +740,26 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UnitId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserLogin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("UnitId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserLogin");
 
                     b.ToTable("UsersUnits");
                 });
@@ -735,7 +772,7 @@ namespace Assignment.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsBlocked")
@@ -751,7 +788,7 @@ namespace Assignment.Api.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -764,6 +801,7 @@ namespace Assignment.Api.Migrations
                     b.HasOne("Assignment.Api.Entities.Subscription", "Subscription")
                         .WithMany("Points")
                         .HasForeignKey("SubscriptionId")
+                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -789,6 +827,7 @@ namespace Assignment.Api.Migrations
                     b.HasOne("Assignment.Api.Entities.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
+                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -837,6 +876,12 @@ namespace Assignment.Api.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Assignment.Api.Entities.Year", "Year")
+                        .WithMany()
+                        .HasForeignKey("YearId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("CivilStatus");
 
                     b.Navigation("Discipline");
@@ -846,6 +891,19 @@ namespace Assignment.Api.Migrations
                     b.Navigation("Situation");
 
                     b.Navigation("Unit");
+
+                    b.Navigation("Year");
+                });
+
+            modelBuilder.Entity("Assignment.Api.Entities.Title", b =>
+                {
+                    b.HasOne("Assignment.Api.Entities.Year", "Year")
+                        .WithMany()
+                        .HasForeignKey("YearId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Year");
                 });
 
             modelBuilder.Entity("Assignment.Api.Entities.TitleBySubscription", b =>
@@ -853,18 +911,27 @@ namespace Assignment.Api.Migrations
                     b.HasOne("Assignment.Api.Entities.Subscription", "Subscription")
                         .WithMany("Titles")
                         .HasForeignKey("SubscriptionId")
+                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Assignment.Api.Entities.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
+                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Assignment.Api.Entities.Title", "Title")
                         .WithMany()
                         .HasForeignKey("TitleId")
+                        .HasPrincipalKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Assignment.Api.Entities.Year", "Year")
+                        .WithMany()
+                        .HasForeignKey("YearId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -873,6 +940,8 @@ namespace Assignment.Api.Migrations
                     b.Navigation("Teacher");
 
                     b.Navigation("Title");
+
+                    b.Navigation("Year");
                 });
 
             modelBuilder.Entity("Assignment.Api.Entities.UserUnit", b =>
@@ -885,7 +954,8 @@ namespace Assignment.Api.Migrations
 
                     b.HasOne("Assignment.Api.Entities.User", "User")
                         .WithMany("UsersUnits")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserLogin")
+                        .HasPrincipalKey("Username")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

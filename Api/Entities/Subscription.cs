@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Assignment.Api.Entities;
 
-namespace Assignment.Api.Entities;
-
-[Table("Subscriptions")]
 public class Subscription : SubscriptionProps
 {
     public Subscription() 
@@ -26,30 +21,12 @@ public class Subscription : SubscriptionProps
 
 public class SubscriptionProps : Entity
 {
-    [Required]
     public int? YearId { get; set; }
-
-    [Required]
     public int? TeacherId { get; set; }
-
-    [Required]
     public int? PreferenceId { get; set; }
-
-    [ForeignKey(nameof(YearId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Year? Year { get; set; }
-    
-    [ForeignKey(nameof(TeacherId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Teacher? Teacher { get; set; }
-    
-    [ForeignKey(nameof(PreferenceId))]
-    [DeleteBehavior(DeleteBehavior.Restrict)]
     public Preference? Preference { get; set; }
-
-    [InverseProperty("Subscription")]
     public IEnumerable<TitleBySubscription>? Titles { get; set; }
-
-    [InverseProperty("Subscription")]
     public IEnumerable<PointsBySubscription>? Points { get; set; }
 }

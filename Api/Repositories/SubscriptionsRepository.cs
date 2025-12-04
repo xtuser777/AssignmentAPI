@@ -5,49 +5,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class SubscriptionsRepository(
-    ApplicationDbContext context) : Repository, ISubscriptionsRepository
+public class SubscriptionsRepository : Repository<Subscription>, ISubscriptionsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public SubscriptionsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Subscriptions.AsQueryable();
+    }
+
     public async Task<Subscription?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Subscriptions.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (Subscription?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Subscription>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Subscriptions.Include("Teacher:Unit").Include("Preference").AsNoTracking();
+        ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Subscription>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Subscription entity)
     {
-        entity.Id = context.Subscriptions.Last().Id + 1;
-        await context.Subscriptions.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Subscriptions.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Subscription> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Subscriptions.AddRangeAsync(entities);
     }
 
     public void Update(Subscription entiy)
     {
-        context.Subscriptions.Update(entiy);
+        _context.Subscriptions.Update(entiy);
     }
 
     public void Delete(Subscription entiy)
     {
-        context.Subscriptions.Remove(entiy);
+        _context.Subscriptions.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Subscriptions.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 
@@ -57,14 +68,12 @@ public class SubscriptionsRepository(
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

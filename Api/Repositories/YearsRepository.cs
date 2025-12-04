@@ -5,77 +5,73 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class YearsRepository(
-    ApplicationDbContext context) : Repository, IYearsRepository
+public class YearsRepository : Repository<Year>, IYearsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public YearsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Years.AsQueryable();
+    }
+
     public async Task<Year?> FindOneAsync(FindOneRepositoryParams @params)
     {
-        query = context.Years.AsQueryable();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
-        Year? year = (Year?)await query.FirstOrDefaultAsync();
-
-        return year;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Year>> FindManyAsync(FindManyRepositoryParams @params)
     {
-        query = context.Years.AsNoTracking();
         BuildQuery(@params.Where);
         BuildOrderBy(@params.OrderBy);
         ApplyPagination(@params.Pagination);
 
-        return (await query.ToListAsync()).Cast<Year>(); 
+        return await query.ToListAsync(); 
     }
 
     public async Task CreateAsync(Year entity)
     {
-        entity.Id = context.Years.OrderBy(x => x.Id).Last().Id + 1;
-        await context.Years.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Years.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Year> entities)
     {
-        var id = ((await context.Years.OrderBy(x => x.Id).LastOrDefaultAsync())?.Id ?? 0) + 1;
+        var id = await GetId();
         foreach (var entity in entities)
         {
             entity.Id ??= id++;
         }
-        await context.Years.AddRangeAsync(entities);
+        await _context.Years.AddRangeAsync(entities);
     }
 
     public void Update(Year entity)
     {
-        context.Years.Update(entity);
+        _context.Years.Update(entity);
     }
 
     public void Delete(Year entity)
     {
-        context.Years.Remove(entity);
+        _context.Years.Remove(entity);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Years.AsNoTracking();
         BuildQuery(props);
-
         return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
-        query = context.Years.AsNoTracking();
-        BuildQuery(props);
-
-        var count = await query.CountAsync();
-
+        var count = await CountAsync(props);
         return count > 0;
     }
 }

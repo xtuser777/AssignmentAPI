@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
 
-[Table("Classifications")]
 public class Classification : ClassificationProps
 {
     public Classification() 

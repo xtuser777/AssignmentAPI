@@ -5,49 +5,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class DisciplinesRepository(
-    ApplicationDbContext context) : Repository, IDisciplinesRepository
+public class DisciplinesRepository : Repository<Discipline>, IDisciplinesRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public DisciplinesRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Disciplines.AsQueryable();
+    }
     public async Task<Discipline?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.Disciplines.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         var entity = await query.FirstOrDefaultAsync();
 
-        return (Discipline?)entity;
+        return entity;
     }
 
     public async Task<IEnumerable<Discipline>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.Disciplines.AsNoTracking();
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
-        var entities = await query.ToListAsync();
-
-        return entities.Cast<Discipline>();
+        return await query.ToListAsync();
     }
 
     public async Task CreateAsync(Discipline entity)
     {
-        entity.Id = context.Disciplines.Last().Id + 1;
-        await context.Disciplines.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.Disciplines.AddAsync(entity);
+    }
+
+    public async Task CreateManyAsync(IEnumerable<Discipline> entities)
+    {
+        var id = await GetId();
+        foreach (var entity in entities)
+        {
+            entity.Id ??= id++;
+        }
+        await _context.Disciplines.AddRangeAsync(entities);
     }
 
     public void Update(Discipline entiy)
     {
-        context.Disciplines.Update(entiy);
+        _context.Disciplines.Update(entiy);
     }
 
     public void Delete(Discipline entiy)
     {
-        context.Disciplines.Remove(entiy);
+        _context.Disciplines.Remove(entiy);
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.Disciplines.AsNoTracking();
         BuildQuery(props);
         var count = await query.CountAsync();
 

@@ -5,22 +5,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class UsersUnitsRepository(
-    ApplicationDbContext context) : Repository, IUsersUnitsRepository
+public class UsersUnitsRepository : Repository<UserUnit>, IUsersUnitsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public UsersUnitsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.UsersUnits.AsQueryable();
+    }
+
     public async Task<UserUnit?> FindOneAsync(FindOneRepositoryParams parameters)
     {
-        query = context.UsersUnits.AsQueryable();
         ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
-        var entity = await query.FirstOrDefaultAsync();
-
-        return (UserUnit?)entity;
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<UserUnit>> FindManyAsync(FindManyRepositoryParams parameters)
     {
-        query = context.UsersUnits.AsNoTracking();
+        ApplyIncludes(parameters.Includes);
         BuildQuery(parameters.Where);
         BuildOrderBy(parameters.OrderBy);
         ApplyPagination(parameters.Pagination);
@@ -31,58 +35,52 @@ public class UsersUnitsRepository(
 
     public async Task CreateAsync(UserUnit entity)
     {
-        entity.Id = context.UsersUnits.Last().Id + 1;
-        await context.UsersUnits.AddAsync(entity);
+        entity.Id = await GetId();
+        await _context.UsersUnits.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<UserUnit> entities)
     {
-        var id = context.UsersUnits.Last().Id + 1;
+        var id = await GetId();
         foreach (var entity in entities)
         {
             entity.Id = id++;
         }
-        await context.UsersUnits.AddRangeAsync(entities);
+        await _context.UsersUnits.AddRangeAsync(entities);
     }
 
     public void Update(UserUnit entiy)
     {
-        context.UsersUnits.Update(entiy);
+        _context.UsersUnits.Update(entiy);
     }
 
     public void Delete(UserUnit entiy)
     {
-        context.UsersUnits.Remove(entiy);
+        _context.UsersUnits.Remove(entiy);
     }
 
     public async Task DeleteManyAsync(Entity props)
     {
-        query = context.UsersUnits.AsNoTracking();
         BuildQuery(props);
         var entities = await query.ToListAsync();
-        context.UsersUnits.RemoveRange(entities.Cast<UserUnit>());
+        _context.UsersUnits.RemoveRange(entities.Cast<UserUnit>());
     }
 
     public async Task<int> CountAsync(Entity props)
     {
-        query = context.UsersUnits.AsNoTracking();
         BuildQuery(props);
-        var count = await query.CountAsync();
-
-        return count;
+        return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 
     public async Task<bool> ExclusiveAsync(Entity props)
     {
         var count = await CountAsync(props);
-
         return count > 0;
     }
 }

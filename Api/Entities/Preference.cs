@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Assignment.Api.Entities;
 
-namespace Assignment.Api.Entities;
-
-[Table("Preferences")]
 public class Preference : PreferenceProps
 {
     public Preference()
@@ -26,7 +21,5 @@ public class Preference : PreferenceProps
 
 public class PreferenceProps : Entity
 {
-    [Required]
-    [StringLength(50)]
     public string? Name { get; set; }
 }

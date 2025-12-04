@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public abstract class Repository
+public abstract class Repository<TEntity> where TEntity : Entity
 {
-    protected IQueryable<Entity> query = null!;
+    protected IQueryable<TEntity> query = null!;
 
     protected void ApplyIncludes<T>(T? @params)
     {
@@ -121,5 +121,13 @@ public abstract class Repository
                 _ => query,
             };
         }
+    }
+
+    protected async Task<int> GetId()
+    {
+        var entity = await query.OrderBy(x => x.Id).LastOrDefaultAsync();
+        var id = entity?.Id ?? 0;
+
+        return id + 1;
     }
 }

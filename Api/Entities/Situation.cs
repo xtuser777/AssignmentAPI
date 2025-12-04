@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Assignment.Api.Entities;
 
-namespace Assignment.Api.Entities;
-
-[Table("Situations")]
 public class Situation : SituationProps
 {
     public Situation()
@@ -26,7 +21,5 @@ public class Situation : SituationProps
 
 public class SituationProps : Entity
 {
-    [Required]
-    [StringLength(50)]
     public string? Name { get; set; }
 }

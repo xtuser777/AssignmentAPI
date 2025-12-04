@@ -57,7 +57,7 @@ public record CreateUsersRequest
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
-                    new UserUnitProps () { UserId = 0, UnitId = unit.UnitId }))],
+                    new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],
         };
     }
 }
@@ -104,7 +104,7 @@ public record UpdateUsersRequest
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
-                    new UserUnitProps () { UserId = 0, UnitId = unit.UnitId }))],
+                    new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],
         };
     }
 }
