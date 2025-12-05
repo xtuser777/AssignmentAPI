@@ -61,61 +61,51 @@ public record CreateTeachersRequest
     public string? Observations { get; set; }
 
     [RequiredField]
-    [Connection<Year>(typeof(IYearsRepository))]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
     public int? YearId { get; set; }
 
     [RequiredField]
-    [Connection<Unit>(typeof(IUnitsRepository))]
+    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExistsUnitsParams))]
     public int? UnitId { get; set; }
 
     [RequiredField]
-    [Connection<CivilStatus>(typeof(ICivilStatusesRepository))]
+    [Connection<CivilStatus>(typeof(ICivilStatusesRepository), typeof(ExistsCivilStatusesParams))]
     public int? CivilStatusId { get; set; }
 
     [RequiredField]
-    [Connection<Position>(typeof(IPositionsRepository))]
+    [Connection<Position>(typeof(IPositionsRepository), typeof(ExistsPositionsParams))]
     public int? PositionId { get; set; }
 
     [RequiredField]
-    [Connection<Discipline>(typeof(IDisciplinesRepository))]
+    [Connection<Discipline>(typeof(IDisciplinesRepository), typeof(ExistsDisciplinesParams))]
     public int? DisciplineId { get; set; }
 
     [RequiredField]
-    [Connection<Situation>(typeof(ISituationsRepository))]
+    [Connection<Situation>(typeof(ISituationsRepository), typeof(ExistsSituationsParams))]
     public int? SituationId { get; set; }
 
     [StringMaxLength(50)]
     public string? Speciality { get; set; }
 
-    [BoolValue]
-    public bool? IsRemove { get; set; }
+    public char? Remove { get; set; }
 
-    [BoolValue]
-    public bool? IsAdido { get; set; }
+    public char? Adido { get; set; }
 
-    [BoolValue]
-    public bool? IsReadapted { get; set; }
+    public char? Readapted { get; set; }
 
-    [BoolValue]
-    public bool? IsReadingRoom { get; set; }
+    public char? ReadingRoom { get; set; }
 
-    [BoolValue]
-    public bool? IsComputing { get; set; }
+    public char? Computing { get; set; }
 
-    [BoolValue]
-    public bool? IsSupplementCharge { get; set; }
+    public char? SupplementCharge { get; set; }
 
-    [BoolValue]
-    public bool? IsTutoring { get; set; }
+    public char? Tutoring { get; set; }
 
-    [BoolValue]
-    public bool? IsAmbientalEdication { get; set; }
+    public char? AmbientalEdication { get; set; }
 
-    [BoolValue]
-    public bool? IsRobotics { get; set; }
+    public char? Robotics { get; set; }
 
-    [BoolValue]
-    public bool? IsMusic { get; set; }
+    public char? Music { get; set; }
 
     public static implicit operator TeacherProps(CreateTeachersRequest request)
     {
@@ -141,16 +131,16 @@ public record CreateTeachersRequest
             DisciplineId = request.DisciplineId,
             SituationId = request.SituationId,
             Speciality = request.Speciality,
-            IsRemove = request.IsRemove,
-            IsAdido = request.IsAdido,
-            IsReadapted = request.IsReadapted,
-            IsReadingRoom = request.IsReadingRoom,
-            IsComputing = request.IsComputing,
-            IsSupplementCharge = request.IsSupplementCharge,
-            IsTutoring = request.IsTutoring,
-            IsAmbientalEdication = request.IsAmbientalEdication,
-            IsRobotics = request.IsRobotics,
-            IsMusic = request.IsMusic,
+            Remove = request.Remove,
+            Adido = request.Adido,
+            Readapted = request.Readapted,
+            ReadingRoom = request.ReadingRoom,
+            Computing = request.Computing,
+            SupplementCharge = request.SupplementCharge,
+            Tutoring = request.Tutoring,
+            AmbientalEdication = request.AmbientalEdication,
+            Robotics = request.Robotics,
+            Music = request.Music,
         };
     }
 }
@@ -209,56 +199,46 @@ public record UpdateTeachersRequest
     [StringMaxLength(255)]
     public string? Observations { get; set; }
 
-    [Connection<Year>(typeof(IYearsRepository))]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExclusiveYearParams))]
     public int? YearId { get; set; }
 
-    [Connection<Unit>(typeof(IUnitsRepository))]
+    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExclusiveUnitsParams))]
     public int? UnitId { get; set; }
 
-    [Connection<CivilStatus>(typeof(ICivilStatusesRepository))]
+    [Connection<CivilStatus>(typeof(ICivilStatusesRepository), typeof(ExclusiveCivilStatusesParams))]
     public int? CivilStatusId { get; set; }
 
-    [Connection<Position>(typeof(IPositionsRepository))]
+    [Connection<Position>(typeof(IPositionsRepository), typeof(ExclusivePositionsParams))]
     public int? PositionId { get; set; }
 
-    [Connection<Discipline>(typeof(IDisciplinesRepository))]
+    [Connection<Discipline>(typeof(IDisciplinesRepository), typeof(ExclusiveDisciplinesParams))]
     public int? DisciplineId { get; set; }
 
-    [Connection<Situation>(typeof(ISituationsRepository))]
+    [Connection<Situation>(typeof(ISituationsRepository), typeof(ExclusiveSituationsParams))]
     public int? SituationId { get; set; }
 
     [StringMaxLength(50)]
     public string? Speciality { get; set; }
 
-    [BoolValue]
-    public bool? IsRemove { get; set; }
+    public char? Remove { get; set; }
 
-    [BoolValue]
-    public bool? IsAdido { get; set; }
+    public char? Adido { get; set; }
 
-    [BoolValue]
-    public bool? IsReadapted { get; set; }
+    public char? Readapted { get; set; }
 
-    [BoolValue]
-    public bool? IsReadingRoom { get; set; }
+    public char? ReadingRoom { get; set; }
 
-    [BoolValue]
-    public bool? IsComputing { get; set; }
+    public char? Computing { get; set; }
 
-    [BoolValue]
-    public bool? IsSupplementCharge { get; set; }
+    public char? SupplementCharge { get; set; }
 
-    [BoolValue]
-    public bool? IsTutoring { get; set; }
+    public char? Tutoring { get; set; }
 
-    [BoolValue]
-    public bool? IsAmbientalEdication { get; set; }
+    public char? AmbientalEdication { get; set; }
 
-    [BoolValue]
-    public bool? IsRobotics { get; set; }
+    public char? Robotics { get; set; }
 
-    [BoolValue]
-    public bool? IsMusic { get; set; }
+    public char? Music { get; set; }
 
     public static implicit operator TeacherProps(UpdateTeachersRequest request)
     {
@@ -284,16 +264,16 @@ public record UpdateTeachersRequest
             DisciplineId = request.DisciplineId,
             SituationId = request.SituationId,
             Speciality = request.Speciality,
-            IsRemove = request.IsRemove,
-            IsAdido = request.IsAdido,
-            IsReadapted = request.IsReadapted,
-            IsReadingRoom = request.IsReadingRoom,
-            IsComputing = request.IsComputing,
-            IsSupplementCharge = request.IsSupplementCharge,
-            IsTutoring = request.IsTutoring,
-            IsAmbientalEdication = request.IsAmbientalEdication,
-            IsRobotics = request.IsRobotics,
-            IsMusic = request.IsMusic,
+            Remove = request.Remove,
+            Adido = request.Adido,
+            Readapted = request.Readapted,
+            ReadingRoom = request.ReadingRoom,
+            Computing = request.Computing,
+            SupplementCharge = request.SupplementCharge,
+            Tutoring = request.Tutoring,
+            AmbientalEdication = request.AmbientalEdication,
+            Robotics = request.Robotics,
+            Music = request.Music,
         };
     }
 }

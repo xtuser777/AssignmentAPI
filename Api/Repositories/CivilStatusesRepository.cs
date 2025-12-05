@@ -34,17 +34,11 @@ public class CivilStatusesRepository : Repository<CivilStatus>, ICivilStatusesRe
 
     public async Task CreateAsync(CivilStatus entity)
     {
-        entity.Id = await GetId();
         await _context.CivilStatuses.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<CivilStatus> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.CivilStatuses.AddRangeAsync(entities);
     }
 

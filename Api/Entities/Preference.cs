@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("preferencia")]
+[PrimaryKey(nameof(PreferenceId))]
 public class Preference : PreferenceProps
 {
     public Preference()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Preference(PreferenceProps props)
@@ -21,5 +24,9 @@ public class Preference : PreferenceProps
 
 public class PreferenceProps : Entity
 {
+    [Column("idpreferencia")]
+    public int? PreferenceId { get; set; }
+
+    [Column("nome")]
     public string? Name { get; set; }
 }

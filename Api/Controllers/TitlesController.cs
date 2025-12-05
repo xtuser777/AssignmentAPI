@@ -27,7 +27,7 @@ public class TitlesController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{titleId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowTitlesParams parameters)
     {
@@ -44,10 +44,10 @@ public class TitlesController(
         var title = await titlesService.CreateAsync(parameters);
         var data = titlesView.Create(title);
 
-        return Created($"titles/{title.Id}", new { Data = data });
+        return Created($"titles/{title.TitleId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{titleId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateTitlesParams parameters)
     {
@@ -56,7 +56,7 @@ public class TitlesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{titleId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTitlesParams parameters)
     {
@@ -74,7 +74,7 @@ public record IndexTitlesParams : PaginationParams
     public decimal? Max { get; set; }
     public int? Order { get; set; }
     public char? Type { get; set; }
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
     public int? YearId { get; set; }
 
     [FromHeader(Name = "X-Order-By-Alias")]
@@ -95,13 +95,14 @@ public record IndexTitlesParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Type")]
     public string? OrderByType { get; set; }
 
-    [FromHeader(Name = "X-Order-By-IsActive")]
-    public string? OrderByIsActive { get; set; }
+    [FromHeader(Name = "X-Order-By-Active")]
+    public string? OrderByActive { get; set; }
 
     [FromHeader(Name = "X-Order-By-Year")]
     public string? OrderByYear { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexTitlesParams indexTitlesParams)
+    public static implicit operator FindManyServiceParams(
+        IndexTitlesParams indexTitlesParams)
         => new()
         {
             FindManyProps = new FindManyTitlesParams
@@ -110,7 +111,7 @@ public record IndexTitlesParams : PaginationParams
                 Description = indexTitlesParams.Description,
                 Weight = indexTitlesParams.Weight,
                 Max = indexTitlesParams.Max,
-                IsActive = indexTitlesParams.IsActive,
+                Active = indexTitlesParams.Active,
                 YearId = indexTitlesParams.YearId,
                 Order = indexTitlesParams.Order,
                 Type = indexTitlesParams.Type,
@@ -121,7 +122,7 @@ public record IndexTitlesParams : PaginationParams
                 Description = indexTitlesParams.OrderByDescription,
                 Weight = indexTitlesParams.OrderByWeight,
                 Max = indexTitlesParams.OrderByMax,
-                IsActive = indexTitlesParams.OrderByIsActive,
+                Active = indexTitlesParams.OrderByActive,
                 Year = indexTitlesParams.OrderByYear,
                 Order = indexTitlesParams.OrderByOrder,
                 Type = indexTitlesParams.OrderByType,
@@ -129,7 +130,8 @@ public record IndexTitlesParams : PaginationParams
             PaginationParams = indexTitlesParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexTitlesParams indexTitlesParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexTitlesParams indexTitlesParams)
         => new()
         {
             CountProps = new CountTitlesParams
@@ -138,7 +140,7 @@ public record IndexTitlesParams : PaginationParams
                 Description = indexTitlesParams.Description,
                 Weight = indexTitlesParams.Weight,
                 Max = indexTitlesParams.Max,
-                IsActive = indexTitlesParams.IsActive,
+                Active = indexTitlesParams.Active,
                 YearId = indexTitlesParams.YearId,
                 Order = indexTitlesParams.Order,
                 Type = indexTitlesParams.Type,
@@ -150,15 +152,19 @@ public record IndexTitlesParams : PaginationParams
 public record ShowTitlesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int TitleId { get; set; }
 
     [FromRoute]
     public bool? IncludeYear { get; set; } = true;
 
-    public static implicit operator FindOneServiceParams(ShowTitlesParams showTitlesParams)
+    public static implicit operator FindOneServiceParams(
+        ShowTitlesParams showTitlesParams)
         => new()
         {
-            Id = showTitlesParams.Id,
+            Where = new FindManyTitlesParams
+            {
+                TitleId = showTitlesParams.TitleId,
+            },
             Includes = new IncludesTitlesParams
             {
                 Year = showTitlesParams.IncludeYear,
@@ -171,7 +177,8 @@ public record CreateTitlesParams
     [FromBody]
     public CreateTitlesRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateTitlesParams createTitlesParams)
+    public static implicit operator CreateServiceParams(
+        CreateTitlesParams createTitlesParams)
         => new()
         {
             Props = createTitlesParams.Request,
@@ -181,27 +188,35 @@ public record CreateTitlesParams
 public record UpdateTitlesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int TitleId { get; set; }
 
     [FromBody]
     public UpdateTitlesRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateTitlesParams createTitlesParams)
+    public static implicit operator UpdateServiceParams(
+        UpdateTitlesParams updateTitlesParams)
         => new()
         {
-            Id = createTitlesParams.Id,
-            Props = createTitlesParams.Request,
+            Where = new FindManyTitlesParams
+            {
+                TitleId = updateTitlesParams.TitleId,
+            },
+            Props = updateTitlesParams.Request,
         };
 }
 
 public record DeleteTitlesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int TitleId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteTitlesParams showTitlesParams)
+    public static implicit operator DeleteServiceParams(
+        DeleteTitlesParams deleteTitlesParams)
         => new()
         {
-            Id = showTitlesParams.Id,
+            Where = new FindManyTitlesParams
+            {
+                TitleId = deleteTitlesParams.TitleId,
+            },
         };
 }

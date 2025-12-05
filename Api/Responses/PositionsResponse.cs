@@ -2,19 +2,19 @@
 
 public record CreatePositionsResponse
 {
-    public int? Id { get; set; }
+    public int? PositionId { get; set; }
 }
 
 public record FindManyPositionsResponse
 {
-    public int? Id { get; set; }
+    public int? PositionId { get; set; }
     public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 }
 
 public record FindOnePositionsResponse
 {
-    public int? Id { get; set; }
+    public int? PositionId { get; set; }
     public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 }

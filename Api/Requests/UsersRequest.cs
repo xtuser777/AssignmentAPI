@@ -8,7 +8,7 @@ namespace Assignment.Api.Requests;
 public record CreateUsersUnitsRequest
 {
     [RequiredField]
-    [Connection<Unit>(typeof(IUnitsRepository))]
+    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExistsUnitsParams))]
     public int UnitId { get; set; }
 }
 
@@ -36,7 +36,7 @@ public record CreateUsersRequest
     public string? Email { get; set; } = string.Empty;
 
     [RequiredField]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     [RequiredField]
     [EnumValue(typeof(UserRole))]
@@ -53,7 +53,7 @@ public record CreateUsersRequest
             Password = request.Password,
             Name = request.Name,
             Email = request.Email,
-            IsActive = request.IsActive,
+            Active = request.Active,
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
@@ -84,7 +84,7 @@ public record UpdateUsersRequest
     public string? Email { get; set; } = string.Empty;
 
     [BoolValue]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     [EnumValue(typeof(UserRole))]
     public string? Role { get; set; }
@@ -100,7 +100,7 @@ public record UpdateUsersRequest
             Password = request.Password,
             Name = request.Name,
             Email = request.Email,
-            IsActive = request.IsActive,
+            Active = request.Active,
             Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(

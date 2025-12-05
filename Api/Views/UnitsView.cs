@@ -15,7 +15,7 @@ public class UnitsView : IUnitsView
 
         return new CreateUnitsResponse
         {
-            Id = unit.Id,
+            UnitId = unit.UnitId,
         };
     }
 
@@ -28,7 +28,7 @@ public class UnitsView : IUnitsView
 
         return new FindOneUnitsResponse
         {
-            Id = unit.Id,
+            UnitId = unit.UnitId,
             Name = unit.Name,
         };
     }
@@ -42,7 +42,7 @@ public class UnitsView : IUnitsView
 
         return units.Select(unit => new FindManyUnitsResponse
         {
-            Id = unit.Id,
+            UnitId = unit.UnitId,
             Name = unit.Name,
         });
     }

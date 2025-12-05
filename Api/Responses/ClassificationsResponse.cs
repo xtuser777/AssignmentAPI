@@ -2,9 +2,7 @@
 
 public record FindManyClassificationsResponse
 {
-    public int? Id { get; set; }
     public int? YearId { get; set; }
-    public int? Year { get; set; }
     public int? TeacherId { get; set; }
     public int? SubscriptionId { get; set; }
     public string? Name { get; set; }
@@ -19,16 +17,14 @@ public record FindManyClassificationsResponse
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public bool? IsRemove { get; set; }
-    public bool? IsAdido { get; set; }
-    public bool? IsReadapted { get; set; }
-    public bool? IsReadingRoom { get; set; }
-    public bool? IsComputing { get; set; }
-    public bool? IsSupplementCharge { get; set; }
-    public bool? IsTutoring { get; set; }
-    public bool? IsAmbientalEdication { get; set; }
-    public bool? IsRobotics { get; set; }
-    public bool? IsMusic { get; set; }
+    public char? Remove { get; set; }
+    public char? Adido { get; set; }
+    public char? Readapted { get; set; }
+    public char? ReadingRoom { get; set; }
+    public char? Computing { get; set; }
+    public char? SupplementCharge { get; set; }
+    public char? Tutoring { get; set; }
+    public char? AmbientalEdication { get; set; }
     public decimal? T1 { get; set; }
     public decimal? T2 { get; set; }
     public decimal? T3 { get; set; }
@@ -51,13 +47,12 @@ public record FindManyClassificationsResponse
     public decimal? T20 { get; set; }
     public decimal? T21 { get; set; }
     public decimal? T22 { get; set; }
+    public decimal? Total { get; set; }
 }
 
 public record FindOneClassificationsResponse
 {
-    public int? Id { get; set; }
     public int? YearId { get; set; }
-    public int? Year { get; set; }
     public int? TeacherId { get; set; }
     public int? SubscriptionId { get; set; }
     public string? Name { get; set; }
@@ -72,16 +67,14 @@ public record FindOneClassificationsResponse
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public bool? IsRemove { get; set; }
-    public bool? IsAdido { get; set; }
-    public bool? IsReadapted { get; set; }
-    public bool? IsReadingRoom { get; set; }
-    public bool? IsComputing { get; set; }
-    public bool? IsSupplementCharge { get; set; }
-    public bool? IsTutoring { get; set; }
-    public bool? IsAmbientalEdication { get; set; }
-    public bool? IsRobotics { get; set; }
-    public bool? IsMusic { get; set; }
+    public char? Remove { get; set; }
+    public char? Adido { get; set; }
+    public char? Readapted { get; set; }
+    public char? ReadingRoom { get; set; }
+    public char? Computing { get; set; }
+    public char? SupplementCharge { get; set; }
+    public char? Tutoring { get; set; }
+    public char? AmbientalEdication { get; set; }
     public decimal? T1 { get; set; }
     public decimal? T2 { get; set; }
     public decimal? T3 { get; set; }
@@ -104,4 +97,5 @@ public record FindOneClassificationsResponse
     public decimal? T20 { get; set; }
     public decimal? T21 { get; set; }
     public decimal? T22 { get; set; }
+    public decimal? Total { get; set; }
 }

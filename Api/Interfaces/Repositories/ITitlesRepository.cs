@@ -25,7 +25,7 @@ public record OrderByTitlesParams : OrderByParams
     public string? Max { get; set; }
     public string? Order { get; set; }
     public string? Type { get; set; }
-    public string? IsActive { get; set; }
+    public string? Active { get; set; }
     public string? Year { get; set; }
 }
 

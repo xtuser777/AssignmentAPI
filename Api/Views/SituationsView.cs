@@ -15,7 +15,7 @@ public class SituationsView : ISituationsView
 
         return new CreateSituationsResponse
         {
-            Id = situation.Id,
+            SituationId = situation.SituationId,
         };
     }
 
@@ -28,7 +28,7 @@ public class SituationsView : ISituationsView
 
         return new FindOneSituationsResponse
         {
-            Id = situation.Id,
+            SituationId = situation.SituationId,
             Name = situation.Name,
         };
     }
@@ -42,7 +42,7 @@ public class SituationsView : ISituationsView
 
         return situations.Select(situation => new FindManySituationsResponse
         {
-            Id = situation.Id,
+            SituationId = situation.SituationId,
             Name = situation.Name,
         });
     }

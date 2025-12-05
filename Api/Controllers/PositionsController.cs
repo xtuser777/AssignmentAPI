@@ -27,7 +27,7 @@ public class PositionsController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{positionId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowPositionsParams parameters)
     {
@@ -44,10 +44,10 @@ public class PositionsController(
         var position = await positionsService.CreateAsync(parameters);
         var data = positionsView.Create(position);
 
-        return Created($"positions/{position.Id}", new { Data = data });
+        return Created($"positions/{position.PositionId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{positionId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdatePositionsParams parameters)
     {
@@ -56,7 +56,7 @@ public class PositionsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{positionId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeletePositionsParams parameters)
     {
@@ -69,37 +69,39 @@ public class PositionsController(
 public record IndexPositionsParams : PaginationParams
 {
     public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    [FromHeader(Name = "X-Order-By-Is-Active")]
-    public string? OrderByIsActive { get; set; }
+    [FromHeader(Name = "X-Order-By--Active")]
+    public string? OrderByActive { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexPositionsParams indexPositionsParams)
+    public static implicit operator FindManyServiceParams(
+        IndexPositionsParams indexPositionsParams)
         => new()
         {
             FindManyProps = new FindManyPositionsParams
             {
                 Name = indexPositionsParams.Name,
-                IsActive = indexPositionsParams.IsActive,
+                Active = indexPositionsParams.Active,
             },
             OrderByParams = new OrderByPositionsParams
             {
                 Name = indexPositionsParams.OrderByName,
-                IsActive = indexPositionsParams.OrderByIsActive,
+                Active = indexPositionsParams.OrderByActive,
             },
             PaginationParams = indexPositionsParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexPositionsParams indexPositionsParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexPositionsParams indexPositionsParams)
         => new()
         {
             CountProps = new CountPositionsParams
             {
                 Name = indexPositionsParams.Name,
-                IsActive = indexPositionsParams.IsActive,
+                Active = indexPositionsParams.Active,
             },
             PaginationParams = indexPositionsParams
         };
@@ -108,12 +110,16 @@ public record IndexPositionsParams : PaginationParams
 public record ShowPositionsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PositionId { get; set; }
 
-    public static implicit operator FindOneServiceParams(ShowPositionsParams showPositionsParams)
+    public static implicit operator FindOneServiceParams(
+        ShowPositionsParams showPositionsParams)
         => new()
         {
-            Id = showPositionsParams.Id,
+            Where = new FindManyPositionsParams
+            {
+                PositionId = showPositionsParams.PositionId,
+            }
         };
 }
 
@@ -122,7 +128,8 @@ public record CreatePositionsParams
     [FromBody]
     public CreatePositionsRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreatePositionsParams createPositionsParams)
+    public static implicit operator CreateServiceParams(
+        CreatePositionsParams createPositionsParams)
         => new()
         {
             Props = createPositionsParams.Request,
@@ -132,27 +139,35 @@ public record CreatePositionsParams
 public record UpdatePositionsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PositionId { get; set; }
 
     [FromBody]
     public UpdatePositionsRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdatePositionsParams createPositionsParams)
+    public static implicit operator UpdateServiceParams(
+        UpdatePositionsParams updatePositionsParams)
         => new()
         {
-            Id = createPositionsParams.Id,
-            Props = createPositionsParams.Request,
+            Where = new FindManyPositionsParams
+            {
+                PositionId = updatePositionsParams.PositionId,
+            },
+            Props = updatePositionsParams.Request,
         };
 }
 
 public record DeletePositionsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PositionId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeletePositionsParams showPositionsParams)
+    public static implicit operator DeleteServiceParams(
+        DeletePositionsParams deletePositionsParams)
         => new()
         {
-            Id = showPositionsParams.Id,
+            Where = new FindManyPositionsParams
+            {
+                PositionId = deletePositionsParams.PositionId,
+            },
         };
 }

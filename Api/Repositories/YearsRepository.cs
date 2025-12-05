@@ -33,17 +33,11 @@ public class YearsRepository : Repository<Year>, IYearsRepository
 
     public async Task CreateAsync(Year entity)
     {
-        entity.Id = await GetId();
         await _context.Years.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Year> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Years.AddRangeAsync(entities);
     }
 

@@ -15,7 +15,8 @@ public class TitlesView : ITitlesView
 
         return new CreateTitlesResponse
         {
-            Id = title.Id,
+            YearId = title.YearId,
+            TitleId = title.TitleId,
         };
     }
 
@@ -28,14 +29,14 @@ public class TitlesView : ITitlesView
 
         return new FindOneTitlesResponse
         {
-            Id = title.Id,
+            TitleId = title.TitleId,
             Alias = title.Alias,
             Description = title.Description,
             Order = title.Order,
             Max = title.Max,
             Type = title.Type,
             Weight = title.Weight,
-            IsActive = title.IsActive,
+            Active = title.Active,
             YearId = title.YearId,
         };
     }
@@ -49,14 +50,14 @@ public class TitlesView : ITitlesView
 
         return titles.Select(title => new FindManyTitlesResponse
         {
-            Id = title.Id,
+            TitleId = title.TitleId,
             Alias = title.Alias,
             Description = title.Description,
             Order = title.Order,
             Max = title.Max,
             Type = title.Type,
             Weight = title.Weight,
-            IsActive = title.IsActive,
+            Active = title.Active,
             YearId = title.YearId,
         });
     }

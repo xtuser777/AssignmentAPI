@@ -12,14 +12,9 @@ public class CountClassificationsParams : FindManyClassificationsParams;
 
 public class ExistsClassificationsParams : CountClassificationsParams;
 
-public class ExclusiveClassificationsParams : CountClassificationsParams
-{
-    public int ExcludeId { get; set; }
-}
-
 public record OrderByClassificationsParams : OrderByParams
 {
-    public string? Year { get; set; }
+    public string? YearId { get; set; }
     public string? Subscription { get; set; }
     public string? Name { get; set; }
     public string? Situation { get; set; }
@@ -29,16 +24,14 @@ public record OrderByClassificationsParams : OrderByParams
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public string? IsRemove { get; set; }
-    public string? IsAdido { get; set; }
-    public string? IsReadapted { get; set; }
-    public string? IsReadingRoom { get; set; }
-    public string? IsComputing { get; set; }
-    public string? IsSupplementCharge { get; set; }
-    public string? IsTutoring { get; set; }
-    public string? IsAmbientalEdication { get; set; }
-    public string? IsRobotics { get; set; }
-    public string? IsMusic { get; set; }
+    public string? Remove { get; set; }
+    public string? Adido { get; set; }
+    public string? Readapted { get; set; }
+    public string? ReadingRoom { get; set; }
+    public string? Computing { get; set; }
+    public string? SupplementCharge { get; set; }
+    public string? Tutoring { get; set; }
+    public string? AmbientalEdication { get; set; }
     public string? T1 { get; set; }
     public string? T2 { get; set; }
     public string? T3 { get; set; }
@@ -61,9 +54,5 @@ public record OrderByClassificationsParams : OrderByParams
     public string? T20 { get; set; }
     public string? T21 { get; set; }
     public string? T22 { get; set; }
-}
-
-public record IncludesClassificationsParams : IncludesParams
-{
-    public bool? Year { get; set; }
+    public string? Value { get; set; }
 }

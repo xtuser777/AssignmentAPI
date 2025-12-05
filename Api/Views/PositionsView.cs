@@ -15,7 +15,7 @@ public class PositionsView : IPositionsView
 
         return new CreatePositionsResponse
         {
-            Id = position.Id,
+            PositionId = position.PositionId,
         };
     }
 
@@ -28,9 +28,9 @@ public class PositionsView : IPositionsView
 
         return new FindOnePositionsResponse
         {
-            Id = position.Id,
+            PositionId = position.PositionId,
             Name = position.Name,
-            IsActive = position.IsActive,
+            Active = position.Active,
         };
     }
 
@@ -43,9 +43,9 @@ public class PositionsView : IPositionsView
 
         return positions.Select(position => new FindManyPositionsResponse
         {
-            Id = position.Id,
+            PositionId = position.PositionId,
             Name = position.Name,
-            IsActive = position.IsActive,
+            Active = position.Active,
         });
     }
 }

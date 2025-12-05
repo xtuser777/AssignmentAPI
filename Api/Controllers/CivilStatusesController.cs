@@ -27,7 +27,7 @@ public class CivilStatusesController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{civilStatusId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowCivilStatusesParams parameters)
     {
@@ -44,10 +44,10 @@ public class CivilStatusesController(
         var civilStatus = await civilStatusesService.CreateAsync(parameters);
         var data = civilStatusesView.Create(civilStatus);
 
-        return Created($"civil-statuses/{civilStatus.Id}", new { Data = data });
+        return Created($"civil-statuses/{civilStatus.CivilStatusId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{civilStatusId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateCivilStatusesParams parameters)
     {
@@ -56,7 +56,7 @@ public class CivilStatusesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{civilStatusId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteCivilStatusesParams parameters)
     {
@@ -73,7 +73,8 @@ public record IndexCivilStatusesParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexCivilStatusesParams indexCivilStatusesParams)
+    public static implicit operator FindManyServiceParams(
+        IndexCivilStatusesParams indexCivilStatusesParams)
         => new()
         {
             FindManyProps = new FindManyCivilStatusesParams
@@ -87,7 +88,8 @@ public record IndexCivilStatusesParams : PaginationParams
             PaginationParams = indexCivilStatusesParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexCivilStatusesParams indexCivilStatusesParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexCivilStatusesParams indexCivilStatusesParams)
         => new()
         {
             CountProps = new CountCivilStatusesParams
@@ -101,12 +103,16 @@ public record IndexCivilStatusesParams : PaginationParams
 public record ShowCivilStatusesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int CivilStatusId { get; set; }
 
-    public static implicit operator FindOneServiceParams(ShowCivilStatusesParams showCivilStatusesParams)
+    public static implicit operator FindOneServiceParams(
+        ShowCivilStatusesParams showCivilStatusesParams)
         => new()
         {
-            Id = showCivilStatusesParams.Id,
+            Where = new FindManyCivilStatusesParams
+            {
+                CivilStatusId = showCivilStatusesParams.CivilStatusId,
+            }
         };
 }
 
@@ -115,7 +121,8 @@ public record CreateCivilStatusesParams
     [FromBody]
     public CreateCivilStatusesRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateCivilStatusesParams createCivilStatusesParams)
+    public static implicit operator CreateServiceParams(
+        CreateCivilStatusesParams createCivilStatusesParams)
         => new()
         {
             Props = createCivilStatusesParams.Request,
@@ -125,27 +132,35 @@ public record CreateCivilStatusesParams
 public record UpdateCivilStatusesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int CivilStatusId { get; set; }
 
     [FromBody]
     public UpdateCivilStatusesRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateCivilStatusesParams createCivilStatusesParams)
+    public static implicit operator UpdateServiceParams(
+        UpdateCivilStatusesParams updateCivilStatusesParams)
         => new()
         {
-            Id = createCivilStatusesParams.Id,
-            Props = createCivilStatusesParams.Request,
+            Where = new FindManyCivilStatusesParams
+            {
+                CivilStatusId = updateCivilStatusesParams.CivilStatusId,
+            },
+            Props = updateCivilStatusesParams.Request,
         };
 }
 
 public record DeleteCivilStatusesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int CivilStatusId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteCivilStatusesParams showCivilStatusesParams)
+    public static implicit operator DeleteServiceParams(
+        DeleteCivilStatusesParams deleteCivilStatusesParams)
         => new()
         {
-            Id = showCivilStatusesParams.Id,
+            Where = new FindManyCivilStatusesParams
+            {
+                CivilStatusId = deleteCivilStatusesParams.CivilStatusId,
+            },
         };
 }

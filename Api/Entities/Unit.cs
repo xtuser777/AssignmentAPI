@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("unidade")]
+[PrimaryKey(nameof(UnitId))]
 public class Unit : UnitProps
 {
     public Unit()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Unit(UnitProps props)
@@ -21,5 +24,9 @@ public class Unit : UnitProps
 
 public class UnitProps : Entity
 {
+    [Column("idunidade")]
+    public int? UnitId { get; set; }
+
+    [Column("nome")]
     public string? Name { get; set; }
 }

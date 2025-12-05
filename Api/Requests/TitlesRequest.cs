@@ -28,10 +28,10 @@ public record CreateTitlesRequest
     public char? Type { get; set; }
 
     [RequiredField]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     [RequiredField]
-    [Connection<Year>(typeof(IYearsRepository))]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
     public int? YearId { get; set; }
 
     public static implicit operator TitleProps(CreateTitlesRequest request)
@@ -44,7 +44,7 @@ public record CreateTitlesRequest
             Max = request.Max,
             Order = request.Order,
             Type = request.Type,
-            IsActive = request.IsActive,
+            Active = request.Active,
             YearId = request.YearId,
         };
     }
@@ -72,9 +72,9 @@ public record UpdateTitlesRequest
     public char? Type { get; set; }
 
     [BoolValue]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
-    [Connection<Year>(typeof(IYearsRepository))]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExclusiveYearParams))]
     public int? YearId { get; set; }
 
     public static implicit operator TitleProps(UpdateTitlesRequest request)
@@ -87,7 +87,7 @@ public record UpdateTitlesRequest
             Max = request.Max,
             Order = request.Order,
             Type = request.Type,
-            IsActive = request.IsActive,
+            Active = request.Active,
             YearId = request.YearId,
         };
     }

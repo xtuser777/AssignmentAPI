@@ -15,7 +15,8 @@ public class TeachersView : ITeachersView
 
         return new CreateTeachersResponse
         {
-            Id = teacher.Id,
+            YearId = teacher.YearId,
+            TeacherId = teacher.TeacherId,
         };
     }
 
@@ -28,7 +29,7 @@ public class TeachersView : ITeachersView
 
         return new FindOneTeachersResponse
         {
-            Id = teacher.Id,
+            TeacherId = teacher.TeacherId,
             Name = teacher.Name,
             Identity = teacher.Identity,
             Document = teacher.Document,
@@ -49,16 +50,16 @@ public class TeachersView : ITeachersView
             DisciplineId = teacher.DisciplineId,
             SituationId = teacher.SituationId,
             Speciality = teacher.Speciality,
-            IsRemove = teacher.IsRemove,
-            IsAdido = teacher.IsAdido,
-            IsReadapted = teacher.IsReadapted,
-            IsReadingRoom = teacher.IsReadingRoom,
-            IsComputing = teacher.IsComputing,
-            IsSupplementCharge = teacher.IsSupplementCharge,
-            IsTutoring = teacher.IsTutoring,
-            IsAmbientalEdication = teacher.IsAmbientalEdication,
-            IsRobotics = teacher.IsRobotics,
-            IsMusic = teacher.IsMusic,
+            Remove = teacher.Remove,
+            Adido = teacher.Adido,
+            Readapted = teacher.Readapted,
+            ReadingRoom = teacher.ReadingRoom,
+            Computing = teacher.Computing,
+            SupplementCharge = teacher.SupplementCharge,
+            Tutoring = teacher.Tutoring,
+            AmbientalEdication = teacher.AmbientalEdication,
+            Robotics = teacher.Robotics,
+            Music = teacher.Music,
         };
     }
 
@@ -71,7 +72,7 @@ public class TeachersView : ITeachersView
 
         return teachers.Select(teacher => new FindManyTeachersResponse
         {
-            Id = teacher.Id,
+            TeacherId = teacher.TeacherId,
             Name = teacher.Name,
             Identity = teacher.Identity,
             Document = teacher.Document,
@@ -97,16 +98,16 @@ public class TeachersView : ITeachersView
             SituationId = teacher.SituationId,
             SituationName = teacher.Situation?.Name,
             Speciality = teacher.Speciality,
-            IsRemove = teacher.IsRemove,
-            IsAdido = teacher.IsAdido,
-            IsReadapted = teacher.IsReadapted,
-            IsReadingRoom = teacher.IsReadingRoom,
-            IsComputing = teacher.IsComputing,
-            IsSupplementCharge = teacher.IsSupplementCharge,
-            IsTutoring = teacher.IsTutoring,
-            IsAmbientalEdication = teacher.IsAmbientalEdication,
-            IsRobotics = teacher.IsRobotics,
-            IsMusic = teacher.IsMusic,
+            Remove = teacher.Remove,
+            Adido = teacher.Adido,
+            Readapted = teacher.Readapted,
+            ReadingRoom = teacher.ReadingRoom,
+            Computing = teacher.Computing,
+            SupplementCharge = teacher.SupplementCharge,
+            Tutoring = teacher.Tutoring,
+            AmbientalEdication = teacher.AmbientalEdication,
+            Robotics = teacher.Robotics,
+            Music = teacher.Music,
         });
     }
 }

@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("cargo")]
+[PrimaryKey(nameof(PositionId))]
 public class Position : PositionProps
 {
     public Position() 
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Position(PositionProps props)
@@ -21,6 +24,12 @@ public class Position : PositionProps
 
 public class PositionProps : Entity
 {
+    [Column("idcargo")]
+    public int? PositionId { get; set; }
+
+    [Column("nome")]
     public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+
+    [Column("ativo")]
+    public char? Active { get; set; }
 }

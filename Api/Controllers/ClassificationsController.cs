@@ -25,25 +25,6 @@ public class ClassificationsController(
             Pagination = pagination
         });
     }
-
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> ShowAsync(
-        [AsParameters] ShowClassificationsParams parameters)
-    {
-        var classification = await classificationsService.FindOneAsync(parameters);
-        var data = classificationsView.FindOne(classification);
-
-        return Ok(new { Data = data });
-    }
-
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteAsync(
-        [AsParameters] DeleteClassificationsParams parameters)
-    {
-        await classificationsService.DeleteAsync(parameters);
-
-        return NoContent();
-    }
 }
 
 public record IndexClassificationsParams : PaginationParams
@@ -59,16 +40,16 @@ public record IndexClassificationsParams : PaginationParams
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public bool? IsRemove { get; set; }
-    public bool? IsAdido { get; set; }
-    public bool? IsReadapted { get; set; }
-    public bool? IsReadingRoom { get; set; }
-    public bool? IsComputing { get; set; }
-    public bool? IsSupplementCharge { get; set; }
-    public bool? IsTutoring { get; set; }
-    public bool? IsAmbientalEdication { get; set; }
-    public bool? IsRobotics { get; set; }
-    public bool? IsMusic { get; set; }
+    public char? Remove { get; set; }
+    public char? Adido { get; set; }
+    public char? Readapted { get; set; }
+    public char? ReadingRoom { get; set; }
+    public char? Computing { get; set; }
+    public char? SupplementCharge { get; set; }
+    public char? Tutoring { get; set; }
+    public char? AmbientalEdication { get; set; }
+    public char? Robotics { get; set; }
+    public char? Music { get; set; }
 
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
@@ -92,28 +73,29 @@ public record IndexClassificationsParams : PaginationParams
     public string? OrderByCellphone { get; set; }
     [FromHeader(Name = "X-Order-By-Speciality")]
     public string? OrderBySpeciality { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Remove")]
-    public string? OrderByIsRemove { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Adido")]
-    public string? OrderByIsAdido { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Readapted")]
-    public string? OrderByIsReadapted { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Reading-Room")]
-    public string? OrderByIsReadingRoom { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Computing")]
-    public string? OrderByIsComputing { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Supplement-Charge")]
-    public string? OrderByIsSupplementCharge { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Tutoring")]
-    public string? OrderByIsTutoring { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Ambiental-Edication")]
-    public string? OrderByIsAmbientalEdication { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Robotics")]
-    public string? OrderByIsRobotics { get; set; }
-    [FromHeader(Name = "X-Order-By-Is-Music")]
-    public string? OrderByIsMusic { get; set; }
+    [FromHeader(Name = "X-Order-By--Remove")]
+    public string? OrderByRemove { get; set; }
+    [FromHeader(Name = "X-Order-By--Adido")]
+    public string? OrderByAdido { get; set; }
+    [FromHeader(Name = "X-Order-By--Readapted")]
+    public string? OrderByReadapted { get; set; }
+    [FromHeader(Name = "X-Order-By--Reading-Room")]
+    public string? OrderByReadingRoom { get; set; }
+    [FromHeader(Name = "X-Order-By--Computing")]
+    public string? OrderByComputing { get; set; }
+    [FromHeader(Name = "X-Order-By--Supplement-Charge")]
+    public string? OrderBySupplementCharge { get; set; }
+    [FromHeader(Name = "X-Order-By--Tutoring")]
+    public string? OrderByTutoring { get; set; }
+    [FromHeader(Name = "X-Order-By--Ambiental-Edication")]
+    public string? OrderByAmbientalEdication { get; set; }
+    [FromHeader(Name = "X-Order-By--Robotics")]
+    public string? OrderByRobotics { get; set; }
+    [FromHeader(Name = "X-Order-By--Music")]
+    public string? OrderByMusic { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexClassificationsParams indexClassificationsParams)
+    public static implicit operator FindManyServiceParams(
+        IndexClassificationsParams indexClassificationsParams)
         => new()
         {
             FindManyProps = new FindManyClassificationsParams
@@ -129,21 +111,19 @@ public record IndexClassificationsParams : PaginationParams
                 Phone = indexClassificationsParams.Phone,
                 Cellphone = indexClassificationsParams.Cellphone,
                 Speciality = indexClassificationsParams.Speciality,
-                IsRemove = indexClassificationsParams.IsRemove,
-                IsAdido = indexClassificationsParams.IsAdido,
-                IsReadapted = indexClassificationsParams.IsReadapted,
-                IsReadingRoom = indexClassificationsParams.IsReadingRoom,
-                IsComputing = indexClassificationsParams.IsComputing,
-                IsSupplementCharge = indexClassificationsParams.IsSupplementCharge,
-                IsTutoring = indexClassificationsParams.IsTutoring,
-                IsAmbientalEdication = indexClassificationsParams.IsAmbientalEdication,
-                IsRobotics = indexClassificationsParams.IsRobotics,
-                IsMusic = indexClassificationsParams.IsMusic,
+                Remove = indexClassificationsParams.Remove,
+                Adido = indexClassificationsParams.Adido,
+                Readapted = indexClassificationsParams.Readapted,
+                ReadingRoom = indexClassificationsParams.ReadingRoom,
+                Computing = indexClassificationsParams.Computing,
+                SupplementCharge = indexClassificationsParams.SupplementCharge,
+                Tutoring = indexClassificationsParams.Tutoring,
+                AmbientalEdication = indexClassificationsParams.AmbientalEdication,
             },
             OrderByParams = new OrderByClassificationsParams
             {
                 Name = indexClassificationsParams.OrderByName,
-                Year = indexClassificationsParams.OrderByYear,
+                YearId = indexClassificationsParams.OrderByYear,
                 Subscription = indexClassificationsParams.OrderBySubscription,
                 Situation = indexClassificationsParams.OrderBySituation,
                 Position = indexClassificationsParams.OrderByPosition,
@@ -152,21 +132,20 @@ public record IndexClassificationsParams : PaginationParams
                 Phone = indexClassificationsParams.OrderByPhone,
                 Cellphone = indexClassificationsParams.OrderByCellphone,
                 Speciality = indexClassificationsParams.OrderBySpeciality,
-                IsRemove = indexClassificationsParams.OrderByIsRemove,
-                IsAdido = indexClassificationsParams.OrderByIsAdido,
-                IsReadapted = indexClassificationsParams.OrderByIsReadapted,
-                IsReadingRoom = indexClassificationsParams.OrderByIsReadingRoom,
-                IsComputing = indexClassificationsParams.OrderByIsComputing,
-                IsSupplementCharge = indexClassificationsParams.OrderByIsSupplementCharge,
-                IsTutoring = indexClassificationsParams.OrderByIsTutoring,
-                IsAmbientalEdication = indexClassificationsParams.OrderByIsAmbientalEdication,
-                IsRobotics = indexClassificationsParams.OrderByIsRobotics,
-                IsMusic = indexClassificationsParams.OrderByIsMusic,
+                Remove = indexClassificationsParams.OrderByRemove,
+                Adido = indexClassificationsParams.OrderByAdido,
+                Readapted = indexClassificationsParams.OrderByReadapted,
+                ReadingRoom = indexClassificationsParams.OrderByReadingRoom,
+                Computing = indexClassificationsParams.OrderByComputing,
+                SupplementCharge = indexClassificationsParams.OrderBySupplementCharge,
+                Tutoring = indexClassificationsParams.OrderByTutoring,
+                AmbientalEdication = indexClassificationsParams.OrderByAmbientalEdication,
             },
             PaginationParams = indexClassificationsParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexClassificationsParams indexClassificationsParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexClassificationsParams indexClassificationsParams)
         => new()
         {
             CountProps = new CountClassificationsParams
@@ -182,41 +161,15 @@ public record IndexClassificationsParams : PaginationParams
                 Phone = indexClassificationsParams.Phone,
                 Cellphone = indexClassificationsParams.Cellphone,
                 Speciality = indexClassificationsParams.Speciality,
-                IsRemove = indexClassificationsParams.IsRemove,
-                IsAdido = indexClassificationsParams.IsAdido,
-                IsReadapted = indexClassificationsParams.IsReadapted,
-                IsReadingRoom = indexClassificationsParams.IsReadingRoom,
-                IsComputing = indexClassificationsParams.IsComputing,
-                IsSupplementCharge = indexClassificationsParams.IsSupplementCharge,
-                IsTutoring = indexClassificationsParams.IsTutoring,
-                IsAmbientalEdication = indexClassificationsParams.IsAmbientalEdication,
-                IsRobotics = indexClassificationsParams.IsRobotics,
-                IsMusic = indexClassificationsParams.IsMusic,
+                Remove = indexClassificationsParams.Remove,
+                Adido = indexClassificationsParams.Adido,
+                Readapted = indexClassificationsParams.Readapted,
+                ReadingRoom = indexClassificationsParams.ReadingRoom,
+                Computing = indexClassificationsParams.Computing,
+                SupplementCharge = indexClassificationsParams.SupplementCharge,
+                Tutoring = indexClassificationsParams.Tutoring,
+                AmbientalEdication = indexClassificationsParams.AmbientalEdication,
             },
             PaginationParams = indexClassificationsParams
-        };
-}
-
-public record ShowClassificationsParams
-{
-    [FromRoute]
-    public int Id { get; set; }
-
-    public static implicit operator FindOneServiceParams(ShowClassificationsParams showClassificationsParams)
-        => new()
-        {
-            Id = showClassificationsParams.Id,
-        };
-}
-
-public record DeleteClassificationsParams
-{
-    [FromRoute]
-    public int Id { get; set; }
-
-    public static implicit operator DeleteServiceParams(DeleteClassificationsParams showClassificationsParams)
-        => new()
-        {
-            Id = showClassificationsParams.Id,
         };
 }

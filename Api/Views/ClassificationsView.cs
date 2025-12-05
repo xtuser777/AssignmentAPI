@@ -16,9 +16,7 @@ public class ClassificationsView : IClassificationsView
 
         return new FindOneClassificationsResponse
         {
-            Id = classification.Id,
             YearId = classification.YearId,
-            Year = classification.Year,
             TeacherId = classification.TeacherId,
             SubscriptionId = classification.SubscriptionId,
             Name = classification.Name,
@@ -33,16 +31,14 @@ public class ClassificationsView : IClassificationsView
             Phone = classification.Phone,
             Cellphone = classification.Cellphone,
             Speciality = classification.Speciality,
-            IsRemove = classification.IsRemove,
-            IsAdido = classification.IsAdido,
-            IsReadapted = classification.IsReadapted,
-            IsReadingRoom = classification.IsReadingRoom,
-            IsComputing = classification.IsComputing,
-            IsSupplementCharge = classification.IsSupplementCharge,
-            IsTutoring = classification.IsTutoring,
-            IsAmbientalEdication = classification.IsAmbientalEdication,
-            IsRobotics = classification.IsRobotics,
-            IsMusic = classification.IsMusic,
+            Remove = classification.Remove,
+            Adido = classification.Adido,
+            Readapted = classification.Readapted,
+            ReadingRoom = classification.ReadingRoom,
+            Computing = classification.Computing,
+            SupplementCharge = classification.SupplementCharge,
+            Tutoring = classification.Tutoring,
+            AmbientalEdication = classification.AmbientalEdication,
             T1 = classification.T1,
             T2 = classification.T2,
             T3 = classification.T3,
@@ -65,6 +61,7 @@ public class ClassificationsView : IClassificationsView
             T20 = classification.T20,
             T21 = classification.T21,
             T22 = classification.T22,
+            Total = classification.Total,
         };
     }
 
@@ -77,9 +74,7 @@ public class ClassificationsView : IClassificationsView
 
         return classifications.Select(classification => new FindManyClassificationsResponse
         {
-            Id = classification.Id,
             YearId = classification.YearId,
-            Year = classification.Year,
             TeacherId = classification.TeacherId,
             SubscriptionId = classification.SubscriptionId,
             Name = classification.Name,
@@ -94,16 +89,14 @@ public class ClassificationsView : IClassificationsView
             Phone = classification.Phone,
             Cellphone = classification.Cellphone,
             Speciality = classification.Speciality,
-            IsRemove = classification.IsRemove,
-            IsAdido = classification.IsAdido,
-            IsReadapted = classification.IsReadapted,
-            IsReadingRoom = classification.IsReadingRoom,
-            IsComputing = classification.IsComputing,
-            IsSupplementCharge = classification.IsSupplementCharge,
-            IsTutoring = classification.IsTutoring,
-            IsAmbientalEdication = classification.IsAmbientalEdication,
-            IsRobotics = classification.IsRobotics,
-            IsMusic = classification.IsMusic,
+            Remove = classification.Remove,
+            Adido = classification.Adido,
+            Readapted = classification.Readapted,
+            ReadingRoom = classification.ReadingRoom,
+            Computing = classification.Computing,
+            SupplementCharge = classification.SupplementCharge,
+            Tutoring = classification.Tutoring,
+            AmbientalEdication = classification.AmbientalEdication,
             T1 = classification.T1,
             T2 = classification.T2,
             T3 = classification.T3,
@@ -126,6 +119,7 @@ public class ClassificationsView : IClassificationsView
             T20 = classification.T20,
             T21 = classification.T21,
             T22 = classification.T22,
+            Total = classification.Total,
         });
     }
 }

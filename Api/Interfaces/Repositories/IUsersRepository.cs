@@ -23,7 +23,7 @@ public record OrderByUsersParams : OrderByParams
     public string? Password { get; set; }
     public string? Name { get; set; }
     public string? Email { get; set; }
-    public string? IsActive { get; set; }
+    public string? Active { get; set; }
     public string? Role { get; set; }
 }
 

@@ -33,17 +33,11 @@ public class TeachersRepository : Repository<Teacher>, ITeachersRepository
 
     public async Task CreateAsync(Teacher entity)
     {
-        entity.Id = await GetId();
         await _context.Teachers.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Teacher> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Teachers.AddRangeAsync(entities);
     }
 

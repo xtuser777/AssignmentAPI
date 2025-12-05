@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("titulo_por_inscricao")]
+[PrimaryKey(nameof(TitleId), nameof(SubscriptionId), nameof(YearId), nameof(TeacherId))]
 public class TitleBySubscription : TitleBySubscriptionProps
 {
     public TitleBySubscription()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public TitleBySubscription(TitleBySubscriptionProps props)
@@ -21,13 +24,30 @@ public class TitleBySubscription : TitleBySubscriptionProps
 
 public class TitleBySubscriptionProps : Entity
 {
-    public int? YearId { get; set; }
-    public int? TeacherId { get; set; }
-    public int? TitleId { get; set; }
+    [Column("idinscricao")]
     public int? SubscriptionId { get; set; }
+
+    [Column("idano")]
+    public int? YearId { get; set; }
+
+    [Column("idprofessor")]
+    public int? TeacherId { get; set; }
+
+    [Column("idtitulo")]
+    public int? TitleId { get; set; }
+
+    [Column("valor")]
     public decimal? Value { get; set; }
-    public Year? Year { get; set; }
-    public Teacher? Teacher { get; init; }
-    public Title? Title { get; init; }
-    public Subscription? Subscription { get; init; }
+
+    [ForeignKey(nameof(YearId))]
+    public virtual Year? Year { get; set; }
+
+    [ForeignKey($"{nameof(YearId)}, {nameof(TeacherId)}")]
+    public virtual Teacher? Teacher { get; init; }
+
+    [ForeignKey($"{nameof(YearId)}, {nameof(TitleId)}")]
+    public virtual Title? Title { get; init; }
+
+    [ForeignKey($"{nameof(YearId)}, {nameof(SubscriptionId)}, {nameof(TeacherId)}")]
+    public virtual Subscription? Subscription { get; init; }
 }

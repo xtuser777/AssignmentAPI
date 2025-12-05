@@ -31,17 +31,11 @@ public class SituationsRepository : Repository<Situation>, ISituationsRepository
 
     public async Task CreateAsync(Situation entity)
     {
-        entity.Id = await GetId();
         await _context.Situations.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Situation> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Situations.AddRangeAsync(entities);
     }
 

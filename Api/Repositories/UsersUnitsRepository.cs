@@ -35,17 +35,11 @@ public class UsersUnitsRepository : Repository<UserUnit>, IUsersUnitsRepository
 
     public async Task CreateAsync(UserUnit entity)
     {
-        entity.Id = await GetId();
         await _context.UsersUnits.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<UserUnit> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id = id++;
-        }
         await _context.UsersUnits.AddRangeAsync(entities);
     }
 

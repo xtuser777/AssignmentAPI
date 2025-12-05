@@ -15,7 +15,7 @@ public record CreateYearsRequest
 
     [RequiredField]
     [BoolValue]
-    public bool? IsBlocked { get; set; }
+    public char? IsBlocked { get; set; }
 
     public static implicit operator YearProps(CreateYearsRequest request)
         => new()
@@ -37,7 +37,7 @@ public record UpdateYearsRequest
     public string? Resolution { get; set; }
 
     [BoolValue]
-    public bool? IsBlocked { get; set; }
+    public char? IsBlocked { get; set; }
 
     public static implicit operator YearProps(UpdateYearsRequest request)
         => new()

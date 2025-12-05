@@ -29,10 +29,10 @@ public class ImportsController(
             {
                 var year = new Year()
                 {
-                    Id = ano.idano,
+                    YearId = ano.idano,
                     Record = ano.ficha,
                     Resolution = ano.resolucao,
-                    IsBlocked = ano.bloqueado == "S"
+                    IsBlocked = ano.bloqueado
                 };
                 years.Add(year);
             }
@@ -58,7 +58,7 @@ public class ImportsController(
             {
                 var unit = new Unit()
                 {
-                    Id = unidade.idunidade,
+                    UnitId = unidade.idunidade,
                     Name = unidade.nome
                 };
                 units.Add(unit);
@@ -85,9 +85,9 @@ public class ImportsController(
             {
                 var position = new Position()
                 {
-                    Id = cargo.idcargo,
+                    PositionId = cargo.idcargo,
                     Name = cargo.nome,
-                    IsActive = cargo.ativo != "N"
+                    Active = cargo.ativo
                 };
                 positions.Add(position);
             }
@@ -113,7 +113,7 @@ public class ImportsController(
             {
                 var discipline = new Discipline()
                 {
-                    Id = disciplina.iddisciplina,
+                    DisciplineId = disciplina.iddisciplina,
                     Name = disciplina.nome,
                 };
                 disciplines.Add(discipline);
@@ -140,7 +140,7 @@ public class ImportsController(
             {
                 var civilStatus = new CivilStatus()
                 {
-                    Id = estado_civil.idestado_civil,
+                    CivilStatusId = estado_civil.idestado_civil,
                     Name = estado_civil.nome,
                 };
                 civilstatuses.Add(civilStatus);
@@ -167,7 +167,7 @@ public class ImportsController(
             {
                 var preference = new Preference()
                 {
-                    Id = preferencia.idpreferencia,
+                    PreferenceId = preferencia.idpreferencia,
                     Name = preferencia.nome,
                 };
                 preferences.Add(preference);
@@ -194,7 +194,7 @@ public class ImportsController(
             {
                 var situation = new Situation()
                 {
-                    Id = situacao.idsituacao,
+                    SituationId = situacao.idsituacao,
                     Name = situacao.nome,
                 };
                 situations.Add(situation);
@@ -212,7 +212,7 @@ public class ImportsController(
         {
             return BadRequest("No file uploaded.");
         }
-        // var titles = new List<Title>();
+        var titles = new List<Title>();
         using (var transation = unitOfWork.BeginTransaction)
         using (var reader = new StreamReader(file.OpenReadStream()))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -221,7 +221,7 @@ public class ImportsController(
             {
                 var title = new Title()
                 {
-                    Id = titulo.idtitulo,
+                    TitleId = titulo.idtitulo,
                     YearId = titulo.idano,
                     Description = titulo.descricao,
                     Alias = titulo.sigla,
@@ -229,23 +229,23 @@ public class ImportsController(
                     Max = titulo.maximo,
                     Order = titulo.ordem,
                     Type = titulo.tipo,
-                    IsActive = titulo.ativo == "S"
+                    Active = titulo.ativo
                 };
-                await unitOfWork.TitlesRepository.CreateAsync(title);
-                await unitOfWork.Commit(transation);
+                titles.Add(title);
             }
-            // await unitOfWork.TitlesRepository.CreateManyAsync(titles);
-            
+            await unitOfWork.TitlesRepository.CreateManyAsync(titles);
+            await unitOfWork.Commit(transation);
+
         }
         return Ok();
     }
 }
 
-public record Ano(int idano, string ficha, string resolucao, string bloqueado);
+public record Ano(int idano, string ficha, string resolucao, char bloqueado);
 
 public record Unidade(int idunidade, string nome);
 
-public record Cargo(int idcargo, string nome, string? ativo);
+public record Cargo(int idcargo, string nome, char? ativo);
 
 public record Disciplina(int iddisciplina, string nome);
 
@@ -255,4 +255,4 @@ public record Preferencia(int idpreferencia, string nome);
 
 public record Situacao(int idsituacao, string nome);
 
-public record Titulo(int idano, int idtitulo, string descricao, string sigla, decimal peso, decimal maximo, int ordem, char tipo, string ativo);
+public record Titulo(int idano, int idtitulo, string descricao, string sigla, decimal peso, decimal maximo, int ordem, char tipo, char ativo);

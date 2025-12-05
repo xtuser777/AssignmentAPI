@@ -32,17 +32,11 @@ public class UnitsRepository : Repository<Unit>, IUnitsRepository
 
     public async Task CreateAsync(Unit entity)
     {
-        entity.Id = await GetId();
         await _context.Units.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Unit> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Units.AddRangeAsync(entities);
     }
 

@@ -15,7 +15,7 @@ public class PreferencesView : IPreferencesView
 
         return new CreatePreferencesResponse
         {
-            Id = preference.Id,
+            PreferenceId = preference.PreferenceId,
         };
     }
 
@@ -28,7 +28,7 @@ public class PreferencesView : IPreferencesView
 
         return new FindOnePreferencesResponse
         {
-            Id = preference.Id,
+            PreferenceId = preference.PreferenceId,
             Name = preference.Name,
         };
     }
@@ -42,7 +42,7 @@ public class PreferencesView : IPreferencesView
 
         return preferences.Select(preference => new FindManyPreferencesResponse
         {
-            Id = preference.Id,
+            PreferenceId = preference.PreferenceId,
             Name = preference.Name,
         });
     }

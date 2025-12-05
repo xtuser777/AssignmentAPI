@@ -47,14 +47,14 @@ public class UniqueFieldAttribute<TEntity> : ValidationAttribute
         }
         else if (method == HttpMethods.Put || method == HttpMethods.Patch)
         {
-            var idString = httpContext.GetRouteData().Values["id"]?.ToString() ?? "";
-            if (int.TryParse(idString, out var id))
+            var idString = httpContext.GetRouteData().Values["code"]?.ToString() ?? "";
+            if (int.TryParse(idString, out var code))
             {
                 var exclusiveParams =
                     (Entity)_paramsType.GetConstructor(Type.EmptyTypes)!
                     .Invoke([])!;
                 exclusiveParams.GetType().GetProperty("ExcludeId")!
-                    .SetValue(exclusiveParams, id);
+                    .SetValue(exclusiveParams, code);
                 exclusiveParams.GetType().GetProperty(propertyName)!
                     .SetValue(exclusiveParams, value.ToString()!);
                 var exclusive = repository.ExclusiveAsync(exclusiveParams)

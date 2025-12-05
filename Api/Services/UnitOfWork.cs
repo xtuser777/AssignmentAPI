@@ -2,7 +2,6 @@
 using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Assignment.Api.Services;
@@ -45,11 +44,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 
     public async Task Commit(IDbContextTransaction transaction, string? tableName = null)
     {
-        if (tableName != null) 
-            await context.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] ON");
         await context.SaveChangesAsync();
-        if (tableName != null) 
-            await context.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] OFF");
         await transaction.CommitAsync();
     }
 

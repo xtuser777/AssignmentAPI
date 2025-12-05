@@ -122,12 +122,4 @@ public abstract class Repository<TEntity> where TEntity : Entity
             };
         }
     }
-
-    protected async Task<int> GetId()
-    {
-        var entity = await query.OrderBy(x => x.Id).LastOrDefaultAsync();
-        var id = entity?.Id ?? 0;
-
-        return id + 1;
-    }
 }

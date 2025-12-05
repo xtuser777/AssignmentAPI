@@ -12,14 +12,14 @@ public record CreatePositionsRequest
     public string? Name { get; set; } = string.Empty;
 
     [RequiredField]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     public static implicit operator PositionProps(CreatePositionsRequest request)
     {
         return new PositionProps
         {
             Name = request.Name,
-            IsActive = request.IsActive,
+            Active = request.Active,
         };
     }
 }
@@ -31,15 +31,14 @@ public record UpdatePositionsRequest
     [UniqueField<Position>(typeof(IPositionsRepository), typeof(ExclusivePositionsParams))]
     public string? Name { get; set; } = string.Empty;
 
-    [BoolValue]
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
 
     public static implicit operator PositionProps(UpdatePositionsRequest request)
     {
         return new PositionProps
         {
             Name = request.Name,
-            IsActive = request.IsActive,
+            Active = request.Active,
         };
     }
 }

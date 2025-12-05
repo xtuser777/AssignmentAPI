@@ -15,7 +15,7 @@ public class SubscriptionsView : ISubscriptionsView
 
         return new CreateSubscriptionsResponse
         {
-            Id = subscription.Id,
+            SubscriptionId = subscription.SubscriptionId,
         };
     }
 
@@ -28,36 +28,36 @@ public class SubscriptionsView : ISubscriptionsView
 
         return new FindOneSubscriptionsResponse
         {
-            Id = subscription.Id,
+            SubscriptionId = subscription.SubscriptionId,
             YearId = subscription.YearId,
             TeacherId = subscription.TeacherId,
             PreferenceId = subscription.PreferenceId,
             Teacher = subscription.Teacher != null 
                 ? new FindOneSubscriptionsTeacherResponse 
                 {
-                    Id = subscription.Teacher.Id,
+                    TeacherId = subscription.Teacher.TeacherId,
                     Name = subscription.Teacher.Name,
                 } 
                 : null,
             Preference = subscription.Preference != null 
                 ? new FindOneSubscriptionsPreferenceResponse 
                 {
-                    Id = subscription.Preference.Id,
+                    PreferenceId = subscription.Preference.PreferenceId,
                     Name = subscription.Preference.Name,
                 } 
                 : null,
             Titles = subscription.Titles?.Select(title => 
                         new FindOneSubscriptionsTitlesResponse 
                         { 
-                            Id = title.Id,
+                            SubscriptionId = title.SubscriptionId,
                             Value = title.Value,
                             TitleId = title.TitleId,
                             Title = title.Title?.Description,
                         }),
             Points = subscription.Points?.Select(points => 
-                        new FindOneSubscriptionsPointsResponse 
+                        new FindOneSubscriptionsPointsResponse
                         {
-                            Id = points.Id,
+                            SubscriptionId = points.SubscriptionId,
                             Description = points.Description,
                             Order = points.Order,
                             Points = points.Points
@@ -75,7 +75,7 @@ public class SubscriptionsView : ISubscriptionsView
 
         return subscriptions.Select(subscription => new FindManySubscriptionsResponse
         {
-            Id = subscription.Id,
+            SubscriptionId = subscription.SubscriptionId,
             YearId = subscription.YearId,
             TeacherId = subscription.TeacherId,
             TeacherName = subscription.Teacher?.Name,

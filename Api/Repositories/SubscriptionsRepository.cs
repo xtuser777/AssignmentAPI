@@ -33,17 +33,11 @@ public class SubscriptionsRepository : Repository<Subscription>, ISubscriptionsR
 
     public async Task CreateAsync(Subscription entity)
     {
-        entity.Id = await GetId();
         await _context.Subscriptions.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Subscription> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Subscriptions.AddRangeAsync(entities);
     }
 

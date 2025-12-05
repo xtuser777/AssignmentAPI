@@ -15,7 +15,7 @@ public class YearsView : IYearsView
 
         return new CreateYearsResponse
         {
-            Id = year.Id,
+            YearId = year.YearId,
         };
     }
 
@@ -28,7 +28,7 @@ public class YearsView : IYearsView
 
         return new FindOneYearsResponse
         {
-            Id = year.Id,
+            YearId = year.YearId,
             Record = year.Record,
             Resolution = year.Resolution,
             IsBlocked = year.IsBlocked
@@ -44,7 +44,7 @@ public class YearsView : IYearsView
 
         return years.Select(year => new FindManyYearsResponse
         {
-            Id = year.Id,
+            YearId = year.YearId,
             Record = year.Record,
             Resolution = year.Resolution,
             IsBlocked = year.IsBlocked

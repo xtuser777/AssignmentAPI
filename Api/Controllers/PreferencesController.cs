@@ -27,7 +27,7 @@ public class PreferencesController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{preferenceId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowPreferencesParams parameters)
     {
@@ -44,10 +44,10 @@ public class PreferencesController(
         var preference = await preferencesService.CreateAsync(parameters);
         var data = preferencesView.Create(preference);
 
-        return Created($"preferences/{preference.Id}", new { Data = data });
+        return Created($"preferences/{preference.PreferenceId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{preferenceId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdatePreferencesParams parameters)
     {
@@ -56,7 +56,7 @@ public class PreferencesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{preferenceId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeletePreferencesParams parameters)
     {
@@ -73,7 +73,8 @@ public record IndexPreferencesParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexPreferencesParams indexPreferencesParams)
+    public static implicit operator FindManyServiceParams(
+        IndexPreferencesParams indexPreferencesParams)
         => new()
         {
             FindManyProps = new FindManyPreferencesParams
@@ -87,7 +88,8 @@ public record IndexPreferencesParams : PaginationParams
             PaginationParams = indexPreferencesParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexPreferencesParams indexPreferencesParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexPreferencesParams indexPreferencesParams)
         => new()
         {
             CountProps = new CountPreferencesParams
@@ -101,12 +103,16 @@ public record IndexPreferencesParams : PaginationParams
 public record ShowPreferencesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PreferenceId { get; set; }
 
-    public static implicit operator FindOneServiceParams(ShowPreferencesParams showPreferencesParams)
+    public static implicit operator FindOneServiceParams(
+        ShowPreferencesParams showPreferencesParams)
         => new()
         {
-            Id = showPreferencesParams.Id,
+            Where = new FindManyPreferencesParams
+            {
+                PreferenceId = showPreferencesParams.PreferenceId,
+            }
         };
 }
 
@@ -115,7 +121,8 @@ public record CreatePreferencesParams
     [FromBody]
     public CreatePreferencesRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreatePreferencesParams createPreferencesParams)
+    public static implicit operator CreateServiceParams(
+        CreatePreferencesParams createPreferencesParams)
         => new()
         {
             Props = createPreferencesParams.Request,
@@ -125,27 +132,35 @@ public record CreatePreferencesParams
 public record UpdatePreferencesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PreferenceId { get; set; }
 
     [FromBody]
     public UpdatePreferencesRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdatePreferencesParams createPreferencesParams)
+    public static implicit operator UpdateServiceParams(
+        UpdatePreferencesParams updatePreferencesParams)
         => new()
         {
-            Id = createPreferencesParams.Id,
-            Props = createPreferencesParams.Request,
+            Where = new FindManyPreferencesParams
+            {
+                PreferenceId = updatePreferencesParams.PreferenceId,
+            },
+            Props = updatePreferencesParams.Request,
         };
 }
 
 public record DeletePreferencesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int PreferenceId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeletePreferencesParams showPreferencesParams)
+    public static implicit operator DeleteServiceParams(
+        DeletePreferencesParams deletePreferencesParams)
         => new()
         {
-            Id = showPreferencesParams.Id,
+            Where = new FindManyPreferencesParams
+            {
+                PreferenceId = deletePreferencesParams.PreferenceId,
+            }
         };
 }

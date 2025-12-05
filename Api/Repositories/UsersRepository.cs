@@ -32,17 +32,11 @@ public class UsersRepository : Repository<User>, IUsersRepository
 
     public async Task CreateAsync(User entity)
     {
-        entity.Id = await GetId();
         await _context.Users.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<User> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Users.AddRangeAsync(entities);
     }
 
@@ -58,7 +52,7 @@ public class UsersRepository : Repository<User>, IUsersRepository
 
     public void SoftDelete(User entity)
     {
-        entity.IsActive = false;
+        entity.Active = 'N';
         _context.Users.Update(entity);
     }
 

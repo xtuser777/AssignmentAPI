@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("ano")]
+[PrimaryKey(nameof(YearId))]
 public class Year : YearProps
 {
     public Year()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Year(YearProps props)
@@ -21,7 +24,15 @@ public class Year : YearProps
 
 public class YearProps : Entity
 {
+    [Column("idano")]
+    public int? YearId { get; set; }
+
+    [Column("ficha")]
     public string? Record { get; set; }
+
+    [Column("resolucao")]
     public string? Resolution { get; set; }
-    public bool? IsBlocked { get; set; }
+
+    [Column("bloqueado")]
+    public char? IsBlocked { get; set; }
 }

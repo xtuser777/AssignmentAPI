@@ -18,6 +18,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Json.Microsoft" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
@@ -27,10 +29,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Requests.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\DisplayValues\UsersUnits.Designer.cs">
+    <Compile Update="Resources\DisplayValues\UsersRoles.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>UsersUnits.resx</DependentUpon>
+      <DependentUpon>UsersRoles.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Messages\Errors.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -44,18 +46,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Requests.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DisplayValues\UsersUnits.resx">
+    <EmbeddedResource Update="Resources\DisplayValues\UsersRoles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UsersUnits.Designer.cs</LastGenOutput>
+      <LastGenOutput>UsersRoles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Messages\Errors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Imports\Files\" />
   </ItemGroup>
 
 </Project>

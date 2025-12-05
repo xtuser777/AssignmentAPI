@@ -27,7 +27,7 @@ public class DisciplinesController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{disciplineId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowDisciplinesParams parameters)
     {
@@ -44,10 +44,10 @@ public class DisciplinesController(
         var discipline = await disciplinesService.CreateAsync(parameters);
         var data = disciplinesView.Create(discipline);
 
-        return Created($"disciplines/{discipline.Id}", new { Data = data });
+        return Created($"disciplines/{discipline.DisciplineId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{disciplineId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateDisciplinesParams parameters)
     {
@@ -56,7 +56,7 @@ public class DisciplinesController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{disciplineId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteDisciplinesParams parameters)
     {
@@ -101,12 +101,15 @@ public record IndexDisciplinesParams : PaginationParams
 public record ShowDisciplinesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int DisciplineId { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowDisciplinesParams showDisciplinesParams)
         => new()
         {
-            Id = showDisciplinesParams.Id,
+            Where = new FindManyDisciplinesParams
+            {
+                DisciplineId = showDisciplinesParams.DisciplineId,
+            }
         };
 }
 
@@ -125,27 +128,33 @@ public record CreateDisciplinesParams
 public record UpdateDisciplinesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int DisciplineId { get; set; }
 
     [FromBody]
     public UpdateDisciplinesRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateDisciplinesParams createDisciplinesParams)
+    public static implicit operator UpdateServiceParams(UpdateDisciplinesParams updateDisciplinesParams)
         => new()
         {
-            Id = createDisciplinesParams.Id,
-            Props = createDisciplinesParams.Request,
+            Where = new FindManyDisciplinesParams
+            {
+                DisciplineId = updateDisciplinesParams.DisciplineId,
+            },
+            Props = updateDisciplinesParams.Request,
         };
 }
 
 public record DeleteDisciplinesParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int DisciplineId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteDisciplinesParams showDisciplinesParams)
+    public static implicit operator DeleteServiceParams(DeleteDisciplinesParams deleteDisciplinesParams)
         => new()
         {
-            Id = showDisciplinesParams.Id,
+            Where = new FindManyDisciplinesParams
+            {
+                DisciplineId = deleteDisciplinesParams.DisciplineId,
+            },
         };
 }

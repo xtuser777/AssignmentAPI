@@ -27,7 +27,7 @@ public class SituationsController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{situationId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowSituationsParams parameters)
     {
@@ -44,10 +44,10 @@ public class SituationsController(
         var situation = await situationsService.CreateAsync(parameters);
         var data = situationsView.Create(situation);
 
-        return Created($"situations/{situation.Id}", new { Data = data });
+        return Created($"situations/{situation.SituationId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{situationId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateSituationsParams parameters)
     {
@@ -56,7 +56,7 @@ public class SituationsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{situationId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteSituationsParams parameters)
     {
@@ -73,7 +73,8 @@ public record IndexSituationsParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexSituationsParams indexSituationsParams)
+    public static implicit operator FindManyServiceParams(
+        IndexSituationsParams indexSituationsParams)
         => new()
         {
             FindManyProps = new FindManySituationsParams
@@ -87,7 +88,8 @@ public record IndexSituationsParams : PaginationParams
             PaginationParams = indexSituationsParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexSituationsParams indexSituationsParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexSituationsParams indexSituationsParams)
         => new()
         {
             CountProps = new CountSituationsParams
@@ -101,12 +103,16 @@ public record IndexSituationsParams : PaginationParams
 public record ShowSituationsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int SituationId { get; set; }
 
-    public static implicit operator FindOneServiceParams(ShowSituationsParams showSituationsParams)
+    public static implicit operator FindOneServiceParams(
+        ShowSituationsParams showSituationsParams)
         => new()
         {
-            Id = showSituationsParams.Id,
+            Where = new FindManySituationsParams
+            {
+                SituationId = showSituationsParams.SituationId,
+            }
         };
 }
 
@@ -115,7 +121,8 @@ public record CreateSituationsParams
     [FromBody]
     public CreateSituationsRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateSituationsParams createSituationsParams)
+    public static implicit operator CreateServiceParams(
+        CreateSituationsParams createSituationsParams)
         => new()
         {
             Props = createSituationsParams.Request,
@@ -125,15 +132,19 @@ public record CreateSituationsParams
 public record UpdateSituationsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int SituationId { get; set; }
 
     [FromBody]
     public UpdateSituationsRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateSituationsParams createSituationsParams)
+    public static implicit operator UpdateServiceParams(
+        UpdateSituationsParams createSituationsParams)
         => new()
         {
-            Id = createSituationsParams.Id,
+            Where = new FindManySituationsParams
+            {
+                SituationId = createSituationsParams.SituationId,
+            },
             Props = createSituationsParams.Request,
         };
 }
@@ -141,11 +152,15 @@ public record UpdateSituationsParams
 public record DeleteSituationsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int SituationId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteSituationsParams showSituationsParams)
+    public static implicit operator DeleteServiceParams(
+        DeleteSituationsParams showSituationsParams)
         => new()
         {
-            Id = showSituationsParams.Id,
+            Where = new FindManySituationsParams 
+            { 
+                SituationId = showSituationsParams.SituationId 
+            },
         };
 }

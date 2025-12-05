@@ -27,7 +27,7 @@ public class UnitsController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{unitId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowUnitsParams parameters)
     {
@@ -44,10 +44,10 @@ public class UnitsController(
         var unit = await unitsService.CreateAsync(parameters);
         var data = unitsView.Create(unit);
 
-        return Created($"units/{unit.Id}", new { Data = data });
+        return Created($"units/{unit.UnitId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{unitId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateUnitsParams parameters)
     {
@@ -56,7 +56,7 @@ public class UnitsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{unitId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteUnitsParams parameters)
     {
@@ -101,12 +101,15 @@ public record IndexUnitsParams : PaginationParams
 public record ShowUnitsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int UnitId { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowUnitsParams showUnitsParams)
         => new()
         {
-            Id = showUnitsParams.Id,
+            Where = new FindManyUnitsParams
+            {
+                UnitId = showUnitsParams.UnitId,
+            }
         };
 }
 
@@ -115,7 +118,8 @@ public record CreateUnitsParams
     [FromBody]
     public CreateUnitsRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateUnitsParams createUnitsParams)
+    public static implicit operator CreateServiceParams(
+        CreateUnitsParams createUnitsParams)
         => new()
         {
             Props = createUnitsParams.Request,
@@ -125,27 +129,35 @@ public record CreateUnitsParams
 public record UpdateUnitsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int UnitId { get; set; }
 
     [FromBody]
     public UpdateUnitsRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateUnitsParams createUnitsParams)
+    public static implicit operator UpdateServiceParams(
+        UpdateUnitsParams updateUnitsParams)
         => new()
         {
-            Id = createUnitsParams.Id,
-            Props = createUnitsParams.Request,
+            Where = new FindManyUnitsParams
+            {
+                UnitId = updateUnitsParams.UnitId,
+            },
+            Props = updateUnitsParams.Request,
         };
 }
 
 public record DeleteUnitsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int UnitId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteUnitsParams showUnitsParams)
+    public static implicit operator DeleteServiceParams(
+        DeleteUnitsParams deleteUnitsParams)
         => new()
         {
-            Id = showUnitsParams.Id,
+            Where = new FindManyUnitsParams
+            {
+                UnitId = deleteUnitsParams.UnitId,
+            }
         };
 }

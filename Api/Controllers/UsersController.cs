@@ -28,7 +28,7 @@ public class UsersController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{username}")]
     public async Task<IActionResult> ShowAsync([AsParameters] ShowUsersParams parameters)
     {
         var user = await usersService.FindOneAsync(parameters);
@@ -52,7 +52,7 @@ public class UsersController(
         });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{username}")]
     public async Task<IActionResult> UpdateAsync([AsParameters] UpdateUsersParams parameters)
     {
         await usersService.UpdateAsync(parameters);
@@ -60,7 +60,7 @@ public class UsersController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{username}")]
     public async Task<IActionResult> DeleteAsync([AsParameters] DeleteUsersParams parameters)
     {
         await usersService.DeleteAsync(parameters);
@@ -74,7 +74,7 @@ public record IndexUsersParams : PaginationParams
     public string? Username { get; set; }
     public string? Name { get; set; }
     public string? Email { get; set; }
-    public bool? IsActive { get; set; }
+    public char? Active { get; set; }
     public string? Role { get; set; }
 
     [FromHeader(Name = "X-Order-By-Username")]
@@ -83,8 +83,8 @@ public record IndexUsersParams : PaginationParams
     public string? OrderByName { get; set; }
     [FromHeader(Name = "X-Order-By-Email")]
     public string? OrderByEmail { get; set; }
-    [FromHeader(Name = "X-Order-By-IsActive")]
-    public string? OrderByIsActive { get; set; }
+    [FromHeader(Name = "X-Order-By-Active")]
+    public string? OrderByActive { get; set; }
     [FromHeader(Name = "X-Order-By-Role")]
     public string? OrderByRole { get; set; }
 
@@ -97,7 +97,7 @@ public record IndexUsersParams : PaginationParams
                 Username = parameters.Username,
                 Name = parameters.Name,
                 Email = parameters.Email,
-                IsActive = parameters.IsActive,
+                Active = parameters.Active,
                 Role = Parser.ToEnumOptional<UserRole>(parameters.Role)
             },
             OrderByParams = new OrderByUsersParams
@@ -105,7 +105,7 @@ public record IndexUsersParams : PaginationParams
                 Username = parameters.OrderByUsername,
                 Name = parameters.OrderByName,
                 Email = parameters.OrderByEmail,
-                IsActive = parameters.OrderByIsActive,
+                Active = parameters.OrderByActive,
                 Role = parameters.OrderByRole,
             },
             PaginationParams = parameters,
@@ -121,7 +121,7 @@ public record IndexUsersParams : PaginationParams
                 Username = parameters.Username,
                 Name = parameters.Name,
                 Email = parameters.Email,
-                IsActive = parameters.IsActive,
+                Active = parameters.Active,
                 Role = Parser.ToEnumOptional<UserRole>(parameters.Role)
             },
             PaginationParams = parameters,
@@ -132,7 +132,7 @@ public record IndexUsersParams : PaginationParams
 public record ShowUsersParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     [FromRoute]
     public bool? IncludeUsersUnits { get; set; } = true;
@@ -140,7 +140,10 @@ public record ShowUsersParams
     public static implicit operator FindOneServiceParams(ShowUsersParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyUsersParams
+            {
+                Username = parameters.Username
+            },
             Includes = new IncludesUsersParams
             {
                 UsersUnits = new IncludesUsersUnitsParams
@@ -166,7 +169,7 @@ public record CreateUsersParams
 public record UpdateUsersParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     [FromBody]
     public UpdateUsersRequest Request { get; set; } = new();
@@ -174,7 +177,10 @@ public record UpdateUsersParams
     public static implicit operator UpdateServiceParams(UpdateUsersParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyUsersParams
+            { 
+                Username = parameters.Username 
+            },
             Props = parameters.Request,
         };
 }
@@ -182,11 +188,14 @@ public record UpdateUsersParams
 public record DeleteUsersParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     public static implicit operator DeleteServiceParams(DeleteUsersParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyUsersParams
+            { 
+                Username = parameters.Username 
+            },
         };
 }

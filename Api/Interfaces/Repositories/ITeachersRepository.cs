@@ -19,6 +19,7 @@ public class ExclusiveTeachersParams : ExistsTeachersParams
 
 public record OrderByTeachersParams : OrderByParams
 {
+    public string? YearId { get; set; }
     public string? Name { get; set; }
     public string? Identity { get; set; }
     public string? Document { get; set; }
@@ -32,28 +33,26 @@ public record OrderByTeachersParams : OrderByParams
     public string? Cellphone { get; set; }
     public string? Email { get; set; }
     public string? Observations { get; set; }
-    public string? Year { get; set; }
     public string? Unit { get; set; }
     public string? CivilStatus { get; set; }
     public string? Position { get; set; }
     public string? Discipline { get; set; }
     public string? Situation { get; set; }
     public string? Speciality { get; set; }
-    public string? IsRemove { get; set; }
-    public string? IsAdido { get; set; }
-    public string? IsReadapted { get; set; }
-    public string? IsReadingRoom { get; set; }
-    public string? IsComputing { get; set; }
-    public string? IsSupplementCharge { get; set; }
-    public string? IsTutoring { get; set; }
-    public string? IsAmbientalEdication { get; set; }
-    public string? IsRobotics { get; set; }
-    public string? IsMusic { get; set; }
+    public string? Remove { get; set; }
+    public string? Adido { get; set; }
+    public string? Readapted { get; set; }
+    public string? ReadingRoom { get; set; }
+    public string? Computing { get; set; }
+    public string? SupplementCharge { get; set; }
+    public string? Tutoring { get; set; }
+    public string? AmbientalEdication { get; set; }
+    public string? Robotics { get; set; }
+    public string? Music { get; set; }
 }
 
 public record IncludesTeachersParams : IncludesParams
 {
-    public bool? Year { get; set; }
     public bool? Unit { get; set; }
     public bool? CivilStatus { get; set; }
     public bool? Position { get; set; }

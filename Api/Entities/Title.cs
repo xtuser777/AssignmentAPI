@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("titulo")]
+[PrimaryKey(nameof(YearId), nameof(TitleId))]
 public class Title: TitleProps
 {
     public Title()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Title(TitleProps props)
@@ -21,13 +24,33 @@ public class Title: TitleProps
 
 public class TitleProps : Entity
 {
-    public string? Description { get; set; }
-    public string? Alias { get; set; }
-    public decimal? Weight { get; set; }
-    public decimal? Max { get; set; }
-    public int? Order { get; set; }
-    public char? Type { get; set; }
-    public bool? IsActive { get; set; }
+    [Column("idano")]
     public int? YearId { get; set; }
-    public Year? Year { get; set; }
+
+    [Column("idtitulo")]
+    public int? TitleId { get; set; }
+
+    [Column("descricao")]
+    public string? Description { get; set; }
+
+    [Column("sigla")]
+    public string? Alias { get; set; }
+
+    [Column("peso")]
+    public decimal? Weight { get; set; }
+
+    [Column("maximo")]
+    public decimal? Max { get; set; }
+
+    [Column("ordem")]
+    public int? Order { get; set; }
+
+    [Column("tipo")]
+    public char? Type { get; set; }
+
+    [Column("ativo")]
+    public char? Active { get; set; }
+
+    [ForeignKey(nameof(YearId))]
+    public virtual Year? Year { get; set; }
 }

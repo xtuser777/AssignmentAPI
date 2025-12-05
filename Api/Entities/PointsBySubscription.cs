@@ -1,11 +1,11 @@
-﻿namespace Assignment.Api.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Assignment.Api.Entities;
 
 public class PointsBySubscription : PointsBySubscriptionProps
 {
     public PointsBySubscription()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public PointsBySubscription(PointsBySubscriptionProps props)
@@ -21,11 +21,18 @@ public class PointsBySubscription : PointsBySubscriptionProps
 
 public class PointsBySubscriptionProps : Entity
 {
+    [Column("idano")]
     public int? YearId { get; set; }
+
+    [Column("idinscricao")]
     public int? SubscriptionId { get; set; }
+
+    [Column("ordem")]
     public int? Order { get; set; }
+
+    [Column("descricao")]
     public string? Description { get; set; }
+
+    [Column("pontos")]
     public decimal? Points { get; set; }
-    public Year? Year { get; init; }
-    public Subscription? Subscription { get; init; }
 }

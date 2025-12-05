@@ -31,6 +31,8 @@ public interface IRepository<T>
     }
 }
 
+public record FindOneParams();
+
 public record IncludesParams();
 
 public record OrderByParams();

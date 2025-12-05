@@ -15,7 +15,7 @@ public class DisciplinesView : IDisciplinesView
 
         return new CreateDisciplinesResponse
         {
-            Id = discipline.Id,
+            DisciplineId = discipline.DisciplineId,
         };
     }
 
@@ -28,7 +28,7 @@ public class DisciplinesView : IDisciplinesView
 
         return new FindOneDisciplinesResponse
         {
-            Id = discipline.Id,
+            DisciplineId = discipline.DisciplineId,
             Name = discipline.Name,
         };
     }
@@ -42,7 +42,7 @@ public class DisciplinesView : IDisciplinesView
 
         return disciplines.Select(discipline => new FindManyDisciplinesResponse
         {
-            Id = discipline.Id,
+            DisciplineId = discipline.DisciplineId,
             Name = discipline.Name,
         });
     }

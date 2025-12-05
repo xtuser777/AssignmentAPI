@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("situacao")]
+[PrimaryKey(nameof(SituationId))]
 public class Situation : SituationProps
 {
     public Situation()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Situation(SituationProps props)
@@ -21,5 +24,9 @@ public class Situation : SituationProps
 
 public class SituationProps : Entity
 {
+    [Column("idsituacao")]
+    public int? SituationId { get; set; }
+
+    [Column("nome")]
     public string? Name { get; set; }
 }

@@ -7,8 +7,6 @@ public class Classification : ClassificationProps
 {
     public Classification() 
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Classification(ClassificationProps props)
@@ -24,119 +22,142 @@ public class Classification : ClassificationProps
 
 public class ClassificationProps : Entity
 {
-    [Required]
+    
+    [Column("idano")]
     public int? YearId { get; set; }
-    [Required]
-    public int? Year {  get; set; }
-    [Required]
+    
+    [Column("idprofessor")]
     public int? TeacherId { get; set; }
-    [Required]
+    
+    [Column("idinscricao")]
     public int? SubscriptionId { get; set; }
-    [Required]
-    [StringLength(200)]
+    
+    [Column("nome")]
     public string? Name { get; set; }
-    [Required]
+    
+    [Column("idsituacao")]
     public int? SituationId { get; set; }
-    [Required]
-    [StringLength(50)]
+    
+    [Column("situacao")]
     public string? Situation { get; set; }
-    [Required]
+    
+    [Column("idcargo")]
     public int? PositionId { get; set; }
-    [Required]
-    [StringLength(50)]
+    
+    [Column("cargo")]
     public string? Position { get; set; }
-    [Required]
+    
+    [Column("idunidade")]
     public int? UnitId { get; set; }
-    [Required]
-    [StringLength(50)]
+    
+    [Column("unidade")]
     public string? Unit { get; set; }
-    [Required]
+    
+    [Column("iddisciplina")]
     public int? DisciplineId { get; set; }
-    [Required]
-    [StringLength(50)]
+    
+    [Column("disciplina")]
     public string? Discipline { get; set; }
-    [Required]
-    [StringLength(10)]
+    
+    [Column("telefone")]
     public string? Phone { get; set; }
-    [Required]
-    [StringLength(11)]
+    
+    [Column("celular")]
     public string? Cellphone { get; set; }
-    [StringLength(50)]
+    
+    [Column("especialidade")]
     public string? Speciality { get; set; }
-    public bool? IsRemove { get; set; }
-    public bool? IsAdido { get; set; }
-    public bool? IsReadapted { get; set; }
-    public bool? IsReadingRoom { get; set; }
-    public bool? IsComputing { get; set; }
-    public bool? IsSupplementCharge { get; set; }
-    public bool? IsTutoring { get; set; }
-    public bool? IsAmbientalEdication { get; set; }
-    public bool? IsRobotics { get; set; }
-    public bool? IsMusic { get; set; }
+    
+    [Column("remocao")]
+    public char? Remove { get; set; }
+    
+    [Column("adido")]
+    public char? Adido { get; set; }
+    
+    [Column("readaptado")]
+    public char? Readapted { get; set; }
+    
+    [Column("saladeleitura")]
+    public char? ReadingRoom { get; set; }
+    
+    [Column("informatica")]
+    public char? Computing { get; set; }
+    
+    [Column("cargasuplementar")]
+    public char? SupplementCharge { get; set; }
+    
+    [Column("reforco")]
+    public char? Tutoring { get; set; }
+    
+    [Column("educacaoambiental")]
+    public char? AmbientalEdication { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t1")]
     public decimal? T1 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t2")]
     public decimal? T2 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t3")]
     public decimal? T3 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t4")]
     public decimal? T4 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t5")]
     public decimal? T5 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t6")]
     public decimal? T6 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t7")]
     public decimal? T7 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t8")]
     public decimal? T8 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t9")]
     public decimal? T9 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t10")]
     public decimal? T10 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t11")]
     public decimal? T11 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t12")]
     public decimal? T12 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t13")]
     public decimal? T13 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t14")]
     public decimal? T14 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t15")]
     public decimal? T15 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t16")]
     public decimal? T16 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t17")]
     public decimal? T17 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t18")]
     public decimal? T18 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t19")]
     public decimal? T19 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t20")]
     public decimal? T20 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t21")]
     public decimal? T21 { get; set; }
 
-    [Column(TypeName = "decimal(12,3)")]
+    [Column("t22")]
     public decimal? T22 { get; set; }
+
+    [Column("total")]
+    public decimal? Total { get; set; }
 }

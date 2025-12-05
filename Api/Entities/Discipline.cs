@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("disciplina")]
+[PrimaryKey(nameof(DisciplineId))]
 public class Discipline : DisciplineProps
 {
     public Discipline()
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public Discipline(DisciplineProps props)
@@ -21,5 +24,9 @@ public class Discipline : DisciplineProps
 
 public class DisciplineProps : Entity
 {
+    [Column("iddisciplina")]
+    public int? DisciplineId { get; set; }
+
+    [Column("nome")]
     public string? Name { get; set; }
 }

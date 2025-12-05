@@ -27,7 +27,7 @@ public class TeachersController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{teacherId:int}")]
     public async Task<IActionResult> ShowAsync(
         [AsParameters] ShowTeachersParams parameters)
     {
@@ -44,10 +44,10 @@ public class TeachersController(
         var teacher = await teachersService.CreateAsync(parameters);
         var data = teachersView.Create(teacher);
 
-        return Created($"teachers/{teacher.Id}", new { Data = data });
+        return Created($"teachers/{teacher.TeacherId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{teacherId:int}")]
     public async Task<IActionResult> UpdateAsync(
         [AsParameters] UpdateTeachersParams parameters)
     {
@@ -56,7 +56,7 @@ public class TeachersController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{teacherId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTeachersParams parameters)
     {
@@ -73,7 +73,8 @@ public record IndexTeachersParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexTeachersParams indexTeachersParams)
+    public static implicit operator FindManyServiceParams(
+        IndexTeachersParams indexTeachersParams)
         => new()
         {
             FindManyProps = new FindManyTeachersParams
@@ -89,11 +90,13 @@ public record IndexTeachersParams : PaginationParams
                 Unit = true,
                 Position = true,
                 Situation = true,
+                CivilStatus = true,
             },
             PaginationParams = indexTeachersParams
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexTeachersParams indexTeachersParams)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexTeachersParams indexTeachersParams)
         => new()
         {
             CountProps = new CountTeachersParams
@@ -107,10 +110,7 @@ public record IndexTeachersParams : PaginationParams
 public record ShowTeachersParams
 {
     [FromRoute]
-    public int Id { get; set; }
-
-    [FromRoute]
-    public bool? IncludeYear { get; set; } = true;
+    public int TeacherId { get; set; }
     [FromRoute]
     public bool? IncludeUnit { get; set; } = true;
     [FromRoute]
@@ -122,13 +122,16 @@ public record ShowTeachersParams
     [FromRoute]
     public bool? IncludeSituation { get; set; } = true;
 
-    public static implicit operator FindOneServiceParams(ShowTeachersParams showTeachersParams)
+    public static implicit operator FindOneServiceParams(
+        ShowTeachersParams showTeachersParams)
         => new()
         {
-            Id = showTeachersParams.Id,
+            Where = new FindManyTeachersParams
+            {
+                TeacherId = showTeachersParams.TeacherId,
+            },
             Includes = new IncludesTeachersParams
             {
-                Year = showTeachersParams.IncludeYear,
                 Unit = showTeachersParams.IncludeUnit,
                 CivilStatus = showTeachersParams.IncludeCivilStatus,
                 Position = showTeachersParams.IncludePosition,
@@ -143,7 +146,8 @@ public record CreateTeachersParams
     [FromBody]
     public CreateTeachersRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateTeachersParams createTeachersParams)
+    public static implicit operator CreateServiceParams(
+        CreateTeachersParams createTeachersParams)
         => new()
         {
             Props = createTeachersParams.Request,
@@ -153,27 +157,35 @@ public record CreateTeachersParams
 public record UpdateTeachersParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int TeacherId { get; set; }
 
     [FromBody]
     public UpdateTeachersRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateTeachersParams createTeachersParams)
+    public static implicit operator UpdateServiceParams(
+        UpdateTeachersParams updateTeachersParams)
         => new()
         {
-            Id = createTeachersParams.Id,
-            Props = createTeachersParams.Request,
+            Where = new FindManyTeachersParams
+            {
+                TeacherId = updateTeachersParams.TeacherId,
+            },
+            Props = updateTeachersParams.Request,
         };
 }
 
 public record DeleteTeachersParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int TeacherId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteTeachersParams showTeachersParams)
+    public static implicit operator DeleteServiceParams(
+        DeleteTeachersParams deleteTeachersParams)
         => new()
         {
-            Id = showTeachersParams.Id,
+            Where = new FindManyTeachersParams
+            {
+                TeacherId = deleteTeachersParams.TeacherId,
+            },
         };
 }

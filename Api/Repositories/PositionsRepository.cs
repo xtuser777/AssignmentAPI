@@ -32,17 +32,11 @@ public class PositionsRepository : Repository<Position>, IPositionsRepository
 
     public async Task CreateAsync(Position entity)
     {
-        entity.Id = await GetId();
         await _context.Positions.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Position> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Positions.AddRangeAsync(entities);
     }
 

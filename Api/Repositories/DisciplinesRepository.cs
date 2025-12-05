@@ -33,17 +33,11 @@ public class DisciplinesRepository : Repository<Discipline>, IDisciplinesReposit
 
     public async Task CreateAsync(Discipline entity)
     {
-        entity.Id = await GetId();
         await _context.Disciplines.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Discipline> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Disciplines.AddRangeAsync(entities);
     }
 

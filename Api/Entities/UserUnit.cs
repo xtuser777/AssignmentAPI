@@ -1,11 +1,14 @@
-﻿namespace Assignment.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Assignment.Api.Entities;
+
+[Table("usuario_unidade")]
+[PrimaryKey(nameof(UserLogin), nameof(UnitId))]
 public class UserUnit : UserUnitProps
 {
     public UserUnit() 
     {
-        CreatedAt = DateTime.Now;
-        UpdatedAt = DateTime.Now;
     }
 
     public UserUnit(UserUnitProps props) 
@@ -21,8 +24,15 @@ public class UserUnit : UserUnitProps
 
 public class UserUnitProps : Entity
 {
+    [Column("login")]
     public string? UserLogin { get; set; }
+
+    [Column("idunidade")]
     public int? UnitId { get; set; }
-    public User? User { get; init; }
-    public Unit? Unit { get; init; }
+
+    [ForeignKey(nameof(UserLogin))]
+    public virtual User? User { get; init; }
+
+    [ForeignKey(nameof(UnitId))]
+    public virtual Unit? Unit { get; init; }
 }

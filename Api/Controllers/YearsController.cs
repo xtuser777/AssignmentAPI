@@ -26,7 +26,7 @@ public class YearsController(
         });
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{yearId:int}")]
     public async Task<IActionResult> ShowAsync([AsParameters] ShowYearsParams parameters)
     {
         var year = await yearsService.FindOneAsync(parameters);
@@ -41,10 +41,10 @@ public class YearsController(
         var year = await yearsService.CreateAsync(parameters);
         var data = yearsView.Create(year);
 
-        return Created($"years/{year.Id}", new { Data = data });
+        return Created($"years/{year.YearId}", new { Data = data });
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{yearId:int}")]
     public async Task<IActionResult> UpdateAsync([AsParameters] UpdateYearsParams parameters)
     {
         await yearsService.UpdateAsync(parameters);
@@ -52,7 +52,7 @@ public class YearsController(
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{yearId:int}")]
     public async Task<IActionResult> DeleteAsync([AsParameters]  DeleteYearsParams parameters)
     {
         await yearsService.DeleteAsync(parameters);
@@ -65,7 +65,7 @@ public record IndexYearsParams : PaginationParams
 {
     public string? Record { get; set; }
     public string? Resolution { get; set; }
-    public bool? IsBlocked { get; set; }
+    public char? IsBlocked { get; set; }
 
     [FromHeader(Name = "Order-By-Record")]
     public string? OrderByRecord { get; set; }
@@ -110,12 +110,15 @@ public record IndexYearsParams : PaginationParams
 public record ShowYearsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int YearId { get; set; }
 
     public static implicit operator FindOneServiceParams(ShowYearsParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyYearsParams
+            { 
+                YearId = parameters.YearId 
+            },
         };
 }
 
@@ -134,7 +137,7 @@ public record CreateYearsParams
 public record UpdateYearsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int YearId { get; set; }
 
     [FromBody]
     public UpdateYearsRequest Request { get; set; } = new();
@@ -142,7 +145,10 @@ public record UpdateYearsParams
     public static implicit operator UpdateServiceParams(UpdateYearsParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyYearsParams
+            {
+                YearId = parameters.YearId
+            },
             Props = parameters.Request,
         };
 }
@@ -150,11 +156,14 @@ public record UpdateYearsParams
 public record DeleteYearsParams
 {
     [FromRoute]
-    public int Id { get; set; }
+    public int YearId { get; set; }
 
     public static implicit operator DeleteServiceParams(DeleteYearsParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = new FindManyYearsParams
+            { 
+                YearId = parameters.YearId 
+            },
         };
 }

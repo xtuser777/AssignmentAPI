@@ -16,7 +16,7 @@ public class UsersView : IUsersView
 
         return new CreateUsersResponse
         {
-            Id = user.Id,
+            Username = user.Username,
         };
     }
 
@@ -29,11 +29,10 @@ public class UsersView : IUsersView
 
         return new FindOneUsersResponse
         {
-            Id = user.Id,
             Username = user.Username,
             Name = user.Name,
             Email = user.Email,
-            IsActive = user.IsActive,
+            Active = user.Active,
             Role = new TranslatableField
             {
                 Value = user.Role.ToString() ?? "",
@@ -42,7 +41,6 @@ public class UsersView : IUsersView
             UsersUnits = user.UsersUnits?
             .Select(unit => new FindOneUsersUsersUnitsResponse
             {
-                Id=unit.Id,
                 UserLogin=unit.UserLogin,
                 UnitId=unit.UnitId,
             }),
@@ -58,11 +56,10 @@ public class UsersView : IUsersView
 
         return users.Select(user => new FindManyUsersResponse
         {
-            Id = user.Id,
             Username = user.Username,
             Name = user.Name,
             Email = user.Email,
-            IsActive = user.IsActive,
+            Active = user.Active,
             Role = new TranslatableField
             {
                 Value = user.Role.ToString() ?? "",

@@ -5,10 +5,10 @@ namespace Assignment.Api.Enums;
 
 public enum UserRole
 {
-    [DisplayValue(typeof(UsersUnits), "Admin")]
+    [DisplayValue(typeof(UsersRoles), nameof(UsersRoles.Admin))]
     Admin = 0,
-    [DisplayValue(typeof(UsersUnits), "Superuser")]
+    [DisplayValue(typeof(UsersRoles), nameof(UsersRoles.Superuser))]
     Superuser = 1,
-    [DisplayValue(typeof(UsersUnits), "User")]
+    [DisplayValue(typeof(UsersRoles), nameof(UsersRoles.User))]
     User = 2,
 }

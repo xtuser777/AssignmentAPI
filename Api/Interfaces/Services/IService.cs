@@ -42,14 +42,14 @@ public record FindManyPaginationServiceParams
 
 public record FindOneServiceParams
 {
-    public int Id { get; set; }
+    public Entity Where { get; set; } = new();
     public IncludesParams? Includes { get; set; }
 
     public static implicit operator FindOneRepositoryParams(
         FindOneServiceParams parameters)
         => new()
         {
-            Where = new() { Id = parameters.Id },
+            Where = parameters.Where,
             Includes = parameters.Includes
         };
 }
@@ -61,7 +61,7 @@ public record CreateServiceParams
 
 public record UpdateServiceParams
 {
-    public int Id { get; set; }
+    public Entity Where { get; set; } = new();
 
     public Entity Props { get; set; } = null!;
 
@@ -69,18 +69,18 @@ public record UpdateServiceParams
         UpdateServiceParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = parameters.Where,
         };
 }
 
 public record DeleteServiceParams
 {
-    public int Id { get; set; }
+    public Entity Where { get; set; } = new();
 
     public static implicit operator FindOneServiceParams(
         DeleteServiceParams parameters)
         => new()
         {
-            Id = parameters.Id,
+            Where = parameters.Where,
         };
 }

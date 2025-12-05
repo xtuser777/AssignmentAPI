@@ -88,7 +88,7 @@ namespace Assignment.Api.Resources.Messages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O(A) {0} com o id &apos;{1}&apos; não foi encontrado..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O(A) {0} com o code &apos;{1}&apos; não foi encontrado..
         /// </summary>
         public static string ConnectionNotFound {
             get {
@@ -313,7 +313,7 @@ namespace Assignment.Api.Resources.Messages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O usuário com o id {0} não foi encontrado..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O usuário com o code {0} não foi encontrado..
         /// </summary>
         public static string UserConnectionNotFound {
             get {
@@ -340,7 +340,7 @@ namespace Assignment.Api.Resources.Messages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O id do usuário logado é obrigatório.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O code do usuário logado é obrigatório.
         /// </summary>
         public static string UserLoggedIdRequired {
             get {

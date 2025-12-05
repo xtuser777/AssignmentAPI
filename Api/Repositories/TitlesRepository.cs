@@ -37,11 +37,6 @@ public class TitlesRepository : Repository<Title>, ITitlesRepository
 
     public async Task CreateManyAsync(IEnumerable<Title> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Titles.AddRangeAsync(entities);
     }
 

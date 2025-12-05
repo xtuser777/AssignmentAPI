@@ -15,7 +15,7 @@ public class CivilStatusesView : ICivilStatusesView
 
         return new CreateCivilStatusesResponse
         { 
-            Id = status.Id 
+            CivilStatusId = status.CivilStatusId 
         };
     }
 
@@ -28,7 +28,7 @@ public class CivilStatusesView : ICivilStatusesView
 
         return new FindOneCivilStatusesResponse
         {
-            Id = status.Id,
+            CivilStatusId = status.CivilStatusId,
             Name = status.Name,
         };
     }
@@ -42,7 +42,7 @@ public class CivilStatusesView : ICivilStatusesView
 
         return statuses.Select(status => new FindManyCivilStatusesResponse
         {
-            Id = status.Id,
+            CivilStatusId = status.CivilStatusId,
             Name = status.Name,
         });
     }

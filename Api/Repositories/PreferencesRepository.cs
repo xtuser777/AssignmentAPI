@@ -33,17 +33,11 @@ public class PreferencesRepository : Repository<Preference>, IPreferencesReposit
 
     public async Task CreateAsync(Preference entity)
     {
-        entity.Id = await GetId();
         await _context.Preferences.AddAsync(entity);
     }
 
     public async Task CreateManyAsync(IEnumerable<Preference> entities)
     {
-        var id = await GetId();
-        foreach (var entity in entities)
-        {
-            entity.Id ??= id++;
-        }
         await _context.Preferences.AddRangeAsync(entities);
     }
 
