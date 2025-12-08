@@ -34,6 +34,7 @@ public class CivilStatusesRepository : Repository<CivilStatus>, ICivilStatusesRe
 
     public async Task CreateAsync(CivilStatus entity)
     {
+        entity.CivilStatusId = await GetId(x => x.CivilStatusId);
         await _context.CivilStatuses.AddAsync(entity);
     }
 

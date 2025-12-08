@@ -6,6 +6,9 @@ namespace Assignment.Api.Requests;
 public record CreateYearsRequest
 {
     [RequiredField]
+    public int? YearId { get; set; }
+
+    [RequiredField]
     [StringMaxLength(250)]
     public string? Record { get; set; }
 
@@ -20,6 +23,7 @@ public record CreateYearsRequest
     public static implicit operator YearProps(CreateYearsRequest request)
         => new()
         {
+            YearId = request.YearId,
             Record = request.Record,
             Resolution = request.Resolution,
             IsBlocked = request.IsBlocked,

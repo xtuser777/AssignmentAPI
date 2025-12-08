@@ -33,6 +33,7 @@ public class SubscriptionsRepository : Repository<Subscription>, ISubscriptionsR
 
     public async Task CreateAsync(Subscription entity)
     {
+        entity.SubscriptionId = await GetId(x => x.SubscriptionId);
         await _context.Subscriptions.AddAsync(entity);
     }
 

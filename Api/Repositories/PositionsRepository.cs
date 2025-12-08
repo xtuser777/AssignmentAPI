@@ -32,6 +32,7 @@ public class PositionsRepository : Repository<Position>, IPositionsRepository
 
     public async Task CreateAsync(Position entity)
     {
+        entity.PositionId = await GetId(x => x.PositionId);
         await _context.Positions.AddAsync(entity);
     }
 

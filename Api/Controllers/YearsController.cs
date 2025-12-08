@@ -13,7 +13,8 @@ public class YearsController(
     IYearsService yearsService) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> IndexAsync([AsParameters] IndexYearsParams parameters)
+    public async Task<IActionResult> IndexAsync(
+        [AsParameters] IndexYearsParams parameters)
     {
         var years = await yearsService.FindManyAsync(parameters);
         var pagination = await yearsService.FindManyPaginationAsync(parameters);
@@ -27,7 +28,8 @@ public class YearsController(
     }
 
     [HttpGet("{yearId:int}")]
-    public async Task<IActionResult> ShowAsync([AsParameters] ShowYearsParams parameters)
+    public async Task<IActionResult> ShowAsync(
+        [AsParameters] ShowYearsParams parameters)
     {
         var year = await yearsService.FindOneAsync(parameters);
         var data = yearsView.FindOne(year);
@@ -36,7 +38,8 @@ public class YearsController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([AsParameters] CreateYearsParams parameters)
+    public async Task<IActionResult> CreateAsync(
+        [AsParameters] CreateYearsParams parameters)
     {
         var year = await yearsService.CreateAsync(parameters);
         var data = yearsView.Create(year);
@@ -45,7 +48,8 @@ public class YearsController(
     }
 
     [HttpPut("{yearId:int}")]
-    public async Task<IActionResult> UpdateAsync([AsParameters] UpdateYearsParams parameters)
+    public async Task<IActionResult> UpdateAsync(
+        [AsParameters] UpdateYearsParams parameters)
     {
         await yearsService.UpdateAsync(parameters);
 
@@ -53,7 +57,8 @@ public class YearsController(
     }
 
     [HttpDelete("{yearId:int}")]
-    public async Task<IActionResult> DeleteAsync([AsParameters]  DeleteYearsParams parameters)
+    public async Task<IActionResult> DeleteAsync(
+        [AsParameters]  DeleteYearsParams parameters)
     {
         await yearsService.DeleteAsync(parameters);
 
@@ -76,7 +81,8 @@ public record IndexYearsParams : PaginationParams
     [FromHeader(Name = "Order-By-IsBlocked")]
     public string? OrderByIsBlocked { get; set; }
 
-    public static implicit operator FindManyServiceParams(IndexYearsParams parameters)
+    public static implicit operator FindManyServiceParams(
+        IndexYearsParams parameters)
         => new()
         {
             FindManyProps = new FindManyYearsParams
@@ -94,7 +100,8 @@ public record IndexYearsParams : PaginationParams
             PaginationParams = parameters,
         };
 
-    public static implicit operator FindManyPaginationServiceParams(IndexYearsParams parameters)
+    public static implicit operator FindManyPaginationServiceParams(
+        IndexYearsParams parameters)
         => new()
         {
             CountProps = new CountYearParams
@@ -112,7 +119,8 @@ public record ShowYearsParams
     [FromRoute]
     public int YearId { get; set; }
 
-    public static implicit operator FindOneServiceParams(ShowYearsParams parameters)
+    public static implicit operator FindOneServiceParams(
+        ShowYearsParams parameters)
         => new()
         {
             Where = new FindManyYearsParams
@@ -127,7 +135,8 @@ public record CreateYearsParams
     [FromBody]
     public CreateYearsRequest Request { get; set; } = new();
 
-    public static implicit operator CreateServiceParams(CreateYearsParams parameters)
+    public static implicit operator CreateServiceParams(
+        CreateYearsParams parameters)
         => new()
         {
             Props = parameters.Request,
@@ -142,7 +151,8 @@ public record UpdateYearsParams
     [FromBody]
     public UpdateYearsRequest Request { get; set; } = new();
 
-    public static implicit operator UpdateServiceParams(UpdateYearsParams parameters)
+    public static implicit operator UpdateServiceParams(
+        UpdateYearsParams parameters)
         => new()
         {
             Where = new FindManyYearsParams
@@ -158,7 +168,8 @@ public record DeleteYearsParams
     [FromRoute]
     public int YearId { get; set; }
 
-    public static implicit operator DeleteServiceParams(DeleteYearsParams parameters)
+    public static implicit operator DeleteServiceParams(
+        DeleteYearsParams parameters)
         => new()
         {
             Where = new FindManyYearsParams

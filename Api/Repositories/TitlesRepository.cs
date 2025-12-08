@@ -32,6 +32,7 @@ public class TitlesRepository : Repository<Title>, ITitlesRepository
 
     public async Task CreateAsync(Title entity)
     {
+        entity.TitleId = await GetId(x => x.TitleId);
         await _context.Titles.AddAsync(entity);
     }
 

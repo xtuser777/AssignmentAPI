@@ -33,6 +33,7 @@ public class PreferencesRepository : Repository<Preference>, IPreferencesReposit
 
     public async Task CreateAsync(Preference entity)
     {
+        entity.PreferenceId = await GetId(x => x.PreferenceId);
         await _context.Preferences.AddAsync(entity);
     }
 

@@ -32,6 +32,7 @@ public class UnitsRepository : Repository<Unit>, IUnitsRepository
 
     public async Task CreateAsync(Unit entity)
     {
+        entity.UnitId = await GetId(x => x.UnitId);
         await _context.Units.AddAsync(entity);
     }
 

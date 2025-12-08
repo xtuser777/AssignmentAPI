@@ -1,4 +1,5 @@
-﻿using Assignment.Api.Entities;
+﻿using System.Linq.Expressions;
+using Assignment.Api.Entities;
 using Assignment.Api.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -121,5 +122,14 @@ public abstract class Repository<TEntity> where TEntity : Entity
                 _ => query,
             };
         }
+    }
+
+    protected async Task<int> GetId(Expression<Func<TEntity, int?>> keySelector)
+    {
+        var entity = await query.OrderBy(keySelector).LastOrDefaultAsync();
+        var id = entity?.GetType().GetProperty(
+            ((MemberExpression)keySelector.Body).Member.Name)!.GetValue(entity) as int? ?? 0;
+
+        return id + 1;
     }
 }

@@ -33,6 +33,7 @@ public class DisciplinesRepository : Repository<Discipline>, IDisciplinesReposit
 
     public async Task CreateAsync(Discipline entity)
     {
+        entity.DisciplineId = await GetId(x => x.DisciplineId);
         await _context.Disciplines.AddAsync(entity);
     }
 

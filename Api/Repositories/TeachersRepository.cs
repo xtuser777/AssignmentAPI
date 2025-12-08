@@ -33,6 +33,7 @@ public class TeachersRepository : Repository<Teacher>, ITeachersRepository
 
     public async Task CreateAsync(Teacher entity)
     {
+        entity.TeacherId = await GetId(x => x.TeacherId);
         await _context.Teachers.AddAsync(entity);
     }
 

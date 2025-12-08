@@ -31,6 +31,7 @@ public class SituationsRepository : Repository<Situation>, ISituationsRepository
 
     public async Task CreateAsync(Situation entity)
     {
+        entity.SituationId = await GetId(x => x.SituationId);
         await _context.Situations.AddAsync(entity);
     }
 
