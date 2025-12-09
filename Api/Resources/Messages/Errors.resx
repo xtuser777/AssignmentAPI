@@ -233,4 +233,34 @@
   <data name="UserLoggedIdEquals" xml:space="preserve">
     <value>Não é permitido remover a si mesmo</value>
   </data>
+  <data name="CivilStatusNotFound" xml:space="preserve">
+    <value>Estado civil não encontrado</value>
+  </data>
+  <data name="ClassificationNotFound" xml:space="preserve">
+    <value>Classificação não encontrada</value>
+  </data>
+  <data name="DisciplineNotFound" xml:space="preserve">
+    <value>Disciina não encontrada</value>
+  </data>
+  <data name="PositionNotFound" xml:space="preserve">
+    <value>Cargo não encontrado</value>
+  </data>
+  <data name="PreferenceNotFound" xml:space="preserve">
+    <value>Preferência não encontrada</value>
+  </data>
+  <data name="SituationNotFound" xml:space="preserve">
+    <value>Situação não encontrada</value>
+  </data>
+  <data name="SubscriptionNotFound" xml:space="preserve">
+    <value>Inscrição não encontrada</value>
+  </data>
+  <data name="TeacherNotFound" xml:space="preserve">
+    <value>Professor não encontrado</value>
+  </data>
+  <data name="TitleNotFound" xml:space="preserve">
+    <value>Título não encontrado</value>
+  </data>
+  <data name="YearNotFound" xml:space="preserve">
+    <value>Ano não encontrado</value>
+  </data>
 </root>

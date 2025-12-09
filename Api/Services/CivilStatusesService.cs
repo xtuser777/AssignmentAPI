@@ -1,6 +1,7 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
 using Assignment.Api.Interfaces.Services;
+using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
 
 namespace Assignment.Api.Services;
@@ -12,7 +13,7 @@ public class CivilStatusesService(IUnitOfWork unitOfWork) : ICivilStatusesServic
         return await unitOfWork
             .CivilStatusesRepository
             .FindOneAsync(parameters)
-            ?? throw new NotFoundException("Civil status not found");
+            ?? throw new NotFoundException(Errors.CivilStatusNotFound);
     }
 
     public async Task<IEnumerable<CivilStatus>> FindManyAsync(FindManyServiceParams parameters)

@@ -14,7 +14,7 @@ public class SubscriptionsService(IUnitOfWork unitOfWork) : ISubscriptionsServic
         return await unitOfWork
             .SubscriptionsRepository
             .FindOneAsync(parameters)
-            ?? throw new NullReferenceException();
+            ?? throw new NotFoundException(Errors.SubscriptionNotFound);
     }
 
     public async Task<IEnumerable<Subscription>> FindManyAsync(FindManyServiceParams parameters)

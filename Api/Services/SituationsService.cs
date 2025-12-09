@@ -1,5 +1,7 @@
 ﻿using Assignment.Api.Entities;
+using Assignment.Api.Exceptions;
 using Assignment.Api.Interfaces.Services;
+using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
 
 namespace Assignment.Api.Services;
@@ -11,7 +13,7 @@ public class SituationsService(IUnitOfWork unitOfWork) : ISituationsService
         return await unitOfWork
             .SituationsRepository
             .FindOneAsync(parameters)
-            ?? throw new NullReferenceException();
+            ?? throw new NotFoundException(Errors.SituationNotFound);
     }
 
     public async Task<IEnumerable<Situation>> FindManyAsync(FindManyServiceParams parameters)

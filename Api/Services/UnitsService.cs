@@ -1,5 +1,7 @@
 ﻿using Assignment.Api.Entities;
+using Assignment.Api.Exceptions;
 using Assignment.Api.Interfaces.Services;
+using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
 
 namespace Assignment.Api.Services;
@@ -12,7 +14,7 @@ public class UnitsService(IUnitOfWork unitOfWork) : IUnitsService
         return await unitOfWork
             .UnitsRepository
             .FindOneAsync(parameters)
-            ?? throw new NullReferenceException();
+            ?? throw new NotFoundException(Errors.UnitNotFound);
     }
 
     public async Task<IEnumerable<Unit>> FindManyAsync(
