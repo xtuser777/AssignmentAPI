@@ -68,9 +68,13 @@ public class YearsController(
 
 public record IndexYearsParams : PaginationParams
 {
+    public int? YearId { get; set; }
     public string? Record { get; set; }
     public string? Resolution { get; set; }
     public char? IsBlocked { get; set; }
+
+    [FromHeader(Name = "Order-By-Year-Id")]
+    public string? OrderByYearId { get; set; }
 
     [FromHeader(Name = "Order-By-Record")]
     public string? OrderByRecord { get; set; }
@@ -78,7 +82,7 @@ public record IndexYearsParams : PaginationParams
     [FromHeader(Name = "Order-By-Resolution")]
     public string? OrderByResolution { get; set; }
 
-    [FromHeader(Name = "Order-By-IsBlocked")]
+    [FromHeader(Name = "Order-By-Is-Blocked")]
     public string? OrderByIsBlocked { get; set; }
 
     public static implicit operator FindManyServiceParams(
@@ -87,12 +91,14 @@ public record IndexYearsParams : PaginationParams
         {
             FindManyProps = new FindManyYearsParams
             {
+                YearId = parameters.YearId,
                 Record = parameters.Record,
                 Resolution = parameters.Resolution,
                 IsBlocked = parameters.IsBlocked,
             },
             OrderByParams = new OrderByYearsParams
             {
+                YearId = parameters.OrderByYearId,
                 Record = parameters.OrderByRecord,
                 Resolution = parameters.OrderByResolution,
                 IsBlocked = parameters.OrderByIsBlocked,
@@ -106,6 +112,7 @@ public record IndexYearsParams : PaginationParams
         {
             CountProps = new CountYearParams
             {
+                YearId = parameters.YearId,
                 Record = parameters.Record,
                 Resolution = parameters.Resolution,
                 IsBlocked = parameters.IsBlocked,

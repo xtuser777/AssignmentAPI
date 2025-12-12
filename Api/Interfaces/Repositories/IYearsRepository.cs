@@ -19,6 +19,7 @@ public class ExclusiveYearParams : ExistsYearParams
 
 public record OrderByYearsParams: OrderByParams
 {
+    public string? YearId { get; set; }
     public string? Record { get; set; }
     public string? Resolution { get; set; }
     public string? IsBlocked { get; set; }

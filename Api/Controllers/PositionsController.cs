@@ -74,7 +74,7 @@ public record IndexPositionsParams : PaginationParams
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
 
-    [FromHeader(Name = "X-Order-By--Active")]
+    [FromHeader(Name = "X-Order-By-Active")]
     public string? OrderByActive { get; set; }
 
     public static implicit operator FindManyServiceParams(

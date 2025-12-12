@@ -17,7 +17,6 @@ public record CreateYearsRequest
     public string? Resolution { get; set; }
 
     [RequiredField]
-    [BoolValue]
     public char? IsBlocked { get; set; }
 
     public static implicit operator YearProps(CreateYearsRequest request)
@@ -40,7 +39,7 @@ public record UpdateYearsRequest
     [StringMaxLength(250)]
     public string? Resolution { get; set; }
 
-    [BoolValue]
+    [RequiredField]
     public char? IsBlocked { get; set; }
 
     public static implicit operator YearProps(UpdateYearsRequest request)
