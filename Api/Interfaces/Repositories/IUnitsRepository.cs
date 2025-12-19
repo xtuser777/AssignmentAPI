@@ -14,7 +14,7 @@ public class ExistsUnitsParams : CountUnitsParams;
 
 public class ExclusiveUnitsParams : ExistsUnitsParams
 {
-    public int ExcludeId { get; set; }
+    public int ExcludeUnitId { get; set; }
 }
 
 public record OrderByUnitsParams : OrderByParams

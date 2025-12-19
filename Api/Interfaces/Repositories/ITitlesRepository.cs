@@ -14,7 +14,7 @@ public class ExistsTitlesParams : CountTitlesParams;
 
 public class ExclusiveTitlesParams : ExistsTitlesParams
 {
-    public int ExcludeId { get; set; }
+    public int ExcludeTitleId { get; set; }
 }
 
 public record OrderByTitlesParams : OrderByParams

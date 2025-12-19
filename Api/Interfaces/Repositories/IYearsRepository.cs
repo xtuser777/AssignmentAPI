@@ -14,7 +14,7 @@ public class ExistsYearParams : CountYearParams;
 
 public class ExclusiveYearParams : ExistsYearParams
 {
-    public int ExcludeId { get; set; }
+    public int ExcludeYearId { get; set; }
 }
 
 public record OrderByYearsParams: OrderByParams

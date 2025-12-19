@@ -54,7 +54,7 @@ public record CreateTeachersRequest
 
     [RequiredField]
     [EmailAddress]
-    [StringMaxLength(11)]
+    [StringMaxLength(100)]
     public string? Email { get; set; }
 
     [StringMaxLength(255)]
@@ -101,7 +101,7 @@ public record CreateTeachersRequest
 
     public char? Tutoring { get; set; }
 
-    public char? AmbientalEdication { get; set; }
+    public char? AmbientalEducation { get; set; }
 
     public char? Robotics { get; set; }
 
@@ -138,7 +138,7 @@ public record CreateTeachersRequest
             Computing = request.Computing,
             SupplementCharge = request.SupplementCharge,
             Tutoring = request.Tutoring,
-            AmbientalEdication = request.AmbientalEdication,
+            AmbientalEdication = request.AmbientalEducation,
             Robotics = request.Robotics,
             Music = request.Music,
         };
@@ -193,7 +193,7 @@ public record UpdateTeachersRequest
 
     [StringMinLength(1)]
     [EmailAddress]
-    [StringMaxLength(11)]
+    [StringMaxLength(100)]
     public string? Email { get; set; }
 
     [StringMaxLength(255)]
@@ -234,7 +234,7 @@ public record UpdateTeachersRequest
 
     public char? Tutoring { get; set; }
 
-    public char? AmbientalEdication { get; set; }
+    public char? AmbientalEducation { get; set; }
 
     public char? Robotics { get; set; }
 
@@ -271,7 +271,7 @@ public record UpdateTeachersRequest
             Computing = request.Computing,
             SupplementCharge = request.SupplementCharge,
             Tutoring = request.Tutoring,
-            AmbientalEdication = request.AmbientalEdication,
+            AmbientalEdication = request.AmbientalEducation,
             Robotics = request.Robotics,
             Music = request.Music,
         };

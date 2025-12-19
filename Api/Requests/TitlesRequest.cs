@@ -9,28 +9,37 @@ public record CreateTitlesRequest
 {
     [RequiredField]
     [StringMaxLength(255)]
+    [UniqueField<Title>(typeof(ITitlesRepository), typeof(ExistsTitlesParams))]
+    [Display(Name = nameof(Description), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Description { get; set; }
 
     [RequiredField]
     [StringMaxLength(10)]
+    [Display(Name = nameof(Alias), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Alias { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(Weight), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Weight { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(Max), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Max { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(Order), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public int? Order { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(Type), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public char? Type { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(Active), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public char? Active { get; set; }
 
     [RequiredField]
+    [Display(Name = nameof(YearId), ResourceType = typeof(Resources.DisplayValues.Requests))]
     [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
     public int? YearId { get; set; }
 
@@ -54,27 +63,35 @@ public record UpdateTitlesRequest
 {
     [StringMinLength(1)]
     [StringMaxLength(255)]
+    [UniqueField<Title>(typeof(ITitlesRepository), typeof(ExclusiveTitlesParams))]
+    [Display(Name = nameof(Description), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Description { get; set; }
 
     [StringMinLength(1)]
     [StringMaxLength(10)]
+    [Display(Name = nameof(Alias), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Alias { get; set; }
 
     [Range(0, 100)]
+    [Display(Name = nameof(Weight), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Weight { get; set; }
 
     [Range(0, 100)]
+    [Display(Name = nameof(Max), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Max { get; set; }
 
     [Range(0, 100)]
+    [Display(Name = nameof(Order), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public int? Order { get; set; }
 
+    [Display(Name = nameof(Type), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public char? Type { get; set; }
 
-    [BoolValue]
+    [Display(Name = nameof(Active), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public char? Active { get; set; }
 
     [Connection<Year>(typeof(IYearsRepository), typeof(ExclusiveYearParams))]
+    [Display(Name = nameof(YearId), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public int? YearId { get; set; }
 
     public static implicit operator TitleProps(UpdateTitlesRequest request)

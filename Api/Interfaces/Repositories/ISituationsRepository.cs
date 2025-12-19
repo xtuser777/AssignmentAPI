@@ -14,7 +14,7 @@ public class ExistsSituationsParams : CountSituationsParams;
 
 public class ExclusiveSituationsParams : ExistsSituationsParams
 {
-    public int ExcludeId { get; set; }
+    public int ExcludeSituationId { get; set; }
 }
 
 public record OrderBySituationsParams : OrderByParams

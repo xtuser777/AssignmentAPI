@@ -14,7 +14,7 @@ public class ExistsCivilStatusesParams : CountCivilStatusesParams;
 
 public class ExclusiveCivilStatusesParams : CountCivilStatusesParams
 {
-    public int ExcludeId { get; set; }
+    public int ExcludeCivilStatusId { get; set; }
 }
 
 public record OrderByCivilStatusesParams : OrderByParams

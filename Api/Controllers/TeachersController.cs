@@ -1,8 +1,11 @@
-﻿using Assignment.Api.Interfaces.Repositories;
+﻿using Assignment.Api.Attributes;
+using Assignment.Api.Entities;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assignment.Api.Controllers;
 
@@ -69,9 +72,96 @@ public class TeachersController(
 public record IndexTeachersParams : PaginationParams
 {
     public string? Name { get; set; }
+    public string? Identity { get; set; }
+    public string? Document { get; set; }
+    public int? Dependents { get; set; }
+    public DateOnly? BirthAt { get; set; }
+    public string? Address { get; set; }
+    public string? Neighborhood { get; set; }
+    public string? City { get; set; }
+    public string? PostalCode { get; set; }
+    public string? Phone { get; set; }
+    public string? Cellphone { get; set; }
+    public string? Email { get; set; }
+    public string? Observations { get; set; }
+    public int? YearId { get; set; }
+    public int? UnitId { get; set; }
+    public int? CivilStatusId { get; set; }
+    public int? PositionId { get; set; }
+    public int? DisciplineId { get; set; }
+    public int? SituationId { get; set; }
+    public string? Speciality { get; set; }
+    public char? Remove { get; set; }
+    public char? Adido { get; set; }
+    public char? Readapted { get; set; }
+    public char? ReadingRoom { get; set; }
+    public char? Computing { get; set; }
+    public char? SupplementCharge { get; set; }
+    public char? Tutoring { get; set; }
+    public char? AmbientalEducation { get; set; }
+    public char? Robotics { get; set; }
+    public char? Music { get; set; }
 
     [FromHeader(Name = "X-Order-By-Name")]
     public string? OrderByName { get; set; }
+    [FromHeader(Name = "X-Order-By-Identity")]
+    public string? OrderByIdentity { get; set; }
+    [FromHeader(Name = "X-Order-By-Document")]
+    public string? OrderByDocument { get; set; }
+    [FromHeader(Name = "X-Order-By-Dependents")]
+    public string? OrderByDependents { get; set; }
+    [FromHeader(Name = "X-Order-By-Birth-At")]
+    public string? OrderByBirthAt { get; set; }
+    [FromHeader(Name = "X-Order-By-Address")]
+    public string? OrderByAddress { get; set; }
+    [FromHeader(Name = "X-Order-By-Neighborhood")]
+    public string? OrderByNeighborhood { get; set; }
+    [FromHeader(Name = "X-Order-By-City")]
+    public string? OrderByCity { get; set; }
+    [FromHeader(Name = "X-Order-By-Postal-Code")]
+    public string? OrderByPostalCode { get; set; }
+    [FromHeader(Name = "X-Order-By-Phone")]
+    public string? OrderByPhone { get; set; }
+    [FromHeader(Name = "X-Order-By-Cellphone")]
+    public string? OrderByCellphone { get; set; }
+    [FromHeader(Name = "X-Order-By-Email")]
+    public string? OrderByEmail { get; set; }
+    [FromHeader(Name = "X-Order-By-Observations")]
+    public string? OrderByObservations { get; set; }
+    [FromHeader(Name = "X-Order-By-Year-Id")]
+    public string? OrderByYearId { get; set; }
+    [FromHeader(Name = "X-Order-By-Unit")]
+    public string? OrderByUnit { get; set; }
+    [FromHeader(Name = "X-Order-By-Civil-Status")]
+    public string? OrderByCivilStatus { get; set; }
+    [FromHeader(Name = "X-Order-By-Position")]
+    public string? OrderByPosition { get; set; }
+    [FromHeader(Name = "X-Order-By-Discipline")]
+    public string? OrderByDiscipline { get; set; }
+    [FromHeader(Name = "X-Order-By-Situation")]
+    public string? OrderBySituation { get; set; }
+    [FromHeader(Name = "X-Order-By-Speciality")]
+    public string? OrderBySpeciality { get; set; }
+    [FromHeader(Name = "X-Order-By-Remove")]
+    public string? OrderByRemove { get; set; }
+    [FromHeader(Name = "X-Order-By-Adido")]
+    public string? OrderByAdido { get; set; }
+    [FromHeader(Name = "X-Order-By-Readapted")]
+    public string? OrderByReadapted { get; set; }
+    [FromHeader(Name = "X-Order-By-Reading-Room")]
+    public string? OrderByReadingRoom { get; set; }
+    [FromHeader(Name = "X-Order-By-Computing")]
+    public string? OrderByComputing { get; set; }
+    [FromHeader(Name = "X-Order-By-Supplement-Charge")]
+    public string? OrderBySupplementCharge { get; set; }
+    [FromHeader(Name = "X-Order-By-Tutoring")]
+    public string? OrderByTutoring { get; set; }
+    [FromHeader(Name = "X-Order-By-Ambiental-Education")]
+    public string? OrderByAmbientalEducation { get; set; }
+    [FromHeader(Name = "X-Order-By-Robotics")]
+    public string? OrderByRobotics { get; set; }
+    [FromHeader(Name = "X-Order-By-Music")]
+    public string? OrderByMusic { get; set; }
 
     public static implicit operator FindManyServiceParams(
         IndexTeachersParams indexTeachersParams)
@@ -80,10 +170,68 @@ public record IndexTeachersParams : PaginationParams
             FindManyProps = new FindManyTeachersParams
             {
                 Name = indexTeachersParams.Name,
+                Identity = indexTeachersParams.Identity,
+                Document = indexTeachersParams.Document,
+                Dependents = indexTeachersParams.Dependents,
+                BirthAt = indexTeachersParams.BirthAt,
+                Address = indexTeachersParams.Address,
+                Neighborhood = indexTeachersParams.Neighborhood,
+                City = indexTeachersParams.City,
+                PostalCode = indexTeachersParams.PostalCode,
+                Phone = indexTeachersParams.Phone,
+                Cellphone = indexTeachersParams.Cellphone,
+                Email = indexTeachersParams.Email,
+                Observations = indexTeachersParams.Observations,
+                YearId = indexTeachersParams.YearId,
+                UnitId = indexTeachersParams.UnitId,
+                CivilStatusId = indexTeachersParams.CivilStatusId,
+                PositionId = indexTeachersParams.PositionId,
+                DisciplineId = indexTeachersParams.DisciplineId,
+                SituationId = indexTeachersParams.SituationId,
+                Speciality = indexTeachersParams.Speciality,
+                Remove = indexTeachersParams.Remove,
+                Adido = indexTeachersParams.Adido,
+                Readapted = indexTeachersParams.Readapted,
+                ReadingRoom = indexTeachersParams.ReadingRoom,
+                Computing = indexTeachersParams.Computing,
+                SupplementCharge = indexTeachersParams.SupplementCharge,
+                Tutoring = indexTeachersParams.Tutoring,
+                AmbientalEdication = indexTeachersParams.AmbientalEducation,
+                Robotics = indexTeachersParams.Robotics,
+                Music = indexTeachersParams.Music,
             },
             OrderByParams = new OrderByTeachersParams
             {
                 Name = indexTeachersParams.OrderByName,
+                Identity = indexTeachersParams.OrderByIdentity,
+                Document = indexTeachersParams.OrderByDocument,
+                Dependents = indexTeachersParams.OrderByDependents,
+                BirthAt = indexTeachersParams.OrderByBirthAt,
+                Address = indexTeachersParams.OrderByAddress,
+                Neighborhood = indexTeachersParams.OrderByNeighborhood,
+                City = indexTeachersParams.OrderByCity,
+                PostalCode = indexTeachersParams.OrderByPostalCode,
+                Phone = indexTeachersParams.OrderByPhone,
+                Cellphone = indexTeachersParams.OrderByCellphone,
+                Email = indexTeachersParams.OrderByEmail,
+                Observations = indexTeachersParams.OrderByObservations,
+                YearId = indexTeachersParams.OrderByYearId,
+                Unit = indexTeachersParams.OrderByUnit,
+                CivilStatus = indexTeachersParams.OrderByCivilStatus,
+                Position = indexTeachersParams.OrderByPosition,
+                Discipline = indexTeachersParams.OrderByDiscipline,
+                Situation = indexTeachersParams.OrderBySituation,
+                Speciality = indexTeachersParams.OrderBySpeciality,
+                Remove = indexTeachersParams.OrderByRemove,
+                Adido = indexTeachersParams.OrderByAdido,
+                Readapted = indexTeachersParams.OrderByReadapted,
+                ReadingRoom = indexTeachersParams.OrderByReadingRoom,
+                Computing = indexTeachersParams.OrderByComputing,
+                SupplementCharge = indexTeachersParams.OrderBySupplementCharge,
+                Tutoring = indexTeachersParams.OrderByTutoring,
+                AmbientalEdication = indexTeachersParams.OrderByAmbientalEducation,
+                Robotics = indexTeachersParams.OrderByRobotics,
+                Music = indexTeachersParams.OrderByMusic,
             },
             Includes = new IncludesTeachersParams
             {
@@ -102,6 +250,35 @@ public record IndexTeachersParams : PaginationParams
             CountProps = new CountTeachersParams
             {
                 Name = indexTeachersParams.Name,
+                Identity = indexTeachersParams.Identity,
+                Document = indexTeachersParams.Document,
+                Dependents = indexTeachersParams.Dependents,
+                BirthAt = indexTeachersParams.BirthAt,
+                Address = indexTeachersParams.Address,
+                Neighborhood = indexTeachersParams.Neighborhood,
+                City = indexTeachersParams.City,
+                PostalCode = indexTeachersParams.PostalCode,
+                Phone = indexTeachersParams.Phone,
+                Cellphone = indexTeachersParams.Cellphone,
+                Email = indexTeachersParams.Email,
+                Observations = indexTeachersParams.Observations,
+                YearId = indexTeachersParams.YearId,
+                UnitId = indexTeachersParams.UnitId,
+                CivilStatusId = indexTeachersParams.CivilStatusId,
+                PositionId = indexTeachersParams.PositionId,
+                DisciplineId = indexTeachersParams.DisciplineId,
+                SituationId = indexTeachersParams.SituationId,
+                Speciality = indexTeachersParams.Speciality,
+                Remove = indexTeachersParams.Remove,
+                Adido = indexTeachersParams.Adido,
+                Readapted = indexTeachersParams.Readapted,
+                ReadingRoom = indexTeachersParams.ReadingRoom,
+                Computing = indexTeachersParams.Computing,
+                SupplementCharge = indexTeachersParams.SupplementCharge,
+                Tutoring = indexTeachersParams.Tutoring,
+                AmbientalEdication = indexTeachersParams.AmbientalEducation,
+                Robotics = indexTeachersParams.Robotics,
+                Music = indexTeachersParams.Music,
             },
             PaginationParams = indexTeachersParams
         };

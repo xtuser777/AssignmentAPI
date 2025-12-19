@@ -70,16 +70,9 @@ public class SubscriptionsController(
 
 public record IndexSubscriptionsParams : PaginationParams
 {
-    [FromRoute]
     public int? SubscriptionId { get; set; }
-
-    [FromRoute]
     public int? YearId { get; set; }
-
-    [FromRoute]
     public int? TeacherId { get; set; }
-
-    [FromRoute]
     public int? PreferenceId { get; set; }
 
     [FromHeader(Name = "X-Order-By-Year-Id")]
