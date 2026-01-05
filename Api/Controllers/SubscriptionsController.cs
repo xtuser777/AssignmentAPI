@@ -99,6 +99,14 @@ public record IndexSubscriptionsParams : PaginationParams
                 Teacher = parameters.OrderByTeacher,
                 Preference = parameters.OrderByPreference,
             },
+            Includes = new IncludesSubscriptionsParams()
+            {
+                Teacher = new IncludesSubscriptionsTeacherParams
+                {
+                    Unit = true,
+                },
+                Preference = true,
+            },
             PaginationParams = parameters,
         };
 
@@ -138,8 +146,12 @@ public record ShowSubscriptionsParams
             },
             Includes = new IncludesSubscriptionsParams
             {
-                Teacher = parameters.IncludeTeacher,
+                Teacher = new IncludesSubscriptionsTeacherParams
+                {
+                    Unit = parameters.IncludeTeacher
+                },
                 Preference = parameters.IncludePreference,
+                Titles = true,
             },
         };
 }

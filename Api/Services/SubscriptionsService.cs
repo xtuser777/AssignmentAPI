@@ -11,10 +11,15 @@ public class SubscriptionsService(IUnitOfWork unitOfWork) : ISubscriptionsServic
 {
     public async Task<Subscription> FindOneAsync(FindOneServiceParams parameters)
     {
-        return await unitOfWork
+        var subscription = await unitOfWork
             .SubscriptionsRepository
             .FindOneAsync(parameters)
             ?? throw new NotFoundException(Errors.SubscriptionNotFound);
+        var points = await unitOfWork.PointsBySubscriptionsRepository.FindManyAsync(new FindManyRepositoryParams
+            { Where = new FindManyPointsBySubscriptionsParams { SubscriptionId = subscription.SubscriptionId } });
+        subscription.Points = points.ToList();
+
+        return subscription;
     }
 
     public async Task<IEnumerable<Subscription>> FindManyAsync(FindManyServiceParams parameters)
@@ -32,68 +37,18 @@ public class SubscriptionsService(IUnitOfWork unitOfWork) : ISubscriptionsServic
     public async Task<Subscription> CreateAsync(CreateServiceParams parameters)
     {
         var props = (SubscriptionProps)parameters.Props;
-        var subscription = new Subscription(props);
+        var subscription = new Subscription(props)
+        {
+            SubscriptionId = await unitOfWork.SubscriptionsRepository.GetId(x => x.SubscriptionId)
+        };
         var titles = props.Titles?.ToList() ?? [];
         titles.ForEach(t => t.SubscriptionId = subscription.SubscriptionId);
-        var points = props.Points?.ToList() ?? [];
-        points.ForEach(p => p.SubscriptionId = subscription.SubscriptionId);
-        var year = await unitOfWork
-            .YearsRepository
-            .FindOneAsync(new() { Where = new FindManyYearsParams 
-            { YearId = props.YearId } });
-        var teacher = await unitOfWork
-            .TeachersRepository
-            .FindOneAsync(
-            new() 
-            { 
-                Where = new FindManyTeachersParams 
-                { TeacherId = props.TeacherId }, 
-                Includes = new IncludesTeachersParams 
-                { Unit = true, Discipline = true, Situation = true, Position = true } 
-            });
-        var classification = new Classification()
-        {
-            YearId = props.YearId,
-            SubscriptionId = subscription.SubscriptionId,
-            TeacherId = teacher?.TeacherId,
-            Name = teacher?.Name,
-            Phone = teacher?.Phone,
-            Cellphone = teacher?.Cellphone,
-            UnitId = teacher?.UnitId,
-            Unit = teacher?.Unit?.Name,
-            DisciplineId = teacher?.DisciplineId,
-            Discipline = teacher?.Discipline?.Name,
-            PositionId = teacher?.PositionId,
-            Position = teacher?.Position?.Name,
-            SituationId = teacher?.SituationId,
-            Situation = teacher?.Situation?.Name,
-            Speciality = teacher?.Speciality,
-            Adido = teacher?.Adido,
-            AmbientalEdication = teacher?.AmbientalEdication,
-            Computing = teacher?.Computing,
-            Readapted = teacher?.Readapted,
-            ReadingRoom = teacher?.ReadingRoom,
-            Remove = teacher?.Remove,
-            SupplementCharge = teacher?.SupplementCharge,
-            Tutoring = teacher?.Tutoring,
-            T1 = points[0].Points,
-            T2 = points[1].Points,
-            T3 = points[2].Points,
-            T4 = points[3].Points,
-            T5 = points[4].Points,
-            T6 = points[5].Points,
-            T7 = points[6].Points,
-            T8 = points[7].Points,
-            T9 = points[8].Points,
-            T10 = points[9].Points,
-            T11 = points[10].Points,
-            Total = points.Sum(p => p.Points)
-        };
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.SubscriptionsRepository.CreateAsync(subscription);
-        await unitOfWork.TitlesBySubscriptionsRepository.CreateManyAsync(titles);
-        await unitOfWork.PointsBySubscriptionsRepository.CreateManyAsync(points);
-        await unitOfWork.ClassificationsRepository.CreateAsync(classification);
+        foreach (var title in titles)
+        {
+            unitOfWork.TitlesBySubscriptionsRepository.Update(title);
+        }
         await unitOfWork.Commit(transaction);
         return subscription;
     }
@@ -105,107 +60,24 @@ public class SubscriptionsService(IUnitOfWork unitOfWork) : ISubscriptionsServic
         subscription.Update(props);
         var titles = props.Titles?.ToList() ?? [];
         titles.ForEach(t => t.SubscriptionId = subscription.SubscriptionId);
-        var points = props.Points?.ToList() ?? [];
-        points.ForEach(p => p.SubscriptionId = subscription.SubscriptionId);
-        var year = await unitOfWork
-            .YearsRepository
-            .FindOneAsync(new() { Where = new FindManyYearsParams 
-            { YearId = props.YearId } });
-        var teacher = await unitOfWork
-            .TeachersRepository
-            .FindOneAsync(
-            new()
-            {
-                Where = new FindManyTeachersParams 
-                { TeacherId = props.TeacherId },
-                Includes = new IncludesTeachersParams
-                { Unit = true, Discipline = true, Situation = true, Position = true }
-            });
-        var classificationProps = new ClassificationProps()
-        {
-            YearId = props.YearId,
-            SubscriptionId = subscription.SubscriptionId,
-            TeacherId = teacher?.TeacherId,
-            Name = teacher?.Name,
-            Phone = teacher?.Phone,
-            Cellphone = teacher?.Cellphone,
-            UnitId = teacher?.UnitId,
-            Unit = teacher?.Unit?.Name,
-            DisciplineId = teacher?.DisciplineId,
-            Discipline = teacher?.Discipline?.Name,
-            PositionId = teacher?.PositionId,
-            Position = teacher?.Position?.Name,
-            SituationId = teacher?.SituationId,
-            Situation = teacher?.Situation?.Name,
-            Speciality = teacher?.Speciality,
-            Adido = teacher?.Adido,
-            AmbientalEdication = teacher?.AmbientalEdication,
-            Computing = teacher?.Computing,
-            Readapted = teacher?.Readapted,
-            ReadingRoom = teacher?.ReadingRoom,
-            Remove = teacher?.Remove,
-            SupplementCharge = teacher?.SupplementCharge,
-            Tutoring = teacher?.Tutoring,
-            T1 = points[0].Points,
-            T2 = points[1].Points,
-            T3 = points[2].Points,
-            T4 = points[3].Points,
-            T5 = points[4].Points,
-            T6 = points[5].Points,
-            T7 = points[6].Points,
-            T8 = points[7].Points,
-            T9 = points[8].Points,
-            T10 = points[9].Points,
-            T11 = points[10].Points,
-            Total = points.Sum(p => p.Points)
-        };
-        var classification = await unitOfWork.
-            ClassificationsRepository.
-            FindOneAsync(
-            new() 
-            { Where = new FindManyClassificationsParams { SubscriptionId = subscription.SubscriptionId } 
-            }) ?? throw new NotFoundException(Errors.UserNotFound);
-        classification.Update(classificationProps);
         await using var transaction = unitOfWork.BeginTransaction;
-        await unitOfWork
-            .TitlesBySubscriptionsRepository
-            .DeleteManyAsync(
-            new FindManyTitleBySubscriptionsParams
-            { SubscriptionId = subscription.SubscriptionId });
-        await unitOfWork
-            .PointsBySubscriptionsRepository
-            .DeleteManyAsync(
-            new FindManyPointsBySubscriptionsParams
-            { SubscriptionId = subscription.SubscriptionId });
-        await unitOfWork.TitlesBySubscriptionsRepository.CreateManyAsync([.. titles]);
-        await unitOfWork.PointsBySubscriptionsRepository.CreateManyAsync([.. points]);
+        foreach (var title in titles)
+        {
+            unitOfWork.TitlesBySubscriptionsRepository.Update(title);
+        }
         unitOfWork.SubscriptionsRepository.Update(subscription);
-        unitOfWork.ClassificationsRepository.Update(classification);
         await unitOfWork.Commit(transaction);
     }
 
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var subscription = await FindOneAsync(parameters);
-        var classification = await unitOfWork.
-            ClassificationsRepository.
-            FindOneAsync(
-            new()
-            {
-                Where = new FindManyClassificationsParams { SubscriptionId = subscription.SubscriptionId }
-            }) ?? throw new NotFoundException(Errors.UserNotFound);
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork
             .TitlesBySubscriptionsRepository
             .DeleteManyAsync(
             new FindManyTitleBySubscriptionsParams
             { SubscriptionId = subscription.SubscriptionId });
-        await unitOfWork
-            .PointsBySubscriptionsRepository
-            .DeleteManyAsync(
-            new FindManyPointsBySubscriptionsParams
-            { SubscriptionId = subscription.SubscriptionId });
-        unitOfWork.ClassificationsRepository.Delete(classification);
         unitOfWork.SubscriptionsRepository.Delete(subscription);
         await unitOfWork.Commit(transaction);
     }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Assignment.Api.Entities;
 
 [Table("inscricao")]
-[PrimaryKey(nameof(YearId), nameof(SubscriptionId), nameof(TeacherId))]
+[PrimaryKey(nameof(SubscriptionId), nameof(YearId), nameof(TeacherId))]
 public class Subscription : SubscriptionProps
 {
     public Subscription() 
@@ -46,8 +46,8 @@ public class SubscriptionProps : Entity
     public virtual Preference? Preference { get; set; }
 
     [InverseProperty("Subscription")]
-    public virtual IEnumerable<TitleBySubscription>? Titles { get; set; }
+    public virtual ICollection<TitleBySubscription>? Titles { get; set; }
 
     [NotMapped]
-    public virtual IEnumerable<PointsBySubscription>? Points { get; set; }
+    public virtual ICollection<PointsBySubscription>? Points { get; set; }
 }

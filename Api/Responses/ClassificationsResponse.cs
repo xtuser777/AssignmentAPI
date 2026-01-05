@@ -24,7 +24,7 @@ public record FindManyClassificationsResponse
     public char? Computing { get; set; }
     public char? SupplementCharge { get; set; }
     public char? Tutoring { get; set; }
-    public char? AmbientalEdication { get; set; }
+    public char? AmbientalEducation { get; set; }
     public decimal? T1 { get; set; }
     public decimal? T2 { get; set; }
     public decimal? T3 { get; set; }

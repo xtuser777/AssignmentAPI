@@ -38,7 +38,13 @@ public class TitlesBySubscriptionsRepository : Repository<TitleBySubscription>, 
 
     public async Task CreateManyAsync(IEnumerable<TitleBySubscription> entities)
     {
-        await _context.TitlesBySubscriptions.AddRangeAsync(entities);
+        foreach (var entity in entities)
+        {
+            if (!await ExistsAsync(entity))
+            {
+                await _context.TitlesBySubscriptions.AddAsync(entity);
+            }
+        }
     }
 
     public void Update(TitleBySubscription entiy)

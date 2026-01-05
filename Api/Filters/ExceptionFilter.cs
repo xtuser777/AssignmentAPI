@@ -4,7 +4,7 @@ using Assignment.Api.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Assignment.Filters;
+namespace Assignment.Api.Filters;
 
 public class ExceptionFilter : IExceptionFilter
 {
@@ -29,6 +29,7 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 
+    
     private static void HandleProjectException(ExceptionContext context)
     {
         switch (context.Exception)

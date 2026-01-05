@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Assignment.Api.Entities;
 
 [Table("titulo_por_inscricao")]
-[PrimaryKey(nameof(TitleId), nameof(SubscriptionId), nameof(YearId), nameof(TeacherId))]
+[PrimaryKey(nameof(SubscriptionId), nameof(TitleId), nameof(YearId), nameof(TeacherId))]
 public class TitleBySubscription : TitleBySubscriptionProps
 {
     public TitleBySubscription()
@@ -48,6 +48,6 @@ public class TitleBySubscriptionProps : Entity
     [ForeignKey($"{nameof(YearId)}, {nameof(TitleId)}")]
     public virtual Title? Title { get; init; }
 
-    [ForeignKey($"{nameof(YearId)}, {nameof(SubscriptionId)}, {nameof(TeacherId)}")]
+    [ForeignKey($"{nameof(SubscriptionId)}, {nameof(YearId)}, {nameof(TeacherId)}")]
     public virtual Subscription? Subscription { get; init; }
 }

@@ -13,11 +13,6 @@ public class Classification : ClassificationProps
     {
         Assign(props);
     }
-
-    public void Update(ClassificationProps props)
-    {
-        AssignUpdate(props);
-    }
 }
 
 public class ClassificationProps : Entity

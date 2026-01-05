@@ -38,14 +38,9 @@ public class ClassificationsService(IUnitOfWork unitOfWork) : IClassificationsSe
         return year;
     }
 
-    public async Task UpdateAsync(UpdateServiceParams parameters)
+    public Task UpdateAsync(UpdateServiceParams parameters)
     {
-        var props = (ClassificationProps)parameters.Props;
-        var year = await FindOneAsync(parameters);
-        year.Update(props);
-        await using var transaction = unitOfWork.BeginTransaction;
-        unitOfWork.ClassificationsRepository.Update(year);
-        await unitOfWork.Commit(transaction);
+        return Task.CompletedTask;
     }
 
     public async Task DeleteAsync(DeleteServiceParams parameters)

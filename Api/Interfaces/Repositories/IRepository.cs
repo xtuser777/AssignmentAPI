@@ -1,4 +1,5 @@
-﻿using Assignment.Api.Entities;
+﻿using System.Linq.Expressions;
+using Assignment.Api.Entities;
 
 namespace Assignment.Api.Interfaces.Repositories;
 
@@ -29,6 +30,8 @@ public interface IRepository<T>
     {
         return Task.FromResult(true);
     }
+
+    Task<int> GetId(Expression<Func<T, int?>> keySelector);
 }
 
 public record FindOneParams();

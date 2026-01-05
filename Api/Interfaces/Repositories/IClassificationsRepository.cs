@@ -54,5 +54,5 @@ public record OrderByClassificationsParams : OrderByParams
     public string? T20 { get; set; }
     public string? T21 { get; set; }
     public string? T22 { get; set; }
-    public string? Value { get; set; }
+    public string? Total { get; set; }
 }

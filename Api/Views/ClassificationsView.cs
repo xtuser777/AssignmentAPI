@@ -96,7 +96,7 @@ public class ClassificationsView : IClassificationsView
             Computing = classification.Computing,
             SupplementCharge = classification.SupplementCharge,
             Tutoring = classification.Tutoring,
-            AmbientalEdication = classification.AmbientalEdication,
+            AmbientalEducation = classification.AmbientalEdication,
             T1 = classification.T1,
             T2 = classification.T2,
             T3 = classification.T3,

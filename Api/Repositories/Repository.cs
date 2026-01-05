@@ -124,7 +124,7 @@ public abstract class Repository<TEntity> where TEntity : Entity
         }
     }
 
-    protected async Task<int> GetId(Expression<Func<TEntity, int?>> keySelector)
+    public async Task<int> GetId(Expression<Func<TEntity, int?>> keySelector)
     {
         var entity = await query.OrderBy(keySelector).LastOrDefaultAsync();
         var id = entity?.GetType().GetProperty(
