@@ -40,16 +40,16 @@ public record IndexClassificationsParams : PaginationParams
     public string? Phone { get; init; }
     public string? Cellphone { get; init; }
     public string? Speciality { get; init; }
-    public char? Remove { get; init; }
-    public char? Adido { get; init; }
-    public char? Readapted { get; init; }
-    public char? ReadingRoom { get; init; }
-    public char? Computing { get; init; }
-    public char? SupplementCharge { get; init; }
-    public char? Tutoring { get; init; }
-    public char? AmbientalEducation { get; init; }
-    public char? Robotics { get; init; }
-    public char? Music { get; init; }
+    public string? Remove { get; init; }
+    public string? Adido { get; init; }
+    public string? Readapted { get; init; }
+    public string? ReadingRoom { get; init; }
+    public string? Computing { get; init; }
+    public string? SupplementCharge { get; init; }
+    public string? Tutoring { get; init; }
+    public string? AmbientalEducation { get; init; }
+    public string? Robotics { get; init; }
+    public string? Music { get; init; }
 
     [FromHeader(Name = "X-Order-By-Name")] public string? OrderByName { get; init; }
     [FromHeader(Name = "X-Order-By-Year")] public string? OrderByYear { get; init; }

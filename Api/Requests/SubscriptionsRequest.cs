@@ -66,22 +66,22 @@ public record UpdateSubscriptionsRequest
             YearId = request.YearId,
             TeacherId = request.TeacherId,
             PreferenceId = request.PreferenceId,
-            Titles = request.Titles.Select(t => new TitleBySubscription
+            Titles = [.. request.Titles.Select(t => new TitleBySubscription
             {
                 SubscriptionId = 0,
                 TeacherId = request.TeacherId,
                 TitleId = t.TitleId,
                 YearId = request.YearId,
                 Value = t.Value
-            }).ToList(),
-            Points = request.Points.Select(p => new PointsBySubscription
+            })],
+            Points = [.. request.Points.Select(p => new PointsBySubscription
             {
                 SubscriptionId = 0,
                 Description = p.Description,
                 Order = p.Order,
                 YearId = request.YearId,
                 Points = p.Points,
-            }).ToList()
+            })]
         };
 }
 

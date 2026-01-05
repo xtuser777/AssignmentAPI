@@ -17,14 +17,14 @@ public record FindManyClassificationsResponse
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public char? Remove { get; set; }
-    public char? Adido { get; set; }
-    public char? Readapted { get; set; }
-    public char? ReadingRoom { get; set; }
-    public char? Computing { get; set; }
-    public char? SupplementCharge { get; set; }
-    public char? Tutoring { get; set; }
-    public char? AmbientalEducation { get; set; }
+    public string? Remove { get; set; }
+    public string? Adido { get; set; }
+    public string? Readapted { get; set; }
+    public string? ReadingRoom { get; set; }
+    public string? Computing { get; set; }
+    public string? SupplementCharge { get; set; }
+    public string? Tutoring { get; set; }
+    public string? AmbientalEducation { get; set; }
     public decimal? T1 { get; set; }
     public decimal? T2 { get; set; }
     public decimal? T3 { get; set; }
@@ -67,14 +67,14 @@ public record FindOneClassificationsResponse
     public string? Phone { get; set; }
     public string? Cellphone { get; set; }
     public string? Speciality { get; set; }
-    public char? Remove { get; set; }
-    public char? Adido { get; set; }
-    public char? Readapted { get; set; }
-    public char? ReadingRoom { get; set; }
-    public char? Computing { get; set; }
-    public char? SupplementCharge { get; set; }
-    public char? Tutoring { get; set; }
-    public char? AmbientalEdication { get; set; }
+    public string? Remove { get; set; }
+    public string? Adido { get; set; }
+    public string? Readapted { get; set; }
+    public string? ReadingRoom { get; set; }
+    public string? Computing { get; set; }
+    public string? SupplementCharge { get; set; }
+    public string? Tutoring { get; set; }
+    public string? AmbientalEdication { get; set; }
     public decimal? T1 { get; set; }
     public decimal? T2 { get; set; }
     public decimal? T3 { get; set; }

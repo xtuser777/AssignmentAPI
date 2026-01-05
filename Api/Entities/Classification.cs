@@ -64,28 +64,28 @@ public class ClassificationProps : Entity
     public string? Speciality { get; set; }
     
     [Column("remocao")]
-    public char? Remove { get; set; }
+    public string? Remove { get; set; }
     
     [Column("adido")]
-    public char? Adido { get; set; }
+    public string? Adido { get; set; }
     
     [Column("readaptado")]
-    public char? Readapted { get; set; }
+    public string? Readapted { get; set; }
     
     [Column("saladeleitura")]
-    public char? ReadingRoom { get; set; }
+    public string? ReadingRoom { get; set; }
     
     [Column("informatica")]
-    public char? Computing { get; set; }
+    public string? Computing { get; set; }
     
     [Column("cargasuplementar")]
-    public char? SupplementCharge { get; set; }
+    public string? SupplementCharge { get; set; }
     
     [Column("reforco")]
-    public char? Tutoring { get; set; }
+    public string? Tutoring { get; set; }
     
     [Column("educacaoambiental")]
-    public char? AmbientalEdication { get; set; }
+    public string? AmbientalEdication { get; set; }
 
     [Column("t1")]
     public decimal? T1 { get; set; }
