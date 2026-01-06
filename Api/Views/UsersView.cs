@@ -43,6 +43,7 @@ public class UsersView : IUsersView
             {
                 UserLogin=unit.UserLogin,
                 UnitId=unit.UnitId,
+                UnitName=unit.Unit?.Name ?? ""
             }),
         };
     }

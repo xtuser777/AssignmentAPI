@@ -18,6 +18,7 @@ public record FindOneUsersUsersUnitsResponse
 {
     public string? UserLogin { get; set; }
     public int? UnitId { get; set; }
+    public string? UnitName { get; set; }
 }
 
 public record FindOneUsersResponse
