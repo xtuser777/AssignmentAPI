@@ -1,5 +1,4 @@
 ﻿using Assignment.Api.Entities;
-using Assignment.Api.Extensions;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Responses;
 
@@ -33,10 +32,12 @@ public class UsersView : IUsersView
             Name = user.Name,
             Email = user.Email,
             Active = user.Active,
-            Role = new TranslatableField
+            RoleId = user.UsersRoles!.ToList()[0].RoleId,
+            UserRole = new FindOneUsersUsersRolesResponse
             {
-                Value = user.Role.ToString() ?? "",
-                DisplayValue = user.Role!.GetDisplayValue()
+                Username = user.Username,
+                RoleId = user.UsersRoles!.ToList()[0].RoleId,
+                RoleDescription = user.UsersRoles!.ToList()[0].Role?.Description,
             },
             UsersUnits = user.UsersUnits?
             .Select(unit => new FindOneUsersUsersUnitsResponse
@@ -61,11 +62,8 @@ public class UsersView : IUsersView
             Name = user.Name,
             Email = user.Email,
             Active = user.Active,
-            Role = new TranslatableField
-            {
-                Value = user.Role.ToString() ?? "",
-                DisplayValue = user.Role!.GetDisplayValue()
-            }
+            RoleId = user.UsersRoles?.ToList()[0].RoleId,
+            RoleDescription = user.UsersRoles?.ToList()[0].Role?.Description,
         });
     }
 }

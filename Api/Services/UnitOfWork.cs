@@ -23,6 +23,8 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     private ITeachersRepository? _teachersRepository = null;
     private ITitlesBySubscriptionsRepository? _titlesBySubscriptionsRepository = null;
     private IPointsBySubscriptionsRepository? _pointsBySubscriptionsRepository = null;
+    private IRolesRepository? _rolesRepository = null;
+    private IUsersRolesRepository? _usersRolesRepository = null;
 
     public ApplicationDbContext Context => context;
     public IDbContextTransaction BeginTransaction => context.Database.BeginTransaction();
@@ -41,6 +43,8 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public ITeachersRepository TeachersRepository => _teachersRepository ?? new TeachersRepository(context);
     public ITitlesBySubscriptionsRepository TitlesBySubscriptionsRepository => _titlesBySubscriptionsRepository ?? new TitlesBySubscriptionsRepository(context);
     public IPointsBySubscriptionsRepository PointsBySubscriptionsRepository => _pointsBySubscriptionsRepository ?? new PointsBySubscriptionsRepository(context);
+    public IRolesRepository RolesRepository => _rolesRepository ?? new RolesRepository(context);
+    public IUsersRolesRepository UsersRolesRepository => _usersRolesRepository ?? new UsersRolesRepository(context);
 
     public async Task Commit(IDbContextTransaction transaction, string? tableName = null)
     {

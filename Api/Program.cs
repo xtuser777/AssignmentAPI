@@ -51,6 +51,7 @@ builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
 builder.Services.AddScoped<ITitlesBySubscriptionsRepository, TitlesBySubscriptionsRepository>();
 builder.Services.AddScoped<IPointsBySubscriptionsRepository, PointsBySubscriptionsRepository>();
 builder.Services.AddScoped<IClassificationsRepository, ClassificationsRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
 
 // Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -68,6 +69,7 @@ builder.Services.AddScoped<ITeachersService, TeachersService>();
 builder.Services.AddScoped<ISubscriptionsService, SubscriptionsService>();
 builder.Services.AddScoped<IPointsBySubscriptionsService, PointsBySubscriptionsService>();
 builder.Services.AddScoped<IClassificationsService, ClassificationsService>();
+builder.Services.AddScoped<IRolesService, RolesService>();
 
 // Views
 builder.Services.AddScoped<IUsersView, UsersView>();
@@ -78,11 +80,11 @@ builder.Services.AddScoped<ISituationsView, SituationsView>();
 builder.Services.AddScoped<IDisciplinesView, DisciplinesView>();
 builder.Services.AddScoped<IPreferencesView, PreferencesView>();
 builder.Services.AddScoped<ICivilStatusesView, CivilStatusesView>();
-builder.Services.AddScoped<IUsersRolesView, UsersRolesView>();
 builder.Services.AddScoped<ITitlesView, TitlesView>();
 builder.Services.AddScoped<ITeachersView, TeachersView>();
 builder.Services.AddScoped<ISubscriptionsView, SubscriptionsView>();
 builder.Services.AddScoped<IClassificationsView, ClassificationsView>();
+builder.Services.AddScoped<IRolesView, RolesView>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

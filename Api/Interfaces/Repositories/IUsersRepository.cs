@@ -24,10 +24,20 @@ public record OrderByUsersParams : OrderByParams
     public string? Name { get; set; }
     public string? Email { get; set; }
     public string? Active { get; set; }
-    public string? Role { get; set; }
+}
+
+public record IncludesUsersUsersRolesParams
+{
+    public bool? Role { get; set; }
+}
+
+public record IncludesUsersUsersUnitsParams
+{
+    public bool? Unit { get; set; }
 }
 
 public record IncludesUsersParams : IncludesParams
 {
-    public IncludesUsersUnitsParams? UsersUnits { get; set; }
+    public IncludesUsersUsersRolesParams? UsersRoles { get; set; }
+    public IncludesUsersUsersUnitsParams? UsersUnits { get; set; }
 }

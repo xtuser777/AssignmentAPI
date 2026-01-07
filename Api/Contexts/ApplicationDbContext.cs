@@ -6,6 +6,7 @@ namespace Assignment.Api.Contexts;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
     public DbSet<Year> Years { get; set; }
     public DbSet<Position> Positions { get; set; }
     public DbSet<Situation> Situations { get; set; }
@@ -18,6 +19,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Title> Titles { get; set; }
     public DbSet<TitleBySubscription> TitlesBySubscriptions { get; set; }
     public DbSet<UserUnit> UsersUnits { get; set; }
+    public DbSet<UserRole> UsersRoles { get; set; }
     public DbSet<PointsBySubscription> PointsBySubscriptions { get; set; }
     public DbSet<Classification> Classifications { get; set; }
 

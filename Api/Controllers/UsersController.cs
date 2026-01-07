@@ -1,5 +1,4 @@
-﻿using Assignment.Api.Enums;
-using Assignment.Api.Interfaces.Repositories;
+﻿using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
@@ -98,7 +97,6 @@ public record IndexUsersParams : PaginationParams
                 Name = parameters.Name,
                 Email = parameters.Email,
                 Active = parameters.Active,
-                Role = Parser.ToEnumOptional<UserRole>(parameters.Role)
             },
             OrderByParams = new OrderByUsersParams
             {
@@ -106,7 +104,11 @@ public record IndexUsersParams : PaginationParams
                 Name = parameters.OrderByName,
                 Email = parameters.OrderByEmail,
                 Active = parameters.OrderByActive,
-                Role = parameters.OrderByRole,
+            },
+            Includes = new IncludesUsersParams
+            {
+                UsersRoles = new IncludesUsersUsersRolesParams { Role = true },
+                UsersUnits = new IncludesUsersUsersUnitsParams { Unit = true }
             },
             PaginationParams = parameters,
         };
@@ -122,7 +124,6 @@ public record IndexUsersParams : PaginationParams
                 Name = parameters.Name,
                 Email = parameters.Email,
                 Active = parameters.Active,
-                Role = Parser.ToEnumOptional<UserRole>(parameters.Role)
             },
             PaginationParams = parameters,
         };
@@ -137,6 +138,9 @@ public record ShowUsersParams
     [FromRoute]
     public bool? IncludeUsersUnits { get; set; } = true;
 
+    [FromRoute]
+    public bool? IncludeUsersRoles { get; set; } = true;
+
     public static implicit operator FindOneServiceParams(ShowUsersParams parameters)
         => new()
         {
@@ -146,9 +150,13 @@ public record ShowUsersParams
             },
             Includes = new IncludesUsersParams
             {
-                UsersUnits = new IncludesUsersUnitsParams
+                UsersRoles = new IncludesUsersUsersRolesParams
                 {
-                    Unit = true,
+                    Role = parameters.IncludeUsersRoles
+                },
+                UsersUnits = new IncludesUsersUsersUnitsParams
+                {
+                    Unit = parameters.IncludeUsersUnits,
                 }
             }
         };

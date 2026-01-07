@@ -39,8 +39,10 @@ public class UsersService(
             Password = cryptService.HashPassword(props.Password!)
         };
         var usersUnits = props.UsersUnits!.ToList();
+        var usersRoles = props.UsersRoles!.ToList();
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.UsersRepository.CreateAsync(user);
+        await unitOfWork.UsersRolesRepository.CreateManyAsync(usersRoles);
         await unitOfWork.UsersUnitsRepository.CreateManyAsync(usersUnits);
         await unitOfWork.Commit(transaction);
         return user;
@@ -54,11 +56,15 @@ public class UsersService(
             props.Password = cryptService.HashPassword(props.Password);
         user.Update(props);
         var usersUnits = props.UsersUnits!.ToList();
+        var usersRoles = props.UsersRoles!.ToList();
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.UsersRepository.Update(user);
         await unitOfWork.UsersUnitsRepository.DeleteManyAsync(
             new FindManyUsersUnitsParams { UserLogin = user.Username });
         await unitOfWork.UsersUnitsRepository.CreateManyAsync([.. usersUnits]);
+        await unitOfWork.UsersRolesRepository.DeleteManyAsync(
+            new FindManyUsersRolesParams { Username = user.Username });
+        await unitOfWork.UsersRolesRepository.CreateManyAsync([.. usersRoles]);
         await unitOfWork.Commit(transaction);
     }
 
@@ -68,6 +74,8 @@ public class UsersService(
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.UsersUnitsRepository.DeleteManyAsync(
             new FindManyUsersUnitsParams { UserLogin = user.Username });
+        await unitOfWork.UsersRolesRepository.DeleteManyAsync(
+            new FindManyUsersRolesParams { Username = user.Username });
         unitOfWork.UsersRepository.Delete(user);
         await unitOfWork.Commit(transaction);
     }

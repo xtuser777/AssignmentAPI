@@ -23,6 +23,8 @@ public interface IUnitOfWork
     IPreferencesRepository PreferencesRepository { get; }
     ITitlesBySubscriptionsRepository TitlesBySubscriptionsRepository { get; }
     IPointsBySubscriptionsRepository PointsBySubscriptionsRepository { get; }
+    IRolesRepository RolesRepository { get; }
+    IUsersRolesRepository UsersRolesRepository { get; }
     Task Commit(IDbContextTransaction transaction, string? tableName = null);
     void Dispose();
 }

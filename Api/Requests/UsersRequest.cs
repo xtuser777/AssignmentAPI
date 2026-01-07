@@ -1,6 +1,5 @@
 ﻿using Assignment.Api.Attributes;
 using Assignment.Api.Entities;
-using Assignment.Api.Enums;
 using Assignment.Api.Interfaces.Repositories;
 
 namespace Assignment.Api.Requests;
@@ -39,8 +38,8 @@ public record CreateUsersRequest
     public char? Active { get; set; }
 
     [RequiredField]
-    [EnumValue(typeof(UserRole))]
-    public string? Role { get; set; }
+    [Connection<Role>(typeof(IRolesRepository), typeof(CountRolesParams))]
+    public int? RoleId { get; set; }
 
     [RequiredField]
     public IEnumerable<CreateUsersUnitsRequest> Units { get; set; } = [];
@@ -54,7 +53,7 @@ public record CreateUsersRequest
             Name = request.Name,
             Email = request.Email,
             Active = request.Active,
-            Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
+            UsersRoles = [new UserRole { RoleId = request.RoleId, Username = request.Username }],
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
                     new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],
@@ -86,8 +85,8 @@ public record UpdateUsersRequest
     [BoolValue]
     public char? Active { get; set; }
 
-    [EnumValue(typeof(UserRole))]
-    public string? Role { get; set; }
+    [Connection<Role>(typeof(IRolesRepository), typeof(CountRolesParams))]
+    public int? RoleId { get; set; }
 
     [RequiredField]
     public IEnumerable<CreateUsersUnitsRequest> Units { get; set; } = [];
@@ -101,7 +100,7 @@ public record UpdateUsersRequest
             Name = request.Name,
             Email = request.Email,
             Active = request.Active,
-            Role = Assignment.Api.Utils.Parser.ToEnumOptional<UserRole>(request.Role),
+            UsersRoles = [new UserRole { RoleId = request.RoleId, Username = request.Username }],
             UsersUnits = [.. request.Units.Select(
                 unit => new UserUnit(
                     new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],

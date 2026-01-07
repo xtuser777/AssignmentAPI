@@ -24,6 +24,7 @@ public class UsersRepository : Repository<User>, IUsersRepository
 
     public async Task<IEnumerable<User>> FindManyAsync(FindManyRepositoryParams @params)
     {
+        ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         BuildOrderBy(@params.OrderBy);
         ApplyPagination(@params.Pagination);

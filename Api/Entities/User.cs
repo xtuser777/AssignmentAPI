@@ -1,5 +1,4 @@
-﻿using Assignment.Api.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Api.Entities;
@@ -40,8 +39,8 @@ public class UserProps : Entity
     [Column("active")]
     public char? Active { get; set; }
 
-    [Column("role")]
-    public UserRole? Role { get; set; }
+    [InverseProperty("User")]
+    public virtual ICollection<UserRole>? UsersRoles { get; set; }
 
     [InverseProperty("User")]
     public virtual ICollection<UserUnit>? UsersUnits { get; set; }
