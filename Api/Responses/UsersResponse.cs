@@ -15,14 +15,14 @@ public record FindManyUsersResponse
     public string? RoleDescription { get; set; } = string.Empty;
 }
 
-public record FindOneUsersUsersUnitsResponse
+public record FindOneUsersUserUnitResponse
 {
     public string? UserLogin { get; set; }
     public int? UnitId { get; set; }
     public string? UnitName { get; set; }
 }
 
-public record FindOneUsersUsersRolesResponse
+public record FindOneUsersUserRoleResponse
 {
     public string? Username { get; set; }
     public int? RoleId { get; set; }
@@ -36,6 +36,7 @@ public record FindOneUsersResponse
     public string? Email { get; set; } = string.Empty;
     public char? Active { get; set; }
     public int? RoleId { get; set; }
-    public FindOneUsersUsersRolesResponse? UserRole { get; set; }
-    public IEnumerable<FindOneUsersUsersUnitsResponse>? UsersUnits { get; set; }
+    public int? UnitId { get; set; }
+    public FindOneUsersUserRoleResponse? UserRole { get; set; }
+    public FindOneUsersUserUnitResponse? UserUnit { get; set; }
 }

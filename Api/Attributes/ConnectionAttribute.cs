@@ -1,7 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Resources.Messages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 
 namespace Assignment.Api.Attributes;
@@ -11,6 +10,10 @@ public class ConnectionAttribute<T>(Type repositoryType, Type existsType) : Vali
     protected override ValidationResult? IsValid(
         object? value, ValidationContext validationContext)
     {
+        if (value == null) 
+        {
+            return ValidationResult.Success;
+        }
         if (value is not int code || code == int.MinValue)
         {
             return ValidationResult.Success;

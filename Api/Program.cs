@@ -7,8 +7,11 @@ using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Repositories;
 using Assignment.Api.Services;
 using Assignment.Api.Views;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +73,8 @@ builder.Services.AddScoped<ISubscriptionsService, SubscriptionsService>();
 builder.Services.AddScoped<IPointsBySubscriptionsService, PointsBySubscriptionsService>();
 builder.Services.AddScoped<IClassificationsService, ClassificationsService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Views
 builder.Services.AddScoped<IUsersView, UsersView>();
@@ -85,6 +90,7 @@ builder.Services.AddScoped<ITeachersView, TeachersView>();
 builder.Services.AddScoped<ISubscriptionsView, SubscriptionsView>();
 builder.Services.AddScoped<IClassificationsView, ClassificationsView>();
 builder.Services.AddScoped<IRolesView, RolesView>();
+builder.Services.AddScoped<IAuthView, AuthView>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -124,6 +130,25 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
         return new BadRequestObjectResult(customErrorResponse);
     };
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey
+            (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? ""))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

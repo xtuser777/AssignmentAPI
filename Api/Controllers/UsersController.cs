@@ -2,13 +2,15 @@
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
-using Assignment.Api.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UsersController(
     IUsersView usersView,
     IUsersService usersService) : ControllerBase

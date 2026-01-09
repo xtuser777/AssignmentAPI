@@ -7,6 +7,7 @@ namespace Assignment.Api.Repositories;
 
 public class RolesRepository(ApplicationDbContext context) : Repository<Role>, IRolesRepository
 {
+
     public async Task CreateAsync(Role entity)
     {
         await context.Roles.AddAsync(entity);
@@ -14,6 +15,7 @@ public class RolesRepository(ApplicationDbContext context) : Repository<Role>, I
 
     public async Task<IEnumerable<Role>> FindManyAsync(FindManyRepositoryParams @params)
     {
+        query = context.Roles.AsNoTracking();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         BuildOrderBy(@params.OrderBy);
@@ -23,6 +25,7 @@ public class RolesRepository(ApplicationDbContext context) : Repository<Role>, I
 
     public Task<Role?> FindOneAsync(FindOneRepositoryParams @params)
     {
+        query = context.Roles.AsQueryable();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         return query.SingleOrDefaultAsync();
@@ -30,12 +33,14 @@ public class RolesRepository(ApplicationDbContext context) : Repository<Role>, I
 
     public async Task<int> CountAsync(Entity parameters)
     {
+        query = context.Roles.AsNoTracking();
         BuildQuery(parameters);
         return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity parameters)
     {
+        query = context.Roles.AsNoTracking();
         var count = await CountAsync(parameters);
         return count > 0;
     }

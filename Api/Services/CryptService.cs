@@ -1,4 +1,5 @@
 ﻿using Assignment.Api.Interfaces.Services;
+using Assignment.Api.Utils;
 using System.Security.Cryptography;
 
 namespace Assignment.Api.Services;
@@ -7,19 +8,20 @@ public class CryptService(IConfiguration configuration) : ICryptService
 {
     public string HashPassword(string password)
     {
-        var salt = configuration["Hash:Salt"]!;
-        var saltBytes = Convert.FromBase64String(salt);
-        var iterations = int.Parse(configuration["Hash:Iterations"]!);
-        var size = int.Parse(configuration["Hash:Size"]!);
-        var pbkdf2 = new Rfc2898DeriveBytes(
-            password,
-            saltBytes,
-            iterations,
-            HashAlgorithmName.SHA256 // Or other hash algorithm used
-        );
-        var key = pbkdf2.GetBytes(size);
+        //var salt = configuration["Hash:Salt"]!;
+        //var saltBytes = Convert.FromBase64String(salt);
+        //var iterations = int.Parse(configuration["Hash:Iterations"]!);
+        //var size = int.Parse(configuration["Hash:Size"]!);
+        //var pbkdf2 = new Rfc2898DeriveBytes(
+        //    password,
+        //    saltBytes,
+        //    iterations,
+        //    HashAlgorithmName.SHA256 // Or other hash algorithm used
+        //);
+        //var key = pbkdf2.GetBytes(size);
 
-        return Convert.ToBase64String(key);
+        //return Convert.ToBase64String(key);
+        return Md5Hasher.CreateMD5Hash(password);
     }
 
     private static bool ByteArraysEqual(byte[] b1, byte[] b2)
@@ -33,6 +35,7 @@ public class CryptService(IConfiguration configuration) : ICryptService
     {
         var encryptedData = Convert.FromBase64String(hashedPassword);
         var keyStr = HashPassword(password);
+        Console.WriteLine($"keyStr: {keyStr}");
         var key = Convert.FromBase64String(keyStr);
 
         return ByteArraysEqual(encryptedData, key);

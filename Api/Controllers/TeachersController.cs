@@ -1,16 +1,16 @@
-﻿using Assignment.Api.Attributes;
-using Assignment.Api.Entities;
-using Assignment.Api.Interfaces.Repositories;
+﻿using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace Assignment.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TeachersController(
     ITeachersView teachersView,
     ITeachersService teachersService) : ControllerBase

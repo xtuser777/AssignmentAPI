@@ -2,12 +2,15 @@
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment.Api.Controllers;
 
 [Route("civil-statuses")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class CivilStatusesController(
     ICivilStatusesView civilStatusesView,
     ICivilStatusesService civilStatusesService) : ControllerBase

@@ -4,13 +4,6 @@ using Assignment.Api.Interfaces.Repositories;
 
 namespace Assignment.Api.Requests;
 
-public record CreateUsersUnitsRequest
-{
-    [RequiredField]
-    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExistsUnitsParams))]
-    public int UnitId { get; set; }
-}
-
 public record CreateUsersRequest
 {
     [RequiredField]
@@ -41,8 +34,8 @@ public record CreateUsersRequest
     [Connection<Role>(typeof(IRolesRepository), typeof(CountRolesParams))]
     public int? RoleId { get; set; }
 
-    [RequiredField]
-    public IEnumerable<CreateUsersUnitsRequest> Units { get; set; } = [];
+    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExistsUnitsParams))]
+    public int? UnitId { get; set; }
 
     public static implicit operator UserProps(CreateUsersRequest request)
     {
@@ -54,9 +47,7 @@ public record CreateUsersRequest
             Email = request.Email,
             Active = request.Active,
             UsersRoles = [new UserRole { RoleId = request.RoleId, Username = request.Username }],
-            UsersUnits = [.. request.Units.Select(
-                unit => new UserUnit(
-                    new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],
+            UsersUnits = request.UnitId != null ? [new UserUnit { UserLogin = request.Username, UnitId = request.UnitId }] : null,
         };
     }
 }
@@ -69,7 +60,6 @@ public record UpdateUsersRequest
     public string? Username { get; set; } = string.Empty;
 
     [StringMaxLength(100)]
-    [StringMinLength(6)]
     public string? Password { get; set; } = string.Empty;
 
     [StringMaxLength(100)]
@@ -82,28 +72,25 @@ public record UpdateUsersRequest
     [UniqueField<User>(typeof(IUsersRepository), typeof(ExclusiveUsersParams))]
     public string? Email { get; set; } = string.Empty;
 
-    [BoolValue]
     public char? Active { get; set; }
 
     [Connection<Role>(typeof(IRolesRepository), typeof(CountRolesParams))]
     public int? RoleId { get; set; }
 
-    [RequiredField]
-    public IEnumerable<CreateUsersUnitsRequest> Units { get; set; } = [];
+    [Connection<Unit>(typeof(IUnitsRepository), typeof(ExistsUnitsParams))]
+    public int? UnitId { get; set; }
 
     public static implicit operator UserProps(UpdateUsersRequest request)
     {
         return new UserProps
         {
             Username = request.Username,
-            Password = request.Password,
+            Password = request.Password == "" ? null : request.Password,
             Name = request.Name,
             Email = request.Email,
             Active = request.Active,
             UsersRoles = [new UserRole { RoleId = request.RoleId, Username = request.Username }],
-            UsersUnits = [.. request.Units.Select(
-                unit => new UserUnit(
-                    new UserUnitProps () { UserLogin = request.Username, UnitId = unit.UnitId }))],
+            UsersUnits = request.UnitId != null ? [new UserUnit { UserLogin = request.Username, UnitId = request.UnitId }] : null,
         };
     }
 }

@@ -19,6 +19,7 @@ public class UsersRolesRepository(
 
     public async Task<IEnumerable<UserRole>> FindManyAsync(FindManyRepositoryParams @params)
     {
+        query = context.UsersRoles.AsNoTracking();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         return await query.ToListAsync();
@@ -26,14 +27,16 @@ public class UsersRolesRepository(
 
     public async Task<UserRole?> FindOneAsync(FindOneRepositoryParams @params)
     {
+        query = context.UsersRoles.AsQueryable();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         return await query.SingleOrDefaultAsync();
     }
 
-    public async Task DeleteManyAsync(FindManyUsersRolesParams parameters)
+    public async Task DeleteManyAsync(Entity props)
     {
-        BuildQuery(parameters);
+        query = context.UsersRoles.AsQueryable();
+        BuildQuery(props);
         var usersRoles = await query.ToListAsync();
         context.UsersRoles.RemoveRange(usersRoles);
     }

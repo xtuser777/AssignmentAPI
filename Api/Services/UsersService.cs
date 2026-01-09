@@ -8,7 +8,7 @@ using Assignment.Api.Utils;
 namespace Assignment.Api.Services;
 
 public class UsersService(
-    IUnitOfWork unitOfWork, 
+    IUnitOfWork unitOfWork,
     ICryptService cryptService) : IUsersService
 {
     public async Task<User> FindOneAsync(FindOneServiceParams parameters)
@@ -38,12 +38,13 @@ public class UsersService(
         {
             Password = cryptService.HashPassword(props.Password!)
         };
-        var usersUnits = props.UsersUnits!.ToList();
+        var usersUnits = props.UsersUnits?.ToList();
         var usersRoles = props.UsersRoles!.ToList();
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.UsersRepository.CreateAsync(user);
         await unitOfWork.UsersRolesRepository.CreateManyAsync(usersRoles);
-        await unitOfWork.UsersUnitsRepository.CreateManyAsync(usersUnits);
+        if (usersUnits != null)
+            await unitOfWork.UsersUnitsRepository.CreateManyAsync(usersUnits);
         await unitOfWork.Commit(transaction);
         return user;
     }
@@ -52,18 +53,19 @@ public class UsersService(
     {
         var props = (UserProps)parameters.Props;
         var user = await FindOneAsync(parameters);
-        if (props.Password is not null) 
+        if (props.Password is not null)
             props.Password = cryptService.HashPassword(props.Password);
-        user.Update(props);
-        var usersUnits = props.UsersUnits!.ToList();
+        var usersUnits = props.UsersUnits?.ToList();
         var usersRoles = props.UsersRoles!.ToList();
+        props.UsersRoles = null;
+        props.UsersUnits = null;
+        user.Update(props);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.UsersRepository.Update(user);
-        await unitOfWork.UsersUnitsRepository.DeleteManyAsync(
-            new FindManyUsersUnitsParams { UserLogin = user.Username });
-        await unitOfWork.UsersUnitsRepository.CreateManyAsync([.. usersUnits]);
-        await unitOfWork.UsersRolesRepository.DeleteManyAsync(
-            new FindManyUsersRolesParams { Username = user.Username });
+        await unitOfWork.UsersUnitsRepository.DeleteManyAsync(new FindManyUsersUnitsParams { UserLogin = user.Username });
+        if (usersUnits != null) 
+            await unitOfWork.UsersUnitsRepository.CreateManyAsync([.. usersUnits]);
+        await unitOfWork.UsersRolesRepository.DeleteManyAsync(new FindManyUsersRolesParams { Username = user.Username });
         await unitOfWork.UsersRolesRepository.CreateManyAsync([.. usersRoles]);
         await unitOfWork.Commit(transaction);
     }

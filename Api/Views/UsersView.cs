@@ -33,19 +33,19 @@ public class UsersView : IUsersView
             Email = user.Email,
             Active = user.Active,
             RoleId = user.UsersRoles!.ToList()[0].RoleId,
-            UserRole = new FindOneUsersUsersRolesResponse
+            UnitId = user.UsersUnits!.Count > 0 ? user.UsersUnits?.ToList()[0].UnitId : null,
+            UserRole = new FindOneUsersUserRoleResponse
             {
                 Username = user.Username,
                 RoleId = user.UsersRoles!.ToList()[0].RoleId,
                 RoleDescription = user.UsersRoles!.ToList()[0].Role?.Description,
             },
-            UsersUnits = user.UsersUnits?
-            .Select(unit => new FindOneUsersUsersUnitsResponse
+            UserUnit = user.UsersUnits!.Count > 0 ? new FindOneUsersUserUnitResponse
             {
-                UserLogin=unit.UserLogin,
-                UnitId=unit.UnitId,
-                UnitName=unit.Unit?.Name ?? ""
-            }),
+                UserLogin= user.UsersUnits!.ToList()[0].UserLogin,
+                UnitId=user.UsersUnits!.ToList()[0].UnitId,
+                UnitName=user.UsersUnits!.ToList()[0].Unit?.Name ?? ""
+            } : null,
         };
     }
 
