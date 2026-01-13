@@ -1,4 +1,5 @@
-﻿using Assignment.Api.Interfaces.Repositories;
+﻿using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Repositories;
 using Assignment.Api.Resources.Messages;
@@ -87,5 +88,24 @@ public class AuthService(
         return !cryptService.VerifyHashedPassword(user.Password!, password)
             ? throw new UnauthorizedAccessException(Errors.AuthInvalidPassword)
             : user;
+    }
+
+    public async Task ResetPasswordAsync(ResetPasswordParams parameters)
+    {
+        var user = await unitOfWork.UsersRepository.FindOneAsync(
+            new FindOneServiceParams
+            {
+                Where = new FindManyUsersParams
+                {
+                    Username = parameters.Username,
+                }
+            })
+            ?? throw new NotFoundException(Errors.UserNotFound);
+        if (!cryptService.VerifyHashedPassword(user.Password!, parameters.Password))
+            throw new BadRequestException(Errors.AuthInvalidPassword);
+        user.Password = cryptService.HashPassword(parameters.NewPassword);
+        await using var transaction = unitOfWork.BeginTransaction;
+        unitOfWork.UsersRepository.Update(user);
+        await unitOfWork.Commit(transaction);
     }
 }

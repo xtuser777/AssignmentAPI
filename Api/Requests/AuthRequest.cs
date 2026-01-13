@@ -29,3 +29,16 @@ public record AuthRequest
         return (request.Username, request.Password, request.YearId);
     }
 }
+
+public record ResetPasswordAuthRequest
+{
+    [RequiredField]
+    [StringMaxLength(12)]
+    [StringMinLength(6)]
+    public string? Password { get; set; } = string.Empty;
+
+    [RequiredField]
+    [StringMaxLength(12)]
+    [StringMinLength(6)]
+    public string? NewPassword { get; set; } = string.Empty;
+}

@@ -2,12 +2,14 @@
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
+[EnableCors("CorsPolicy")]
 public class YearsController(
     IYearsView yearsView,
     IYearsService yearsService) : ControllerBase

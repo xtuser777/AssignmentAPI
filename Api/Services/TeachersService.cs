@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -45,6 +46,63 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
         teacher.Update(props);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.TeachersRepository.Update(teacher);
+        await unitOfWork.Commit(transaction);
+    }
+
+    public async Task ImportAsync(int yearId)
+    {
+        var yearBefore = yearId - 1;
+        var teachersToImport = await unitOfWork.TeachersRepository
+            .FindManyAsync(new FindManyRepositoryParams
+            {
+                Where = new FindManyTeachersParams
+                {
+                    YearId = yearBefore
+                }
+            });
+        var importedTeachers = teachersToImport
+            .Select(teacher =>
+            {
+                var teacherId = unitOfWork.TeachersRepository.GetId(t => t.TeacherId).GetAwaiter().GetResult();
+                var impotedTeacher = new Teacher
+                {
+                    TeacherId = teacherId,
+                    YearId = yearId,
+                    Address = teacher.Address,
+                    Email = teacher.Email,
+                    Name = teacher.Name,
+                    Phone = teacher.Phone,
+                    PositionId = teacher.PositionId,
+                    Adido = teacher.Adido,
+                    AmbientalEdication = teacher.AmbientalEdication,
+                    BirthAt = teacher.BirthAt,
+                    Cellphone = teacher.Cellphone,
+                    City = teacher.City,
+                    CivilStatusId = teacher.CivilStatusId,
+                    Computing = teacher.Computing,
+                    Dependents = teacher.Dependents,
+                    DisciplineId = teacher.DisciplineId,
+                    Document = teacher.Document,
+                    Identity = teacher.Identity,
+                    Music = teacher.Music,
+                    Neighborhood = teacher.Neighborhood,
+                    Observations = teacher.Observations,
+                    PostalCode = teacher.PostalCode,
+                    Readapted = teacher.Readapted,
+                    ReadingRoom = teacher.ReadingRoom,
+                    Remove = teacher.Remove,
+                    Robotics = teacher.Robotics,
+                    SituationId = teacher.SituationId,
+                    Speciality = teacher.Speciality,
+                    SupplementCharge = teacher.SupplementCharge,
+                    Tutoring = teacher.Tutoring,
+                    UnitId = teacher.UnitId,
+                };
+                return impotedTeacher;
+            })
+            .ToList();
+        await using var transaction = unitOfWork.BeginTransaction;
+        await unitOfWork.TeachersRepository.CreateManyAsync(importedTeachers);
         await unitOfWork.Commit(transaction);
     }
 

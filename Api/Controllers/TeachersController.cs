@@ -59,6 +59,14 @@ public class TeachersController(
         return NoContent();
     }
 
+    [HttpGet("import/{yearId:int}")]
+    public async Task<IActionResult> ImportAsync(
+        [FromRoute] int yearId)
+    {
+        await teachersService.ImportAsync(yearId);
+        return NoContent();
+    }
+
     [HttpDelete("{teacherId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTeachersParams parameters)
