@@ -109,3 +109,15 @@ public record UpdateTitlesRequest
         };
     }
 }
+
+public record ImportTitlesRequest
+{
+    [RequiredField]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
+    public int? YearId { get; set; }
+
+    public static implicit operator int(ImportTitlesRequest request)
+    {
+        return request.YearId ?? 0;
+    }
+}

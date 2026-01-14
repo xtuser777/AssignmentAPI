@@ -76,7 +76,6 @@ public record CreateTeachersRequest
     [Connection<Position>(typeof(IPositionsRepository), typeof(ExistsPositionsParams))]
     public int? PositionId { get; set; }
 
-    [RequiredField]
     [Connection<Discipline>(typeof(IDisciplinesRepository), typeof(ExistsDisciplinesParams))]
     public int? DisciplineId { get; set; }
 
@@ -149,7 +148,7 @@ public record UpdateTeachersRequest
 {
     [StringMinLength(1)]
     [StringMaxLength(200)]
-    [UniqueField<Teacher>(typeof(ITeachersRepository), typeof(ExistsTeachersParams))]
+    [UniqueField<Teacher>(typeof(ITeachersRepository), typeof(ExclusiveTeachersParams))]
     public string? Name { get; set; } = string.Empty;
 
     [StringMinLength(1)]
@@ -275,5 +274,17 @@ public record UpdateTeachersRequest
             Robotics = request.Robotics,
             Music = request.Music,
         };
+    }
+}
+
+public record ImportTeachersRequest
+{
+    [RequiredField]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
+    public int? YearId { get; set; }
+
+    public static implicit operator int(ImportTeachersRequest request)
+    {
+        return request.YearId ?? 0;
     }
 }

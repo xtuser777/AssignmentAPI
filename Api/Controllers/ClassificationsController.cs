@@ -141,6 +141,8 @@ public record IndexClassificationsParams : PaginationParams
                 SupplementCharge = indexClassificationsParams.SupplementCharge,
                 Tutoring = indexClassificationsParams.Tutoring,
                 AmbientalEdication = indexClassificationsParams.AmbientalEducation,
+                Robotics = indexClassificationsParams.Robotics,
+                Music = indexClassificationsParams.Music,
             },
             OrderByParams = new OrderByClassificationsParams
             {
@@ -162,6 +164,8 @@ public record IndexClassificationsParams : PaginationParams
                 SupplementCharge = indexClassificationsParams.OrderBySupplementCharge,
                 Tutoring = indexClassificationsParams.OrderByTutoring,
                 AmbientalEdication = indexClassificationsParams.OrderByAmbientalEducation,
+                Robotics = indexClassificationsParams.OrderByRobotics,
+                Music = indexClassificationsParams.OrderByMusic,
                 Total = "d",
             },
             PaginationParams = indexClassificationsParams
@@ -192,6 +196,8 @@ public record IndexClassificationsParams : PaginationParams
                 SupplementCharge = indexClassificationsParams.SupplementCharge,
                 Tutoring = indexClassificationsParams.Tutoring,
                 AmbientalEdication = indexClassificationsParams.AmbientalEducation,
+                Robotics = indexClassificationsParams.Robotics,
+                Music = indexClassificationsParams.Music,
             },
             PaginationParams = indexClassificationsParams
         };

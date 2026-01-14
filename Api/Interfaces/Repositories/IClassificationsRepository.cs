@@ -32,6 +32,8 @@ public record OrderByClassificationsParams : OrderByParams
     public string? SupplementCharge { get; set; }
     public string? Tutoring { get; set; }
     public string? AmbientalEdication { get; set; }
+    public string? Robotics { get; set; }
+    public string? Music { get; set; }
     public string? T1 { get; set; }
     public string? T2 { get; set; }
     public string? T3 { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -45,6 +46,39 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
         title.Update(props);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.TitlesRepository.Update(title);
+        await unitOfWork.Commit(transaction);
+    }
+
+    public async Task ImportAsync(int yearId)
+    {
+        var yearBefore = yearId - 1;
+        var titlesToImport = await unitOfWork.TitlesRepository
+            .FindManyAsync(new FindManyRepositoryParams
+            {
+                Where = new FindManyTitlesParams { YearId = yearBefore }
+            });
+        var importedTitles = titlesToImport
+            .Select(title =>
+            {
+                var titleId = unitOfWork.TitlesRepository.GetId(t => t.TitleId).GetAwaiter().GetResult();
+                var description = title.Description!.Replace(yearBefore.ToString(), yearId.ToString());
+                var importedtitle = new Title
+                {
+                    TitleId = titleId,
+                    YearId = yearId,
+                    Description = description,
+                    Alias = title.Alias,
+                    Order = title.Order,
+                    Max = title.Max,
+                    Weight = title.Weight,
+                    Type = title.Type,
+                    Active = title.Active
+                };
+                return importedtitle;
+            })
+            .ToList();
+        await using var transaction = unitOfWork.BeginTransaction;
+        await unitOfWork.TitlesRepository.CreateManyAsync(importedTitles);
         await unitOfWork.Commit(transaction);
     }
 

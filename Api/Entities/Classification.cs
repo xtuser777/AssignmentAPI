@@ -87,6 +87,12 @@ public class ClassificationProps : Entity
     [Column("educacaoambiental")]
     public string? AmbientalEdication { get; set; }
 
+    [Column("robotica")]
+    public string? Robotics { get; set; }
+
+    [Column("musica")]
+    public string? Music { get; set; }
+
     [Column("t1")]
     public decimal? T1 { get; set; }
 

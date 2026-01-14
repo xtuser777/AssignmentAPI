@@ -59,11 +59,11 @@ public class TeachersController(
         return NoContent();
     }
 
-    [HttpGet("import/{yearId:int}")]
+    [HttpPost("import")]
     public async Task<IActionResult> ImportAsync(
-        [FromRoute] int yearId)
+        [FromBody] ImportTeachersRequest request)
     {
-        await teachersService.ImportAsync(yearId);
+        await teachersService.ImportAsync(request);
         return NoContent();
     }
 

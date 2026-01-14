@@ -59,6 +59,14 @@ public class TitlesController(
         return NoContent();
     }
 
+    [HttpPost("import")]
+    public async Task<IActionResult> ImportAsync(
+        [FromBody] ImportTitlesRequest request)
+    {
+        await titlesService.ImportAsync(request);
+        return NoContent();
+    }
+
     [HttpDelete("{titleId:int}")]
     public async Task<IActionResult> DeleteAsync(
         [AsParameters] DeleteTitlesParams parameters)
