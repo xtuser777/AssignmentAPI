@@ -9,7 +9,7 @@ public record CreateTitlesRequest
 {
     [RequiredField]
     [StringMaxLength(255)]
-    [UniqueField<Title>(typeof(ITitlesRepository), typeof(ExistsTitlesParams))]
+    [UniqueFieldV2<Title, ITitlesRepository, ExistsTitlesParams>(nameof(YearId))]
     [Display(Name = nameof(Description), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Description { get; set; }
 
@@ -19,14 +19,17 @@ public record CreateTitlesRequest
     public string? Alias { get; set; }
 
     [RequiredField]
+    [Range(0.001, 100, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Weight), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Weight { get; set; }
 
     [RequiredField]
+    [Range(1, 999999, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Max), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Max { get; set; }
 
     [RequiredField]
+    [Range(1, 22, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Order), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public int? Order { get; set; }
 
@@ -63,7 +66,7 @@ public record UpdateTitlesRequest
 {
     [StringMinLength(1)]
     [StringMaxLength(255)]
-    [UniqueField<Title>(typeof(ITitlesRepository), typeof(ExclusiveTitlesParams))]
+    [UniqueFieldV2<Title, ITitlesRepository, ExclusiveTitlesParams>(nameof(YearId))]
     [Display(Name = nameof(Description), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Description { get; set; }
 
@@ -72,15 +75,15 @@ public record UpdateTitlesRequest
     [Display(Name = nameof(Alias), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Alias { get; set; }
 
-    [Range(0, 100)]
+    [Range(0.001, 100, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Weight), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Weight { get; set; }
 
-    [Range(0, 100)]
+    [Range(1, 999999, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Max), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public decimal? Max { get; set; }
 
-    [Range(0, 100)]
+    [Range(1, 22, ErrorMessage = "O campo {0} deve ter um valor entre {1} e {2}.")]
     [Display(Name = nameof(Order), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public int? Order { get; set; }
 

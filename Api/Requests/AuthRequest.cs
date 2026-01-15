@@ -22,12 +22,7 @@ public record AuthRequest
     [RequiredField]
     [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
     [Display(Name = nameof(YearId), ResourceType = typeof(Resources.DisplayValues.Requests))]
-    public int YearId { get; set; }
-
-    public static implicit operator (string, string, int)?(AuthRequest request)
-    {
-        return (request.Username, request.Password, request.YearId);
-    }
+    public int? YearId { get; set; }
 }
 
 public record ResetPasswordAuthRequest

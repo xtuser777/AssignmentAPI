@@ -2,14 +2,12 @@
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [EnableCors("CorsPolicy")]
     public class AuthController(
         IAuthService authService,
         IAuthView authView) : ControllerBase
@@ -24,7 +22,7 @@ namespace Assignment.Api.Controllers
             }
 
             var token = await authService.Login(
-                request.Username, request.Password, request.YearId);
+                request.Username, request.Password, request.YearId ?? 0);
             var data = authView.Login(token);
 
             return Ok(new
