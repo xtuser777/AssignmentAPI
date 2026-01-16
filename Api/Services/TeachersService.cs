@@ -66,7 +66,7 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
                 var teacherId = unitOfWork.TeachersRepository.GetId(t => t.TeacherId).GetAwaiter().GetResult();
                 var impotedTeacher = new Teacher
                 {
-                    TeacherId = teacherId,
+                    TeacherId = teacher.TeacherId + teacherId,
                     YearId = yearId,
                     Address = teacher.Address,
                     Email = teacher.Email,

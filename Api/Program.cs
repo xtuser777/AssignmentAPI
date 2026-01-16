@@ -34,6 +34,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var serverVersion = new MySqlServerVersion(new Version(5, 7, 24));
+// var serverVersion = new MySqlServerVersion(new Version(8, 0, 44));
 builder.Services.AddDbContext<ApplicationDbContext>(
             dbContextOptions => dbContextOptions
                 .UseMySql(connectionString, serverVersion)

@@ -75,16 +75,16 @@ public record IndexYearsParams : PaginationParams
     public string? Resolution { get; set; }
     public char? IsBlocked { get; set; }
 
-    [FromHeader(Name = "Order-By-Year-Id")]
+    [FromHeader(Name = "X-Order-By-Year-Id")]
     public string? OrderByYearId { get; set; }
 
-    [FromHeader(Name = "Order-By-Record")]
+    [FromHeader(Name = "X-Order-By-Record")]
     public string? OrderByRecord { get; set; }
 
-    [FromHeader(Name = "Order-By-Resolution")]
+    [FromHeader(Name = "X-Order-By-Resolution")]
     public string? OrderByResolution { get; set; }
 
-    [FromHeader(Name = "Order-By-Is-Blocked")]
+    [FromHeader(Name = "X-Order-By-Is-Blocked")]
     public string? OrderByIsBlocked { get; set; }
 
     public static implicit operator FindManyServiceParams(

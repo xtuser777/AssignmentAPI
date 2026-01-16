@@ -64,7 +64,7 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
                 var description = title.Description!.Replace(yearBefore.ToString(), yearId.ToString());
                 var importedtitle = new Title
                 {
-                    TitleId = titleId,
+                    TitleId = title.TitleId + titleId,
                     YearId = yearId,
                     Description = description,
                     Alias = title.Alias,
