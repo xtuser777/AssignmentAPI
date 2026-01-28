@@ -61,6 +61,7 @@ builder.Services.AddScoped<ITitlesBySubscriptionsRepository, TitlesBySubscriptio
 builder.Services.AddScoped<IPointsBySubscriptionsRepository, PointsBySubscriptionsRepository>();
 builder.Services.AddScoped<IClassificationsRepository, ClassificationsRepository>();
 builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+builder.Services.AddScoped<IImportsRepository, ImportsRepository>();
 
 // Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -79,6 +80,7 @@ builder.Services.AddScoped<ISubscriptionsService, SubscriptionsService>();
 builder.Services.AddScoped<IPointsBySubscriptionsService, PointsBySubscriptionsService>();
 builder.Services.AddScoped<IClassificationsService, ClassificationsService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
+builder.Services.AddScoped<IImportsService, ImportsService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -96,6 +98,7 @@ builder.Services.AddScoped<ITeachersView, TeachersView>();
 builder.Services.AddScoped<ISubscriptionsView, SubscriptionsView>();
 builder.Services.AddScoped<IClassificationsView, ClassificationsView>();
 builder.Services.AddScoped<IRolesView, RolesView>();
+builder.Services.AddScoped<IImportsView, ImportsView>();
 builder.Services.AddScoped<IAuthView, AuthView>();
 
 builder.Services.AddControllers();

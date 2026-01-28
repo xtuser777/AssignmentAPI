@@ -25,6 +25,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     private IPointsBySubscriptionsRepository? _pointsBySubscriptionsRepository = null;
     private IRolesRepository? _rolesRepository = null;
     private IUsersRolesRepository? _usersRolesRepository = null;
+    private IImportsRepository? _importsRepository = null;
 
     public ApplicationDbContext Context => context;
     public IDbContextTransaction BeginTransaction => context.Database.BeginTransaction();
@@ -45,6 +46,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public IPointsBySubscriptionsRepository PointsBySubscriptionsRepository => _pointsBySubscriptionsRepository ?? new PointsBySubscriptionsRepository(context);
     public IRolesRepository RolesRepository => _rolesRepository ?? new RolesRepository(context);
     public IUsersRolesRepository UsersRolesRepository => _usersRolesRepository ?? new UsersRolesRepository(context);
+    public IImportsRepository ImportsRepository => _importsRepository ?? new ImportsRepository(context);
 
     public async Task Commit(IDbContextTransaction transaction, string? tableName = null)
     {

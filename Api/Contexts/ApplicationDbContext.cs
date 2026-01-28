@@ -22,6 +22,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<UserRole> UsersRoles { get; set; }
     public DbSet<PointsBySubscription> PointsBySubscriptions { get; set; }
     public DbSet<Classification> Classifications { get; set; }
+    public DbSet<Import> Imports { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

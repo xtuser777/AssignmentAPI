@@ -25,6 +25,7 @@ public interface IUnitOfWork
     IPointsBySubscriptionsRepository PointsBySubscriptionsRepository { get; }
     IRolesRepository RolesRepository { get; }
     IUsersRolesRepository UsersRolesRepository { get; }
+    IImportsRepository ImportsRepository { get; }
     Task Commit(IDbContextTransaction transaction, string? tableName = null);
     void Dispose();
 }

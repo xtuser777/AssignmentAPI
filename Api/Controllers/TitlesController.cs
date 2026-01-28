@@ -1,4 +1,6 @@
-﻿using Assignment.Api.Interfaces.Repositories;
+﻿using Assignment.Api.Attributes;
+using Assignment.Api.Entities;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Interfaces.Views;
 using Assignment.Api.Requests;
@@ -13,7 +15,8 @@ namespace Assignment.Api.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TitlesController(
     ITitlesView titlesView,
-    ITitlesService titlesService) : ControllerBase
+    ITitlesService titlesService,
+    IImportsService importsService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> IndexAsync(
@@ -61,9 +64,22 @@ public class TitlesController(
 
     [HttpPost("import")]
     public async Task<IActionResult> ImportAsync(
-        [FromBody] ImportTitlesRequest request)
+        [FromBody] ImportTitlesRequest request,
+        [UserLogin] string login)
     {
         await titlesService.ImportAsync(request);
+        await importsService.CreateAsync(new()
+        {
+            Props = new ImportProps()
+            {
+                ImportId = null,
+                YearId = request.YearId,
+                Date = DateOnly.FromDateTime(DateTime.UtcNow),
+                Time = TimeOnly.FromDateTime(DateTime.UtcNow),
+                Type = "titles",
+                Login = login,
+            }
+        });
         return NoContent();
     }
 
