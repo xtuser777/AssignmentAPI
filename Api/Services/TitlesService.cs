@@ -49,7 +49,7 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
         await unitOfWork.Commit(transaction);
     }
 
-    public async Task ImportAsync(int yearId)
+    public async Task ImportAsync(int yearId, string login)
     {
         var yearBefore = yearId - 1;
         var titlesToImport = await unitOfWork.TitlesRepository
@@ -77,8 +77,19 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
                 return importedtitle;
             })
             .ToList();
+        var importId = await unitOfWork.ImportsRepository.GetId(t => t.ImportId);
+        var import = new Import
+        {
+            ImportId = importId,
+            YearId = yearId,
+            Date = DateOnly.FromDateTime(DateTime.Now),
+            Time = TimeOnly.FromDateTime(DateTime.Now),
+            Type = "titles",
+            Login = login,
+        };
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.TitlesRepository.CreateManyAsync(importedTitles);
+        await unitOfWork.ImportsRepository.CreateAsync(import);
         await unitOfWork.Commit(transaction);
     }
 

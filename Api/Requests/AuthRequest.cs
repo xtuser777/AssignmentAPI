@@ -30,10 +30,12 @@ public record ResetPasswordAuthRequest
     [RequiredField]
     [StringMaxLength(12)]
     [StringMinLength(6)]
+    [Display(Name = nameof(Password), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? Password { get; set; } = string.Empty;
 
     [RequiredField]
     [StringMaxLength(12)]
     [StringMinLength(6)]
+    [Display(Name = nameof(NewPassword), ResourceType = typeof(Resources.DisplayValues.Requests))]
     public string? NewPassword { get; set; } = string.Empty;
 }

@@ -15,8 +15,7 @@ namespace Assignment.Api.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TitlesController(
     ITitlesView titlesView,
-    ITitlesService titlesService,
-    IImportsService importsService) : ControllerBase
+    ITitlesService titlesService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> IndexAsync(
@@ -65,21 +64,10 @@ public class TitlesController(
     [HttpPost("import")]
     public async Task<IActionResult> ImportAsync(
         [FromBody] ImportTitlesRequest request,
-        [UserLogin] string login)
+        [ModelBinder(BinderType = typeof(UserIdAttribute))] string login)
     {
-        await titlesService.ImportAsync(request);
-        await importsService.CreateAsync(new()
-        {
-            Props = new ImportProps()
-            {
-                ImportId = null,
-                YearId = request.YearId,
-                Date = DateOnly.FromDateTime(DateTime.UtcNow),
-                Time = TimeOnly.FromDateTime(DateTime.UtcNow),
-                Type = "titles",
-                Login = login,
-            }
-        });
+        await titlesService.ImportAsync(request, login);
+
         return NoContent();
     }
 

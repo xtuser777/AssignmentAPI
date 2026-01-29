@@ -49,7 +49,7 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
         await unitOfWork.Commit(transaction);
     }
 
-    public async Task ImportAsync(int yearId)
+    public async Task ImportAsync(int yearId, string login)
     {
         var yearBefore = yearId - 1;
         var teachersToImport = await unitOfWork.TeachersRepository
@@ -101,8 +101,19 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
                 return impotedTeacher;
             })
             .ToList();
+        var importId = await unitOfWork.ImportsRepository.GetId(t => t.ImportId);
+        var import = new Import
+        {
+            ImportId = importId,
+            YearId = yearId,
+            Date = DateOnly.FromDateTime(DateTime.Now),
+            Time = TimeOnly.FromDateTime(DateTime.Now),
+            Type = "teachers",
+            Login = login,
+        };
         await using var transaction = unitOfWork.BeginTransaction;
         await unitOfWork.TeachersRepository.CreateManyAsync(importedTeachers);
+        await unitOfWork.ImportsRepository.CreateAsync(import);
         await unitOfWork.Commit(transaction);
     }
 

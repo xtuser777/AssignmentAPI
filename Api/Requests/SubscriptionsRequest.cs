@@ -1,19 +1,34 @@
 ﻿using Assignment.Api.Attributes;
 using Assignment.Api.Entities;
+using Assignment.Api.Interfaces.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assignment.Api.Requests;
 
 public record CreateSubscriptionsRequest
 {
-    [RequiredField] public int? YearId { get; set; }
+    [RequiredField]
+    [Connection<Year>(typeof(IYearsRepository), typeof(ExistsYearParams))]
+    [Display(Name = nameof(YearId), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public int? YearId { get; set; }
 
-    [RequiredField] public int? TeacherId { get; set; }
+    [RequiredField]
+    [Connection<Year>(typeof(ITeachersRepository), typeof(ExistsTeachersParams))]
+    [Display(Name = nameof(TeacherId), ResourceType = typeof(Resources.DisplayValues.Requests))] 
+    public int? TeacherId { get; set; }
 
-    [RequiredField] public int? PreferenceId { get; set; }
+    [RequiredField]
+    [Connection<Year>(typeof(IPreferencesRepository), typeof(ExistsPreferencesParams))]
+    [Display(Name = nameof(PreferenceId), ResourceType = typeof(Resources.DisplayValues.Requests))] 
+    public int? PreferenceId { get; set; }
 
-    [RequiredField] public IEnumerable<CreateSubscriptionsTitlesRequest> Titles { get; set; } = [];
+    [RequiredField]
+    [Display(Name = nameof(Titles), ResourceType = typeof(Resources.DisplayValues.Requests))] 
+    public IEnumerable<CreateSubscriptionsTitlesRequest> Titles { get; set; } = [];
 
-    [RequiredField] public IEnumerable<CreateSubscriptionsPointsRequest> Points { get; set; } = [];
+    [RequiredField]
+    [Display(Name = nameof(Points), ResourceType = typeof(Resources.DisplayValues.Requests))] 
+    public IEnumerable<CreateSubscriptionsPointsRequest> Points { get; set; } = [];
 
     public static implicit operator SubscriptionProps(CreateSubscriptionsRequest request)
         => new()
@@ -87,14 +102,25 @@ public record UpdateSubscriptionsRequest
 
 public record CreateSubscriptionsTitlesRequest
 {
-    [RequiredField] public int? TitleId { get; set; }
+    [RequiredField]
+    [Connection<Year>(typeof(ITitlesRepository), typeof(ExistsTitlesParams))]
+    [Display(Name = nameof(TitleId), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public int? TitleId { get; set; }
 
-    [RequiredField] public decimal? Value { get; set; }
+    [RequiredField]
+    [Display(Name = nameof(Value), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public decimal? Value { get; set; }
 }
 
 public record CreateSubscriptionsPointsRequest
 {
-    [RequiredField] public string? Description { get; set; }
-    [RequiredField] public int? Order { get; set; }
-    [RequiredField] public decimal? Points { get; set; }
+    [RequiredField]
+    [Display(Name = nameof(Description), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public string? Description { get; set; }
+    [RequiredField]
+    [Display(Name = nameof(Order), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public int? Order { get; set; }
+    [RequiredField]
+    [Display(Name = nameof(Points), ResourceType = typeof(Resources.DisplayValues.Requests))]
+    public decimal? Points { get; set; }
 }

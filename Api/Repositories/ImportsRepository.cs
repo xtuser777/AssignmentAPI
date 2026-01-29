@@ -5,12 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Api.Repositories;
 
-public class ImportsRepository(
-    ApplicationDbContext context) : Repository<Import>, IImportsRepository
+public class ImportsRepository : Repository<Import>, IImportsRepository
 {
+    private readonly ApplicationDbContext _context;
+
+    public ImportsRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        query = context.Imports.AsNoTracking();
+    }
+
     public async Task<Import?> FindOneAsync(FindOneRepositoryParams @params)
     {
-        query = context.Imports.AsQueryable();
+        query = _context.Imports.AsQueryable();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         return await query.FirstOrDefaultAsync();
@@ -18,7 +25,6 @@ public class ImportsRepository(
 
     public async Task<IEnumerable<Import>> FindManyAsync(FindManyRepositoryParams @params)
     {
-        query = context.Imports.AsNoTracking();
         ApplyIncludes(@params.Includes);
         BuildQuery(@params.Where);
         BuildOrderBy(@params.OrderBy);
@@ -28,29 +34,27 @@ public class ImportsRepository(
 
     public async Task CreateAsync(Import entity)
     {
-        await context.Imports.AddAsync(entity);
+        await _context.Imports.AddAsync(entity);
     }
 
     public void Update(Import entity)
     {
-        context.Imports.Update(entity);
+        _context.Imports.Update(entity);
     }
 
     public void Delete(Import entity)
     {
-        context.Imports.Remove(entity);
+        _context.Imports.Remove(entity);
     }
 
     public async Task<int> CountAsync(Entity parameters)
     {
-        query = context.Imports.AsNoTracking();
         BuildQuery(parameters);
         return await query.CountAsync();
     }
 
     public async Task<bool> ExistsAsync(Entity parameters)
     {
-        query = context.Imports.AsNoTracking();
         var count = await CountAsync(parameters);
         return count > 0;
     }
