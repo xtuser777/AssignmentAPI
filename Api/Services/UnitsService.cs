@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -54,8 +55,39 @@ public class UnitsService(IUnitOfWork unitOfWork) : IUnitsService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var unit = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(unit.UnitId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.UnitsRepository.Delete(unit);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int unitId)
+    {
+        await CheckTeacherDependenciesAsync(unitId);
+        await CheckUserUnitDependenciesAsync(unitId);
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int unitId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { UnitId = unitId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"A unidade possui vínculo com {teachers} professores");
+        }
+    }
+
+    private async Task CheckUserUnitDependenciesAsync(int unitId)
+    {
+        var usersUnits = await unitOfWork
+            .UsersUnitsRepository
+            .CountAsync(new CountUsersUnitsParams { UnitId = unitId });
+        if (usersUnits > 0)
+        {
+            throw new BadRequestException(
+                $"A unidade possui vínculo com {usersUnits} usuários");
+        }
     }
 }

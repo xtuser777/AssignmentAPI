@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -12,7 +13,7 @@ public class YearsService(IUnitOfWork unitOfWork) : IYearsService
     {
         return await unitOfWork
             .YearsRepository
-            .FindOneAsync(parameters) 
+            .FindOneAsync(parameters)
             ?? throw new NotFoundException(Errors.YearNotFound);
     }
 
@@ -51,8 +52,65 @@ public class YearsService(IUnitOfWork unitOfWork) : IYearsService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var year = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(year.YearId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.YearsRepository.Delete(year);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int yearId)
+    {
+        await CheckTitleDependenciesAsync(yearId);
+        await CheckTeacherDependenciesAsync(yearId);
+        await CheckSubscriptionDependenciesAsync(yearId);
+        await CheckImportDependenciesAsync(yearId);
+    }
+
+    private async Task CheckTitleDependenciesAsync(int yearId)
+    {
+        var titles = await unitOfWork
+            .TitlesRepository
+            .CountAsync(new CountTitlesParams { YearId = yearId });
+        if (titles > 0)
+        {
+            throw new BadRequestException(
+                $"O ano possui vínculo com {titles} títulos");
+        }
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int yearId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { YearId = yearId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"O ano possui vínculo com {teachers} professores");
+        }
+    }
+
+    private async Task CheckSubscriptionDependenciesAsync(int yearId)
+    {
+        var subscriptions = await unitOfWork
+            .SubscriptionsRepository
+            .CountAsync(new CountSubscriptionsParams { YearId = yearId });
+        if (subscriptions > 0)
+        {
+            throw new BadRequestException(
+                $"O ano possui vínculo com {subscriptions} inscrições");
+        }
+    }
+
+    private async Task CheckImportDependenciesAsync(int yearId)
+    {
+        var imports = await unitOfWork
+            .ImportsRepository
+            .CountAsync(new CountImportsParams { YearId = yearId });
+        if (imports > 0)
+        {
+            throw new BadRequestException(
+                $"O ano possui vínculo com {imports} importações");
+        }
     }
 }

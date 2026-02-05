@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -51,8 +52,26 @@ public class DisciplinesService(IUnitOfWork unitOfWork) : IDisciplinesService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var discipline = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(discipline.DisciplineId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.DisciplinesRepository.Delete(discipline);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int disciplineId)
+    {
+        await CheckTeacherDependenciesAsync(disciplineId);
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int disciplineId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { DisciplineId = disciplineId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"A disciplina possui vínculo com {teachers} professores");
+        }
     }
 }

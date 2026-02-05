@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -51,8 +52,26 @@ public class PositionsService(IUnitOfWork unitOfWork) : IPositionsService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var position = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(position.PositionId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.PositionsRepository.Delete(position);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int positionId)
+    {
+        await CheckTeacherDependenciesAsync(positionId);
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int positionId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { PositionId = positionId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"O cargo possui vínculo com {teachers} professores");
+        }
     }
 }

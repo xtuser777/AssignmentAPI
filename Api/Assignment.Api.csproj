@@ -30,11 +30,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Requests.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\DisplayValues\UsersRoles.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>UsersRoles.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Messages\Errors.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -46,10 +41,6 @@
     <EmbeddedResource Update="Resources\DisplayValues\Requests.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Requests.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\DisplayValues\UsersRoles.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UsersRoles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Messages\Errors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

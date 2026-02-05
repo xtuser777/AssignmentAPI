@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -51,8 +52,26 @@ public class CivilStatusesService(IUnitOfWork unitOfWork) : ICivilStatusesServic
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var status = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(status.CivilStatusId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.CivilStatusesRepository.Delete(status);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int civilStatusId)
+    {
+        await CheckTeacherDependenciesAsync(civilStatusId);
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int civilStatusId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { CivilStatusId = civilStatusId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"O estado civil possui vínculo com {teachers} professores");
+        }
     }
 }

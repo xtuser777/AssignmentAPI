@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -51,8 +52,25 @@ public class PreferencesService(IUnitOfWork unitOfWork) : IPreferencesService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var preference = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(preference.PreferenceId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.PreferencesRepository.Delete(preference);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int preferenceId)
+    {
+        await CheckSubscriptionDependenciesAsync(preferenceId);
+    }
+
+    private async Task CheckSubscriptionDependenciesAsync(int preferenceId)
+    {
+        var subscriptions = await unitOfWork
+            .SubscriptionsRepository
+            .CountAsync(new CountSubscriptionsParams { PreferenceId = preferenceId });
+        if (subscriptions > 0)
+        {
+            throw new BadRequestException($"A preferência possui vínculo com {subscriptions} inscrições");
+        }
     }
 }

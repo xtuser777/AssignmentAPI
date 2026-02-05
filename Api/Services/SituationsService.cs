@@ -1,5 +1,6 @@
 ﻿using Assignment.Api.Entities;
 using Assignment.Api.Exceptions;
+using Assignment.Api.Interfaces.Repositories;
 using Assignment.Api.Interfaces.Services;
 using Assignment.Api.Resources.Messages;
 using Assignment.Api.Utils;
@@ -51,8 +52,26 @@ public class SituationsService(IUnitOfWork unitOfWork) : ISituationsService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var situation = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(situation.SituationId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.SituationsRepository.Delete(situation);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int situationId)
+    {
+        await CheckTeacherDependenciesAsync(situationId);
+    }
+
+    private async Task CheckTeacherDependenciesAsync(int situationId)
+    {
+        var teachers = await unitOfWork
+            .TeachersRepository
+            .CountAsync(new CountTeachersParams { SituationId = situationId });
+        if (teachers > 0)
+        {
+            throw new BadRequestException(
+                $"A situação possui vínculo com {teachers} professores");
+        }
     }
 }

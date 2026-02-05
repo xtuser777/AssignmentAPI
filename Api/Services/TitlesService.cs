@@ -96,8 +96,25 @@ public class TitlesService(IUnitOfWork unitOfWork) : ITitlesService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var title = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(title.TitleId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.TitlesRepository.Delete(title);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int titleId)
+    {
+        await CheckTitleBySubscriptionDependenciesAsync(titleId);
+    }
+
+    private async Task CheckTitleBySubscriptionDependenciesAsync(int titleId)
+    {
+        var titlesBySubscriptions = await unitOfWork
+            .TitlesBySubscriptionsRepository
+            .CountAsync(new FindManyTitleBySubscriptionsParams { TitleId = titleId });
+        if (titlesBySubscriptions > 0)
+        {
+            throw new BadRequestException($"O título possui vinculo com {titlesBySubscriptions} inscrições");
+        }
     }
 }

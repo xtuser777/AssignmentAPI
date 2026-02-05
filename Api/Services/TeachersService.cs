@@ -120,8 +120,25 @@ public class TeachersService(IUnitOfWork unitOfWork) : ITeachersService
     public async Task DeleteAsync(DeleteServiceParams parameters)
     {
         var teacher = await FindOneAsync(parameters);
+        await CheckDependenciesAsync(teacher.TeacherId ?? 0);
         await using var transaction = unitOfWork.BeginTransaction;
         unitOfWork.TeachersRepository.Delete(teacher);
         await unitOfWork.Commit(transaction);
+    }
+
+    private async Task CheckDependenciesAsync(int teacherId)
+    {
+        await CheckSubscriptionDependenciesAsync(teacherId);
+    }
+
+    private async Task CheckSubscriptionDependenciesAsync(int teacherId)
+    {
+        var subscriptions = await unitOfWork
+            .SubscriptionsRepository
+            .CountAsync(new CountSubscriptionsParams { TeacherId = teacherId });
+        if (subscriptions > 0)
+        {
+            throw new BadRequestException($"O professor possui vículo com {subscriptions} inscrições");
+        }
     }
 }
